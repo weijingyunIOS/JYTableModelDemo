@@ -42,21 +42,31 @@
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
     }];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"reload 1-1" style:0 target:self action:@selector(reloadIndexPath)];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"reload" style:0 target:self action:@selector(reload)];
 }
 
 - (void)confiTableModel{
     JYNode *node1 = [JYNode nodeContentClass:[StyleCellModel class] config:^(JYNode *node) {
         
-        [node addCellNodes:@[[StyleCell1 class],[StyleCell2 class]]];
+        [node addCellNode:[JYCellNode cellClass:[StyleCell1 class] config:^(JYCellNode *cellNode) {
+            cellNode.edgeInsets = UIEdgeInsetsMake(0, 10, 0, 10);
+        }]];
+        
+        [node addCellNode:[JYCellNode cellClass:[StyleCell2 class] config:^(JYCellNode *cellNode) {
+            cellNode.edgeInsets = UIEdgeInsetsMake(0, 10, 0, 10);
+        }]];
+        
         [node addCellNode:[JYCellNode cellClass:[StyleCell3 class] config:^(JYCellNode *cellNode) {
-            cellNode.edgeInsets = UIEdgeInsetsMake(0, 0, 10, 0);
+            cellNode.edgeInsets = UIEdgeInsetsMake(0, 10, 10, 10);
         }]];
     }];
     
     
     JYNode *node2 = [JYNode nodeContentClass:[StyleCell1Model1 class] config:^(JYNode *node) {
         [node addCellNode:[JYCellNode cellClass:[StyleCell2 class] config:^(JYCellNode *cellNode) {
-            cellNode.edgeInsets = UIEdgeInsetsMake(0, 0, 10, 0);
+            cellNode.edgeInsets = UIEdgeInsetsMake(0, 10, 10, 10);
         }]];
     }];
     
@@ -82,6 +92,16 @@
         
     }
     [self.tableModel addContents:@[model1,model4,model2,model3]];
+    [self.tableView reloadData];
+}
+
+#pragma mark - 测试cell间距调整展示问题
+- (void)reloadIndexPath{
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:2 inSection:0];
+    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:0];
+}
+
+- (void)reload{
     [self.tableView reloadData];
 }
 

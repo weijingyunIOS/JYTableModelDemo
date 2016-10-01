@@ -17,7 +17,8 @@
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if ([super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-        self.backgroundColor = [UIColor orangeColor];
+        self.contentView.backgroundColor = [UIColor orangeColor];
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     return self;
 }
