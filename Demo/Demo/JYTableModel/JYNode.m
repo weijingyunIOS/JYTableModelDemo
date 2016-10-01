@@ -14,16 +14,20 @@
 @property (nonatomic, copy) NSString *identifier;
 
 // 外部展现时对应 的 cellClass
-@property (nonatomic, strong) Class cellClass;
+@property (nonatomic, assign) NSInteger currentIndex;
 @property (nonatomic, strong) id content;
 
 @end
 
 @implementation JYNode
 
-- (void)recordCellClass:(Class)aCellClass content:(id)aContent{
-    _cellClass = aCellClass;
+- (void)recordCurrentIndex:(NSInteger)aIndex content:(id)aContent{
+    _currentIndex = aIndex;
     _content = aContent;
+}
+
+- (Class)cellClass{
+    return self.groupClass[self.currentIndex];
 }
 
 + (NSString *)identifierForContent:(id)aContent{

@@ -136,7 +136,7 @@
             
             node = self.nodeCache[[JYNode identifierForContent:obj]];
             NSInteger cellIndex = node.groupClass.count - (index - indexPath.row) - 1;
-            [node recordCellClass:node.groupClass[cellIndex] content:obj];
+            [node recordCurrentIndex:cellIndex content:obj];
             
             *stop = YES;
         }
