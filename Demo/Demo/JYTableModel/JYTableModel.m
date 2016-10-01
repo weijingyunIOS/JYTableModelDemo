@@ -8,6 +8,7 @@
 
 #import "JYTableModel.h"
 #import <objc/runtime.h>
+#import "UITableViewCell+JYCellMargin.h"
 
 @interface JYTableModel()
 
@@ -89,12 +90,14 @@
 
 - (CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
+    CGFloat height = 0.;
     JYNode *node = [self getCellNodeAtIndexPath:indexPath];
     Method originalMethod = class_getClassMethod(node.cellNode.cellClass, @selector(heightForContent:));
     if (originalMethod != nil) {
-        return [node.cellNode.cellClass heightForContent:node.content];
+        height = [node.cellNode.cellClass heightForContent:node.content];
     }
-    return 20;
+    height += node.cellNode.edgeInsets.top + node.cellNode.edgeInsets.bottom;
+    return height;
 }
 
 - (UITableViewCell *)cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -105,6 +108,7 @@
     
     JYNode *node = [self getCellNodeAtIndexPath:indexPath];
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:NSStringFromClass(node.cellNode.cellClass) forIndexPath:indexPath];
+    cell.edgeInsets = node.cellNode.edgeInsets;
     if ([cell respondsToSelector:@selector(setCellContent:)]) {
         [(id)cell setCellContent:node.content];
     }

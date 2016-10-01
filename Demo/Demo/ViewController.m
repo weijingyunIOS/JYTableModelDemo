@@ -56,7 +56,7 @@
     
     JYNode *node2 = [JYNode nodeContentClass:[StyleCell1Model1 class] config:^(JYNode *node) {
         [node addCellNode:[JYCellNode cellClass:[StyleCell2 class] config:^(JYCellNode *cellNode) {
-            cellNode.edgeInsets = UIEdgeInsetsMake(10, 10, 10, 10);
+            cellNode.edgeInsets = UIEdgeInsetsMake(0, 0, 10, 0);
         }]];
     }];
     

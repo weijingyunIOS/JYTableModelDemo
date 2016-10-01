@@ -15,6 +15,7 @@
 		5C0D13501DA0080C00B22B60 /* StyleCell1Model1.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C0D134F1DA0080C00B22B60 /* StyleCell1Model1.m */; };
 		5C0D13531DA0082C00B22B60 /* StyleCellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C0D13521DA0082C00B22B60 /* StyleCellModel.m */; };
 		5C0D13571DA026E400B22B60 /* JYCellNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C0D13561DA026E400B22B60 /* JYCellNode.m */; };
+		5C0D135A1DA0331D00B22B60 /* UITableViewCell+JYCellMargin.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C0D13591DA0331D00B22B60 /* UITableViewCell+JYCellMargin.m */; };
 		5C2C8F581D9CAE7E00751F06 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C2C8F571D9CAE7E00751F06 /* main.m */; };
 		5C2C8F5B1D9CAE7E00751F06 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C2C8F5A1D9CAE7E00751F06 /* AppDelegate.m */; };
 		5C2C8F5E1D9CAE7E00751F06 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C2C8F5D1D9CAE7E00751F06 /* ViewController.m */; };
@@ -61,6 +62,9 @@
 		5C0D13521DA0082C00B22B60 /* StyleCellModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StyleCellModel.m; sourceTree = "<group>"; };
 		5C0D13551DA026E400B22B60 /* JYCellNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYCellNode.h; sourceTree = "<group>"; };
 		5C0D13561DA026E400B22B60 /* JYCellNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYCellNode.m; sourceTree = "<group>"; };
+		5C0D13581DA0331D00B22B60 /* UITableViewCell+JYCellMargin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewCell+JYCellMargin.h"; sourceTree = "<group>"; };
+		5C0D13591DA0331D00B22B60 /* UITableViewCell+JYCellMargin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewCell+JYCellMargin.m"; sourceTree = "<group>"; };
+		5C0D135B1DA0333100B22B60 /* JYSwizzlingDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYSwizzlingDefine.h; sourceTree = "<group>"; };
 		5C2C8F531D9CAE7E00751F06 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C2C8F571D9CAE7E00751F06 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5C2C8F591D9CAE7E00751F06 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -126,6 +130,9 @@
 				5C0D13561DA026E400B22B60 /* JYCellNode.m */,
 				5C0D13411D9FF5B900B22B60 /* JYTableModel.h */,
 				5C0D13421D9FF5B900B22B60 /* JYTableModel.m */,
+				5C0D135B1DA0333100B22B60 /* JYSwizzlingDefine.h */,
+				5C0D13581DA0331D00B22B60 /* UITableViewCell+JYCellMargin.h */,
+				5C0D13591DA0331D00B22B60 /* UITableViewCell+JYCellMargin.m */,
 			);
 			path = JYTableModel;
 			sourceTree = "<group>";
@@ -400,6 +407,7 @@
 			files = (
 				5C0D13571DA026E400B22B60 /* JYCellNode.m in Sources */,
 				5C0D13501DA0080C00B22B60 /* StyleCell1Model1.m in Sources */,
+				5C0D135A1DA0331D00B22B60 /* UITableViewCell+JYCellMargin.m in Sources */,
 				5C0D134A1DA0050A00B22B60 /* StyleCell2.m in Sources */,
 				5C0D13401D9FF57900B22B60 /* JYNode.m in Sources */,
 				5C2C8F5E1D9CAE7E00751F06 /* ViewController.m in Sources */,
