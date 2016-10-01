@@ -13,7 +13,7 @@
 @property (nonatomic, weak) UITableView *tableView;
 
 // cell 的配置信息
-@property (nonatomic, strong) NSMutableArray<JYCellNode *> *nodes;
+@property (nonatomic, strong) NSMutableDictionary<NSString * ,JYCellNode *> *nodeCache;
 
 // 所有的数据源
 @property (nonatomic, strong) NSMutableArray<NSMutableArray*>* allContents;
@@ -26,11 +26,11 @@
 #pragma mark -  注册cell tableView
 - (void)registCellNodes:(NSArray<JYCellNode*>*)nodes byTableView:(UITableView*)tableView{
     _tableView = tableView;
-    [self.nodes addObjectsFromArray:nodes];
-    [self.nodes enumerateObjectsUsingBlock:^(JYCellNode * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [nodes enumerateObjectsUsingBlock:^(JYCellNode * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [obj.cellClass enumerateObjectsUsingBlock:^(Class  _Nonnull cellClass, NSUInteger idx, BOOL * _Nonnull stop) {
             [tableView registerClass:cellClass forCellReuseIdentifier:NSStringFromClass(cellClass)];
         }];
+        [self.nodeCache setObject:obj forKey:obj.identifier];
     }];
 }
 
@@ -81,11 +81,11 @@
 
 // 因为存在 多cell拼接 所以要做偏移计算
 - (NSInteger)numberOfRowsInSection:(NSInteger)section{
-    return 10;
+    return [self caculateCountInSection:section];
 }
 
 - (CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 10;
+    return 20;
 }
 
 - (UITableViewCell *)cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -100,33 +100,27 @@
     
     __block NSInteger count = 0;
     [contents enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        count += [self cellCountForContentClass:[self classForObject:obj]];
+        count += [self cellCountForContent:obj];
     }];
-    
     return count;
 }
 
-- (NSInteger)cellCountForContentClass:(Class)aContentClass
+- (NSInteger)cellCountForContent:(id)aContent
 {
-//    [self.nodes enumerateObjectsUsingBlock:^(JYCellNode * _Nonnull node, NSUInteger idx, BOOL * _Nonnull stop) {
-//        node
-//    }];
-    return 0;
+    JYCellNode *node = self.nodeCache[[JYCellNode identifierForContent:aContent]];
+    return node.cellClass.count;
 }
 
 // 必须检测字符串，要对字符串类型做特殊处理
 - (Class)classForObject:(id)aObject{
-    if ([aObject isKindOfClass:[NSString class]]) {
-        return [NSString class];
-    }
-    return [aObject class];
+    return [JYCellNode classForObject:aObject];
 }
 #pragma mark - 懒加载
-- (NSMutableArray<JYCellNode *> *)nodes{
-    if (!_nodes) {
-        _nodes = [[NSMutableArray alloc] init];
+- (NSMutableDictionary<NSString *,JYCellNode *> *)nodeCache{
+    if (!_nodeCache) {
+        _nodeCache = [[NSMutableDictionary alloc] init];
     }
-    return _nodes;
+    return _nodeCache;
 }
 
 - (NSMutableArray<NSMutableArray *> *)allContents{

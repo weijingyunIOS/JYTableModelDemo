@@ -53,8 +53,8 @@
     
     JYCellNode *node2 = [[JYCellNode alloc] init];
     {
-        node1.contentClass = [StyleCell1Model1 class];
-        node1.cellClass = @[[StyleCell1 class]];
+        node2.contentClass = [StyleCell1Model1 class];
+        node2.cellClass = @[[StyleCell1 class]];
     }
     
     [self.tableModel registCellNodes:@[node1,node2] byTableView:self.tableView];
