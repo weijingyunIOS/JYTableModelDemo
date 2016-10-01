@@ -48,13 +48,13 @@
     JYCellNode *node1 = [[JYCellNode alloc] init];
     {
         node1.contentClass = [StyleCellModel class];
-        node1.cellClass = @[[StyleCell1 class],[StyleCell2 class],[StyleCell3 class]];
+        node1.groupClass = @[[StyleCell1 class],[StyleCell2 class],[StyleCell3 class]];
     }
     
     JYCellNode *node2 = [[JYCellNode alloc] init];
     {
         node2.contentClass = [StyleCell1Model1 class];
-        node2.cellClass = @[[StyleCell1 class]];
+        node2.groupClass = @[[StyleCell1 class]];
     }
     
     [self.tableModel registCellNodes:@[node1,node2] byTableView:self.tableView];

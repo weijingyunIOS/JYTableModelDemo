@@ -7,6 +7,7 @@
 //
 
 #import "JYTableModel.h"
+
 @interface JYTableModel()
 
 // 对应的tableViw
@@ -27,8 +28,8 @@
 - (void)registCellNodes:(NSArray<JYCellNode*>*)nodes byTableView:(UITableView*)tableView{
     _tableView = tableView;
     [nodes enumerateObjectsUsingBlock:^(JYCellNode * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [obj.cellClass enumerateObjectsUsingBlock:^(Class  _Nonnull cellClass, NSUInteger idx, BOOL * _Nonnull stop) {
-            [tableView registerClass:cellClass forCellReuseIdentifier:NSStringFromClass(cellClass)];
+        [obj.groupClass enumerateObjectsUsingBlock:^(Class  _Nonnull groupClass, NSUInteger idx, BOOL * _Nonnull stop) {
+            [tableView registerClass:groupClass forCellReuseIdentifier:NSStringFromClass(groupClass)];
         }];
         [self.nodeCache setObject:obj forKey:obj.identifier];
     }];
@@ -94,6 +95,25 @@
     return cell;
 }
 
+- (JYCellNode *)contentInfoAtIndexPath:(NSIndexPath *)indexPath{
+    
+    NSArray *contents = [self contentsAtInSection:indexPath.section];
+    __block NSInteger index = -1;
+    __block JYCellNode *node = nil;
+    [contents enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        index += [self cellCountForContent:obj];
+        if (index >= indexPath.row) {
+            
+            node = self.nodeCache[[JYCellNode identifierForContent:obj]];
+            NSInteger cellIndex = node.groupClass.count - (index - indexPath.row) - 1;
+            
+            *stop = YES;
+        }
+    }];
+    return node;
+}
+
 - (NSInteger)caculateCountInSection:(NSInteger)section
 {
     NSArray* contents = [self.allContents objectAtIndex:section];
@@ -108,7 +128,7 @@
 - (NSInteger)cellCountForContent:(id)aContent
 {
     JYCellNode *node = self.nodeCache[[JYCellNode identifierForContent:aContent]];
-    return node.cellClass.count;
+    return node.groupClass.count;
 }
 
 // 必须检测字符串，要对字符串类型做特殊处理

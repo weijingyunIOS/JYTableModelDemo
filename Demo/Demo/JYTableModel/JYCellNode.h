@@ -21,7 +21,7 @@
 @property (nonatomic, assign) NSInteger cellType;
 
 // 模型对应的cell 由多个cell拼接 所以按数组排列
-@property (nonatomic, strong) NSArray<Class>*cellClass;
+@property (nonatomic, strong) NSArray<Class>*groupClass;
 
 + (NSString *)identifierForContent:(id)aContent;
 

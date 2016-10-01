@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "JYCellNode.h"
 
+@class JYCellNode;
+
 @interface JYTableModel : NSObject
 
 // 所有的数据源
