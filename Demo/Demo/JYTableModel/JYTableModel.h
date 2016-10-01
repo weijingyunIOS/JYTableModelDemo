@@ -32,6 +32,7 @@
 
 - (CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 - (UITableViewCell *)cellForRowAtIndexPath:(NSIndexPath *)indexPath;
+- (UITableViewCell *)cellForRowAtIndexPath:(NSIndexPath *)indexPath config:(void (^)(UITableViewCell *aCell,id aContent))aConfig;
 
 
 - (void)reomveObjectAtIndexPath:(NSIndexPath *)aIndexPath;

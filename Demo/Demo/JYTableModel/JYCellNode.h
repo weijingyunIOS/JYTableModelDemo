@@ -18,6 +18,8 @@
 @property (nonatomic, strong) UIColor *bottomColor;
 @property (nonatomic, strong) UIColor *rightColor;
 
++ (instancetype)cellClass:(Class)aCellClass config:(void (^)(JYCellNode *cellNode))aConfig;
+
 // 拷贝一份
 - (instancetype)copyNode;
 

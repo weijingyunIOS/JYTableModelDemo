@@ -13,7 +13,7 @@
 @interface JYNode : NSObject
 
 // 模型class
-@property (nonatomic, strong) Class<JYContentNodeProtocol> contentClass;
+@property (nonatomic, strong, readonly) Class contentClass;
 
 // 同一contentClass(需要实现- (NSInteger)cellType) 对应 不同的 cellType
 @property (nonatomic, assign) NSInteger cellType;
@@ -26,9 +26,15 @@
 @property (nonatomic, strong, readonly) id content;
 
 #pragma mark - cellNode 配置
++ (instancetype)nodeContentClass:(Class)aContentClass config:(void (^)(JYNode *node))aConfig;
++ (instancetype)nodeContentClass:(Class)aContentClass cellType:(NSInteger)aCellType config:(void (^)(JYNode *node))aConfig;
+// 数组元素只能是 JYCellNode 与 Class
+- (void)bindContentClass:(Class)aContentClass cellNodes:(NSArray*)aNodes;
+- (void)bindContentClass:(Class)aContentClass;
 - (void)addCellClass:(Class)cellClass;
 - (void)addCellNode:(JYCellNode *)cellNode;
-- (void)addCellNodes:(NSArray*)aNodes; // 数组元素只能是 JYCellNode 与 Class
+// 数组元素只能是 JYCellNode 与 Class
+- (void)addCellNodes:(NSArray*)aNodes;
 
 
 #pragma mark - private 用于框架内部调用

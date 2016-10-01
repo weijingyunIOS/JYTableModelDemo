@@ -19,6 +19,7 @@
 
 // CellNode
 @property (nonatomic, strong) NSMutableArray<JYCellNode *>*groupCellNode;
+@property (nonatomic, strong) Class contentClass;
 
 @end
 
@@ -35,6 +36,29 @@
 }
 
 #pragma mark - cellNode 配置
++ (instancetype)nodeContentClass:(Class)aContentClass config:(void (^)(JYNode *node))aConfig{
+    return [self nodeContentClass:aContentClass cellType:0 config:aConfig];
+}
+
++ (instancetype)nodeContentClass:(Class)aContentClass cellType:(NSInteger)aCellType config:(void (^)(JYNode *node))aConfig{
+    JYNode *node = [[JYNode alloc] init];
+    node.cellType = aCellType;
+    [node bindContentClass:aContentClass];
+    if (aConfig) {
+        aConfig(node);
+    }
+    return node;
+}
+
+- (void)bindContentClass:(Class)aContentClass cellNodes:(NSArray*)aNodes{
+    [self bindContentClass:aContentClass];
+    [self addCellNodes:aNodes];
+}
+
+- (void)bindContentClass:(Class)aContentClass{
+    _contentClass = aContentClass;
+}
+
 - (void)addCellClass:(Class)cellClass{
     JYCellNode *cellNode = [[JYCellNode alloc] init];
     cellNode.cellClass = cellClass;

@@ -45,21 +45,20 @@
 }
 
 - (void)confiTableModel{
-    JYNode *node1 = [[JYNode alloc] init];
-    {
-        node1.contentClass = [StyleCellModel class];
-        [node1 addCellNodes:@[[StyleCell1 class],[StyleCell2 class],[StyleCell3 class]]];
-    }
-    
-    JYNode *node2 = [[JYNode alloc] init];
-    {
-        node2.contentClass = [StyleCell1Model1 class];
+    JYNode *node1 = [JYNode nodeContentClass:[StyleCellModel class] config:^(JYNode *node) {
         
-        JYCellNode *cellNode = [[JYCellNode alloc] init];
-        cellNode.cellClass = [StyleCell2 class];
-        cellNode.edgeInsets = UIEdgeInsetsMake(10, 10, 10, 10);
-        [node2 addCellNode:cellNode];
-    }
+        [node addCellNodes:@[[StyleCell1 class],[StyleCell2 class]]];
+        [node addCellNode:[JYCellNode cellClass:[StyleCell3 class] config:^(JYCellNode *cellNode) {
+            cellNode.edgeInsets = UIEdgeInsetsMake(0, 0, 10, 0);
+        }]];
+    }];
+    
+    
+    JYNode *node2 = [JYNode nodeContentClass:[StyleCell1Model1 class] config:^(JYNode *node) {
+        [node addCellNode:[JYCellNode cellClass:[StyleCell2 class] config:^(JYCellNode *cellNode) {
+            cellNode.edgeInsets = UIEdgeInsetsMake(10, 10, 10, 10);
+        }]];
+    }];
     
     [self.tableModel registCellNodes:@[node1,node2] byTableView:self.tableView];
 }

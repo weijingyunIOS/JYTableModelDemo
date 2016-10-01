@@ -9,6 +9,14 @@
 #import "JYCellNode.h"
 @implementation JYCellNode
 
++ (instancetype)cellClass:(Class)aCellClass config:(void (^)(JYCellNode *cellNode))aConfig{
+    JYCellNode *node = [[JYCellNode alloc] init];
+    node.cellClass = aCellClass;
+    if (aConfig) {
+        aConfig(node);
+    }
+    return node;
+}
 
 - (instancetype)copyNode{
     JYCellNode *node = [[JYCellNode alloc] init];
