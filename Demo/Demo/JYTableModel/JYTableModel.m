@@ -88,7 +88,7 @@
 
 - (CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    JYCellNode *node = [self contentInfoAtIndexPath:indexPath];
+    JYCellNode *node = [self getCellNodeAtIndexPath:indexPath];
     Method originalMethod = class_getClassMethod(node.cellClass, @selector(heightForContent:));
     if (originalMethod != nil) {
         return [node.cellClass heightForContent:node.content];
@@ -97,12 +97,34 @@
 }
 
 - (UITableViewCell *)cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell *cell = [[UITableViewCell alloc] init];
-    cell.contentView.backgroundColor = [UIColor redColor];
+    return [self cellForRowAtIndexPath:indexPath config:nil];
+}
+
+- (UITableViewCell *)cellForRowAtIndexPath:(NSIndexPath *)indexPath config:(void (^)(UITableViewCell *aCell,id aContent))aConfig{
+    
+    JYCellNode *node = [self getCellNodeAtIndexPath:indexPath];
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:NSStringFromClass(node.cellClass) forIndexPath:indexPath];
+    if ([cell respondsToSelector:@selector(setCellContent:)]) {
+        [(id)cell setCellContent:node.content];
+    }
+    if (aConfig) {
+        aConfig(cell,node.content);
+    }
     return cell;
 }
 
-- (JYCellNode *)contentInfoAtIndexPath:(NSIndexPath *)indexPath{
+- (void)reomveObjectAtIndexPath:(NSIndexPath *)aIndexPath{
+    NSMutableArray* contents = [self contentsAtInSection:aIndexPath.section];
+    id content = [self getObjectAtIndexPath:aIndexPath];
+    [contents removeObject:content];
+}
+
+- (id)getObjectAtIndexPath:(NSIndexPath *)aIndexPath{
+    JYCellNode *node = [self getCellNodeAtIndexPath:aIndexPath];
+    return node.content;
+}
+
+- (JYCellNode *)getCellNodeAtIndexPath:(NSIndexPath *)indexPath{
     
     NSArray *contents = [self contentsAtInSection:indexPath.section];
     __block NSInteger index = -1;

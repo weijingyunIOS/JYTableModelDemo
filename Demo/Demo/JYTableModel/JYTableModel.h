@@ -34,4 +34,8 @@
 - (UITableViewCell *)cellForRowAtIndexPath:(NSIndexPath *)indexPath;
 
 
+- (void)reomveObjectAtIndexPath:(NSIndexPath *)aIndexPath;
+- (id)getObjectAtIndexPath:(NSIndexPath *)aIndexPath;
+- (JYCellNode *)getCellNodeAtIndexPath:(NSIndexPath *)indexPath;
+
 @end

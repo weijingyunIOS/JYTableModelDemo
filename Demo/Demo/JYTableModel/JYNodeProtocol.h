@@ -14,6 +14,9 @@
 // 实现tableView高度计算， 如不实现则使用约束自动计算
 + (CGFloat)heightForContent:(id)aContent;
 
+// 实现数据设置
+- (void)setCellContent:(id)aCellContent;
+
 @end
 
 
