@@ -13,10 +13,18 @@
 // 根据 contentClass 与 cellType 生成的唯一表识用于快速定位
 @property (nonatomic, copy) NSString *identifier;
 
+// 外部展现时对应 的 cellClass
+@property (nonatomic, strong) Class cellClass;
+@property (nonatomic, strong) id content;
+
 @end
 
 @implementation JYCellNode
 
+- (void)recordCellClass:(Class)aCellClass content:(id)aContent{
+    _cellClass = aCellClass;
+    _content = aContent;
+}
 
 + (NSString *)identifierForContent:(id)aContent{
     NSInteger cellType = 0;

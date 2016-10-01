@@ -11,9 +11,6 @@
 
 @interface JYCellNode : NSObject
 
-// 根据 contentClass 与 cellType 生成的唯一表识用于快速定位
-@property (nonatomic, copy, readonly) NSString *identifier;
-
 // 模型class
 @property (nonatomic, strong) Class<JYContentNodeProtocol> contentClass;
 
@@ -22,6 +19,18 @@
 
 // 模型对应的cell 由多个cell拼接 所以按数组排列
 @property (nonatomic, strong) NSArray<Class>*groupClass;
+
+// 外部展现时对应 的 cellClass 与 数据
+@property (nonatomic, strong, readonly) Class cellClass;
+@property (nonatomic, strong, readonly) id content;
+
+
+
+#pragma mark - private 用于框架内部调用
+- (void)recordCellClass:(Class)aCellClass content:(id)aContent;
+
+// 根据 contentClass 与 cellType 生成的唯一表识用于快速定位
+@property (nonatomic, copy, readonly) NSString *identifier;
 
 + (NSString *)identifierForContent:(id)aContent;
 

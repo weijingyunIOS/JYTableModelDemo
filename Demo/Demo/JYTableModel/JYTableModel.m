@@ -7,6 +7,7 @@
 //
 
 #import "JYTableModel.h"
+#import <objc/runtime.h>
 
 @interface JYTableModel()
 
@@ -86,6 +87,12 @@
 }
 
 - (CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    JYCellNode *node = [self contentInfoAtIndexPath:indexPath];
+    Method originalMethod = class_getClassMethod(node.cellClass, @selector(heightForContent:));
+    if (originalMethod != nil) {
+        return [node.cellClass heightForContent:node.content];
+    }
     return 20;
 }
 
@@ -107,6 +114,7 @@
             
             node = self.nodeCache[[JYCellNode identifierForContent:obj]];
             NSInteger cellIndex = node.groupClass.count - (index - indexPath.row) - 1;
+            [node recordCellClass:node.groupClass[cellIndex] content:obj];
             
             *stop = YES;
         }

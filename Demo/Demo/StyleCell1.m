@@ -30,7 +30,7 @@
 
 #pragma mark - JYCellNodeProtocol
 + (CGFloat)heightForContent:(id)aContent{
-    return 10;
+    return 50;
 }
 
 @end
