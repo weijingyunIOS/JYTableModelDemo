@@ -1,5 +1,5 @@
 //
-//  JYCellNodeProtocol.h
+//  JYNodeProtocol.h
 //  Demo
 //
 //  Created by weijingyun on 16/10/1.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol JYCellNodeProtocol <NSObject>
+@protocol JYNodeProtocol <NSObject>
 
 @optional
 // 实现tableView高度计算， 如不实现则使用约束自动计算

@@ -27,7 +27,7 @@
     // Configure the view for the selected state
 }
 
-#pragma mark - JYCellNodeProtocol
+#pragma mark - JYNodeProtocol
 + (CGFloat)heightForContent:(id)aContent{
     return 150;
 }

@@ -1,14 +1,14 @@
 //
-//  JYCellNode.m
+//  JYNode.m
 //  Demo
 //
 //  Created by weijingyun on 16/10/1.
 //  Copyright © 2016年 weijingyun. All rights reserved.
 //
 
-#import "JYCellNode.h"
+#import "JYNode.h"
 
-@interface JYCellNode()
+@interface JYNode()
 
 // 根据 contentClass 与 cellType 生成的唯一表识用于快速定位
 @property (nonatomic, copy) NSString *identifier;
@@ -19,7 +19,7 @@
 
 @end
 
-@implementation JYCellNode
+@implementation JYNode
 
 - (void)recordCellClass:(Class)aCellClass content:(id)aContent{
     _cellClass = aCellClass;

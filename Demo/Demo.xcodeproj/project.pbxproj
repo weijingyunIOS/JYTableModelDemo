@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5C0D13401D9FF57900B22B60 /* JYCellNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C0D133F1D9FF57900B22B60 /* JYCellNode.m */; };
+		5C0D13401D9FF57900B22B60 /* JYNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C0D133F1D9FF57900B22B60 /* JYNode.m */; };
 		5C0D13431D9FF5B900B22B60 /* JYTableModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C0D13421D9FF5B900B22B60 /* JYTableModel.m */; };
 		5C0D13471DA004FE00B22B60 /* StyleCell1.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C0D13461DA004FE00B22B60 /* StyleCell1.m */; };
 		5C0D134A1DA0050A00B22B60 /* StyleCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C0D13491DA0050A00B22B60 /* StyleCell2.m */; };
@@ -43,8 +43,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		5C0D133E1D9FF57900B22B60 /* JYCellNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYCellNode.h; sourceTree = "<group>"; };
-		5C0D133F1D9FF57900B22B60 /* JYCellNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYCellNode.m; sourceTree = "<group>"; };
+		5C0D133E1D9FF57900B22B60 /* JYNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYNode.h; sourceTree = "<group>"; };
+		5C0D133F1D9FF57900B22B60 /* JYNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYNode.m; sourceTree = "<group>"; };
 		5C0D13411D9FF5B900B22B60 /* JYTableModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYTableModel.h; sourceTree = "<group>"; };
 		5C0D13421D9FF5B900B22B60 /* JYTableModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYTableModel.m; sourceTree = "<group>"; };
 		5C0D13441DA0014F00B22B60 /* JYNodeProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYNodeProtocol.h; sourceTree = "<group>"; };
@@ -117,8 +117,8 @@
 			isa = PBXGroup;
 			children = (
 				5C0D13441DA0014F00B22B60 /* JYNodeProtocol.h */,
-				5C0D133E1D9FF57900B22B60 /* JYCellNode.h */,
-				5C0D133F1D9FF57900B22B60 /* JYCellNode.m */,
+				5C0D133E1D9FF57900B22B60 /* JYNode.h */,
+				5C0D133F1D9FF57900B22B60 /* JYNode.m */,
 				5C0D13411D9FF5B900B22B60 /* JYTableModel.h */,
 				5C0D13421D9FF5B900B22B60 /* JYTableModel.m */,
 			);
@@ -395,7 +395,7 @@
 			files = (
 				5C0D13501DA0080C00B22B60 /* StyleCell1Model1.m in Sources */,
 				5C0D134A1DA0050A00B22B60 /* StyleCell2.m in Sources */,
-				5C0D13401D9FF57900B22B60 /* JYCellNode.m in Sources */,
+				5C0D13401D9FF57900B22B60 /* JYNode.m in Sources */,
 				5C2C8F5E1D9CAE7E00751F06 /* ViewController.m in Sources */,
 				5C0D134D1DA0051500B22B60 /* StyleCell3.m in Sources */,
 				5C2C8F5B1D9CAE7E00751F06 /* AppDelegate.m in Sources */,

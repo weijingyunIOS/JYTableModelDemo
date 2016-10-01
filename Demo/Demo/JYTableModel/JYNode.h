@@ -1,5 +1,5 @@
 //
-//  JYCellNode.h
+//  JYNode.h
 //  Demo
 //
 //  Created by weijingyun on 16/10/1.
@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "JYNodeProtocol.h"
 
-@interface JYCellNode : NSObject
+@interface JYNode : NSObject
 
 // 模型class
 @property (nonatomic, strong) Class<JYContentNodeProtocol> contentClass;

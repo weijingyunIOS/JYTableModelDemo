@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "JYCellNode.h"
+#import "JYNode.h"
 
-@class JYCellNode;
+@class JYNode;
 
 @interface JYTableModel : NSObject
 
@@ -17,7 +17,7 @@
 @property (nonatomic, strong, readonly) NSMutableArray<NSMutableArray*>* allContents;
 
 #pragma mark -  注册cell tableView
-- (void)registCellNodes:(NSArray<JYCellNode*>*)nodes byTableView:(UITableView*)tableView;
+- (void)registCellNodes:(NSArray<JYNode*>*)nodes byTableView:(UITableView*)tableView;
 
 #pragma mark - 数据操作
 - (void)setContents:(NSArray *)aContents;
@@ -36,6 +36,6 @@
 
 - (void)reomveObjectAtIndexPath:(NSIndexPath *)aIndexPath;
 - (id)getObjectAtIndexPath:(NSIndexPath *)aIndexPath;
-- (JYCellNode *)getCellNodeAtIndexPath:(NSIndexPath *)indexPath;
+- (JYNode *)getCellNodeAtIndexPath:(NSIndexPath *)indexPath;
 
 @end

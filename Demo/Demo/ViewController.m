@@ -45,13 +45,13 @@
 }
 
 - (void)confiTableModel{
-    JYCellNode *node1 = [[JYCellNode alloc] init];
+    JYNode *node1 = [[JYNode alloc] init];
     {
         node1.contentClass = [StyleCellModel class];
         node1.groupClass = @[[StyleCell1 class],[StyleCell2 class],[StyleCell3 class]];
     }
     
-    JYCellNode *node2 = [[JYCellNode alloc] init];
+    JYNode *node2 = [[JYNode alloc] init];
     {
         node2.contentClass = [StyleCell1Model1 class];
         node2.groupClass = @[[StyleCell1 class]];

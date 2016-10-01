@@ -15,7 +15,7 @@
 @property (nonatomic, weak) UITableView *tableView;
 
 // cell 的配置信息
-@property (nonatomic, strong) NSMutableDictionary<NSString * ,JYCellNode *> *nodeCache;
+@property (nonatomic, strong) NSMutableDictionary<NSString * ,JYNode *> *nodeCache;
 
 // 所有的数据源
 @property (nonatomic, strong) NSMutableArray<NSMutableArray*>* allContents;
@@ -26,9 +26,9 @@
 
 
 #pragma mark -  注册cell tableView
-- (void)registCellNodes:(NSArray<JYCellNode*>*)nodes byTableView:(UITableView*)tableView{
+- (void)registCellNodes:(NSArray<JYNode*>*)nodes byTableView:(UITableView*)tableView{
     _tableView = tableView;
-    [nodes enumerateObjectsUsingBlock:^(JYCellNode * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [nodes enumerateObjectsUsingBlock:^(JYNode * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [obj.groupClass enumerateObjectsUsingBlock:^(Class  _Nonnull groupClass, NSUInteger idx, BOOL * _Nonnull stop) {
             [tableView registerClass:groupClass forCellReuseIdentifier:NSStringFromClass(groupClass)];
         }];
@@ -88,7 +88,7 @@
 
 - (CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    JYCellNode *node = [self getCellNodeAtIndexPath:indexPath];
+    JYNode *node = [self getCellNodeAtIndexPath:indexPath];
     Method originalMethod = class_getClassMethod(node.cellClass, @selector(heightForContent:));
     if (originalMethod != nil) {
         return [node.cellClass heightForContent:node.content];
@@ -102,7 +102,7 @@
 
 - (UITableViewCell *)cellForRowAtIndexPath:(NSIndexPath *)indexPath config:(void (^)(UITableViewCell *aCell,id aContent))aConfig{
     
-    JYCellNode *node = [self getCellNodeAtIndexPath:indexPath];
+    JYNode *node = [self getCellNodeAtIndexPath:indexPath];
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:NSStringFromClass(node.cellClass) forIndexPath:indexPath];
     if ([cell respondsToSelector:@selector(setCellContent:)]) {
         [(id)cell setCellContent:node.content];
@@ -120,21 +120,21 @@
 }
 
 - (id)getObjectAtIndexPath:(NSIndexPath *)aIndexPath{
-    JYCellNode *node = [self getCellNodeAtIndexPath:aIndexPath];
+    JYNode *node = [self getCellNodeAtIndexPath:aIndexPath];
     return node.content;
 }
 
-- (JYCellNode *)getCellNodeAtIndexPath:(NSIndexPath *)indexPath{
+- (JYNode *)getCellNodeAtIndexPath:(NSIndexPath *)indexPath{
     
     NSArray *contents = [self contentsAtInSection:indexPath.section];
     __block NSInteger index = -1;
-    __block JYCellNode *node = nil;
+    __block JYNode *node = nil;
     [contents enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         
         index += [self cellCountForContent:obj];
         if (index >= indexPath.row) {
             
-            node = self.nodeCache[[JYCellNode identifierForContent:obj]];
+            node = self.nodeCache[[JYNode identifierForContent:obj]];
             NSInteger cellIndex = node.groupClass.count - (index - indexPath.row) - 1;
             [node recordCellClass:node.groupClass[cellIndex] content:obj];
             
@@ -157,16 +157,16 @@
 
 - (NSInteger)cellCountForContent:(id)aContent
 {
-    JYCellNode *node = self.nodeCache[[JYCellNode identifierForContent:aContent]];
+    JYNode *node = self.nodeCache[[JYNode identifierForContent:aContent]];
     return node.groupClass.count;
 }
 
 // 必须检测字符串，要对字符串类型做特殊处理
 - (Class)classForObject:(id)aObject{
-    return [JYCellNode classForObject:aObject];
+    return [JYNode classForObject:aObject];
 }
 #pragma mark - 懒加载
-- (NSMutableDictionary<NSString *,JYCellNode *> *)nodeCache{
+- (NSMutableDictionary<NSString *,JYNode *> *)nodeCache{
     if (!_nodeCache) {
         _nodeCache = [[NSMutableDictionary alloc] init];
     }
