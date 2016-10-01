@@ -48,13 +48,17 @@
     JYNode *node1 = [[JYNode alloc] init];
     {
         node1.contentClass = [StyleCellModel class];
-        node1.groupClass = @[[StyleCell1 class],[StyleCell2 class],[StyleCell3 class]];
+        [node1 addCellNodes:@[[StyleCell1 class],[StyleCell2 class],[StyleCell3 class]]];
     }
     
     JYNode *node2 = [[JYNode alloc] init];
     {
         node2.contentClass = [StyleCell1Model1 class];
-        node2.groupClass = @[[StyleCell1 class]];
+        
+        JYCellNode *cellNode = [[JYCellNode alloc] init];
+        cellNode.cellClass = [StyleCell2 class];
+        cellNode.edgeInsets = UIEdgeInsetsMake(10, 10, 10, 10);
+        [node2 addCellNode:cellNode];
     }
     
     [self.tableModel registCellNodes:@[node1,node2] byTableView:self.tableView];

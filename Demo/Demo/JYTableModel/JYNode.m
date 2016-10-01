@@ -17,19 +17,45 @@
 @property (nonatomic, assign) NSInteger currentIndex;
 @property (nonatomic, strong) id content;
 
+// CellNode
+@property (nonatomic, strong) NSMutableArray<JYCellNode *>*groupCellNode;
+
 @end
 
 @implementation JYNode
+
 
 - (void)recordCurrentIndex:(NSInteger)aIndex content:(id)aContent{
     _currentIndex = aIndex;
     _content = aContent;
 }
 
-- (Class)cellClass{
-    return self.groupClass[self.currentIndex];
+- (JYCellNode *)cellNode{
+    return self.groupCellNode[self.currentIndex];
 }
 
+#pragma mark - cellNode 配置
+- (void)addCellClass:(Class)cellClass{
+    JYCellNode *cellNode = [[JYCellNode alloc] init];
+    cellNode.cellClass = cellClass;
+    [self.groupCellNode addObject:cellNode];
+}
+
+- (void)addCellNode:(JYCellNode *)cellNode{
+    [self.groupCellNode addObject:[cellNode copyNode]];
+}
+
+- (void)addCellNodes:(NSArray*)aNodes{
+    [aNodes enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isKindOfClass:[JYCellNode class]]) {
+            [self addCellNode:obj];
+        }else{
+            [self addCellClass:obj];
+        }
+    }];
+}
+
+#pragma mark - private 用于框架内部调用
 + (NSString *)identifierForContent:(id)aContent{
     NSInteger cellType = 0;
     if ([aContent respondsToSelector:@selector(cellType)]) {
@@ -52,6 +78,14 @@
         return [NSString class];
     }
     return [aObject class];
+}
+
+#pragma mark - 懒加载
+- (NSMutableArray<JYCellNode *> *)groupCellNode{
+    if (!_groupCellNode) {
+        _groupCellNode = [[NSMutableArray alloc] init];
+    }
+    return _groupCellNode;
 }
 
 @end

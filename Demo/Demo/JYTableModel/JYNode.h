@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JYCellNode.h"
 #import "JYNodeProtocol.h"
 
 @interface JYNode : NSObject
@@ -18,12 +19,16 @@
 @property (nonatomic, assign) NSInteger cellType;
 
 // 模型对应的cell 由多个cell拼接 所以按数组排列
-@property (nonatomic, strong) NSArray<Class>*groupClass;
+@property (nonatomic, strong,readonly) NSMutableArray<JYCellNode *>*groupCellNode;
 
 // 外部展现时对应 的 cellClass 与 数据
-@property (nonatomic, strong, readonly) Class cellClass;
+@property (nonatomic, strong, readonly) JYCellNode* cellNode;
 @property (nonatomic, strong, readonly) id content;
 
+#pragma mark - cellNode 配置
+- (void)addCellClass:(Class)cellClass;
+- (void)addCellNode:(JYCellNode *)cellNode;
+- (void)addCellNodes:(NSArray*)aNodes; // 数组元素只能是 JYCellNode 与 Class
 
 
 #pragma mark - private 用于框架内部调用

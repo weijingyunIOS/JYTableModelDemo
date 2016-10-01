@@ -29,8 +29,9 @@
 - (void)registCellNodes:(NSArray<JYNode*>*)nodes byTableView:(UITableView*)tableView{
     _tableView = tableView;
     [nodes enumerateObjectsUsingBlock:^(JYNode * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [obj.groupClass enumerateObjectsUsingBlock:^(Class  _Nonnull groupClass, NSUInteger idx, BOOL * _Nonnull stop) {
-            [tableView registerClass:groupClass forCellReuseIdentifier:NSStringFromClass(groupClass)];
+        
+        [obj.groupCellNode enumerateObjectsUsingBlock:^(JYCellNode* groupCellNode, NSUInteger idx, BOOL * _Nonnull stop) {
+            [tableView registerClass:groupCellNode.cellClass forCellReuseIdentifier:NSStringFromClass(groupCellNode.cellClass)];
         }];
         [self.nodeCache setObject:obj forKey:obj.identifier];
     }];
@@ -89,9 +90,9 @@
 - (CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     JYNode *node = [self getCellNodeAtIndexPath:indexPath];
-    Method originalMethod = class_getClassMethod(node.cellClass, @selector(heightForContent:));
+    Method originalMethod = class_getClassMethod(node.cellNode.cellClass, @selector(heightForContent:));
     if (originalMethod != nil) {
-        return [node.cellClass heightForContent:node.content];
+        return [node.cellNode.cellClass heightForContent:node.content];
     }
     return 20;
 }
@@ -103,7 +104,7 @@
 - (UITableViewCell *)cellForRowAtIndexPath:(NSIndexPath *)indexPath config:(void (^)(UITableViewCell *aCell,id aContent))aConfig{
     
     JYNode *node = [self getCellNodeAtIndexPath:indexPath];
-    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:NSStringFromClass(node.cellClass) forIndexPath:indexPath];
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:NSStringFromClass(node.cellNode.cellClass) forIndexPath:indexPath];
     if ([cell respondsToSelector:@selector(setCellContent:)]) {
         [(id)cell setCellContent:node.content];
     }
@@ -135,7 +136,7 @@
         if (index >= indexPath.row) {
             
             node = self.nodeCache[[JYNode identifierForContent:obj]];
-            NSInteger cellIndex = node.groupClass.count - (index - indexPath.row) - 1;
+            NSInteger cellIndex = node.groupCellNode.count - (index - indexPath.row) - 1;
             [node recordCurrentIndex:cellIndex content:obj];
             
             *stop = YES;
@@ -158,7 +159,7 @@
 - (NSInteger)cellCountForContent:(id)aContent
 {
     JYNode *node = self.nodeCache[[JYNode identifierForContent:aContent]];
-    return node.groupClass.count;
+    return node.groupCellNode.count;
 }
 
 // 必须检测字符串，要对字符串类型做特殊处理
