@@ -105,7 +105,7 @@
         model4.cellTitle = @"model4.cellTitle";
         model4.cellSubTitle = @"model4.cellSubTitle";
     }
-    [self.tableModel addContents:@[model1,model4,model2,model3]];
+    [self.tableModel addContents:@[model1,model4,model2,model3,model1,model4,model2,model3,model1,model4,model2,model3]];
     [self.tableView reloadData];
 }
 

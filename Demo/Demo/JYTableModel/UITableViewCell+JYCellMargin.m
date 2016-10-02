@@ -32,7 +32,7 @@ static char kJYEdgeInsets;
 //}
 
 - (void)addMasonry{
-    [self.contentView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.contentView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self).mas_offset(self.edgeInsets);
     }];
 }
