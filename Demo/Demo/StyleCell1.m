@@ -17,7 +17,7 @@
 }
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
-    if ([super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+    if ([super initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:reuseIdentifier]) {
         self.contentView.backgroundColor = [UIColor redColor];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
     }
@@ -32,7 +32,7 @@
 
 #pragma mark - JYNodeProtocol
 + (CGFloat)heightForContent:(StyleCell1Model *)aContent{
-    return 50;
+    return 100;
 }
 
 - (void)setCellContent:(StyleCell1Model *)aCellContent{
