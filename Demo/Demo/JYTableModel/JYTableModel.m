@@ -21,6 +21,9 @@
 // 所有的数据源
 @property (nonatomic, strong) NSMutableArray<NSMutableArray*>* allContents;
 
+// 多cell拼接需要进行复杂计算，该标记是 为 Content － cell 一对一时 节省计算
+@property (nonatomic, assign) BOOL isMoreCell;
+
 @end
 
 @implementation JYTableModel
@@ -29,8 +32,12 @@
 #pragma mark -  注册cell tableView
 - (void)registCellNodes:(NSArray<JYNode*>*)nodes byTableView:(UITableView*)tableView{
     _tableView = tableView;
+    self.isMoreCell = NO;
     [nodes enumerateObjectsUsingBlock:^(JYNode * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         
+        if (obj.groupCellNode.count >1) {
+            self.isMoreCell = YES;
+        }
         [obj.groupCellNode enumerateObjectsUsingBlock:^(JYCellNode* groupCellNode, NSUInteger idx, BOOL * _Nonnull stop) {
             [tableView registerClass:groupCellNode.cellClass forCellReuseIdentifier:NSStringFromClass(groupCellNode.cellClass)];
         }];
@@ -132,6 +139,12 @@
 - (JYNode *)getCellNodeAtIndexPath:(NSIndexPath *)indexPath{
     
     NSArray *contents = [self contentsAtInSection:indexPath.section];
+    if (!self.isMoreCell) {
+        id content = contents[indexPath.row];
+        JYNode *node = self.nodeCache[[JYNode identifierForContent:content]];
+        [node recordCurrentIndex:0 content:content];
+        return node;
+    }
     __block NSInteger index = -1;
     __block JYNode *node = nil;
     [contents enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -151,8 +164,11 @@
 
 - (NSInteger)caculateCountInSection:(NSInteger)section
 {
-    NSArray* contents = [self.allContents objectAtIndex:section];
     
+    NSArray* contents = [self.allContents objectAtIndex:section];
+    if (!self.isMoreCell) {
+        return contents.count;
+    }
     __block NSInteger count = 0;
     [contents enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         count += [self cellCountForContent:obj];
