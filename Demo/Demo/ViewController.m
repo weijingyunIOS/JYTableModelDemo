@@ -56,13 +56,13 @@
             cellNode.edgeInsets = UIEdgeInsetsMake(0, 10, 0, 10);
         }]];
         
-//        [node addCellNode:[JYCellNode cellClass:[StyleCell2 class] config:^(JYCellNode *cellNode) {
-//            cellNode.edgeInsets = UIEdgeInsetsMake(0, 10, 0, 10);
-//        }]];
-//        
-//        [node addCellNode:[JYCellNode cellClass:[StyleCell3 class] config:^(JYCellNode *cellNode) {
-//            cellNode.edgeInsets = UIEdgeInsetsMake(0, 10, 10, 10);
-//        }]];
+        [node addCellNode:[JYCellNode cellClass:[StyleCell2 class] config:^(JYCellNode *cellNode) {
+            cellNode.edgeInsets = UIEdgeInsetsMake(0, 10, 0, 10);
+        }]];
+        
+        [node addCellNode:[JYCellNode cellClass:[StyleCell3 class] config:^(JYCellNode *cellNode) {
+            cellNode.edgeInsets = UIEdgeInsetsMake(0, 10, 10, 10);
+        }]];
     }];
     
     
