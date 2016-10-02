@@ -13,7 +13,9 @@
 #import "StyleCell2.h"
 #import "StyleCell3.h"
 #import "StyleCellModel.h"
-#import "StyleCell1Model1.h"
+#import "StyleCell1Model.h"
+#import "StyleCell2Model.h"
+#import "StyleCell3Model.h"
 
 @interface ViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -64,8 +66,8 @@
     }];
     
     
-    JYNode *node2 = [JYNode nodeContentClass:[StyleCell1Model1 class] config:^(JYNode *node) {
-        [node addCellNode:[JYCellNode cellClass:[StyleCell2 class] config:^(JYCellNode *cellNode) {
+    JYNode *node2 = [JYNode nodeContentClass:[StyleCell1Model class] config:^(JYNode *node) {
+        [node addCellNode:[JYCellNode cellClass:[StyleCell1 class] config:^(JYCellNode *cellNode) {
             cellNode.edgeInsets = UIEdgeInsetsMake(0, 10, 10, 10);
         }]];
     }];
@@ -83,11 +85,11 @@
         
     }
     
-    StyleCell1Model1 *model3 = [[StyleCell1Model1 alloc] init];
+    StyleCell1Model *model3 = [[StyleCell1Model alloc] init];
     {
         
     }
-    StyleCell1Model1 *model4 = [[StyleCell1Model1 alloc] init];
+    StyleCell1Model *model4 = [[StyleCell1Model alloc] init];
     {
         
     }

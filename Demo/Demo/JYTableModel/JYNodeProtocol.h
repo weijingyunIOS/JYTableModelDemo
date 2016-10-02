@@ -27,4 +27,7 @@
 // 如果该 模型 有给不同 cell 使用，需要实现该方法区分
 - (NSInteger)cellType;
 
+// 模型转化，对应相应Cell 要转换成对应模型
+- (id)conversionModelForCellClass:(Class)aCellClass;
+
 @end

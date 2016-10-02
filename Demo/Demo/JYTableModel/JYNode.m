@@ -31,6 +31,14 @@
     _content = aContent;
 }
 
+- (id)conversionModel{
+    id model = self.content;
+    if ([self.content respondsToSelector:@selector(conversionModelForCellClass:)]) {
+        model = [self.content conversionModelForCellClass:self.cellNode.cellClass];
+    }
+    return model;
+}
+
 - (JYCellNode *)cellNode{
     return self.groupCellNode[self.currentIndex];
 }

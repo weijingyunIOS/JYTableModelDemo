@@ -39,6 +39,7 @@
 
 #pragma mark - private 用于框架内部调用
 - (void)recordCurrentIndex:(NSInteger)aIndex content:(id)aContent;
+- (id)conversionModel; // 执行recordCurrentIndex 后有效
 
 // 根据 contentClass 与 cellType 生成的唯一表识用于快速定位
 @property (nonatomic, copy, readonly) NSString *identifier;

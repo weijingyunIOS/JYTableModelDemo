@@ -7,7 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "JYNodeProtocol.h"
 
-@interface StyleCellModel : NSObject
+@interface StyleCellModel : NSObject<JYContentNodeProtocol>
+
+@property (nonatomic, copy) NSString *cell1Title;
+@property (nonatomic, copy) NSString *cell1SubTitle;
+
+@property (nonatomic, copy) NSString *cell2Title;
+@property (nonatomic, copy) NSString *cell2SubTitle;
+
+@property (nonatomic, copy) NSString *cell3Title;
+@property (nonatomic, copy) NSString *cell3SubTitle;
 
 @end

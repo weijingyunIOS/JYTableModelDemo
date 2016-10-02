@@ -7,6 +7,7 @@
 //
 
 #import "StyleCell3.h"
+#import "StyleCell3Model.h"
 
 @implementation StyleCell3
 
@@ -29,8 +30,13 @@
 }
 
 #pragma mark - JYNodeProtocol
-+ (CGFloat)heightForContent:(id)aContent{
++ (CGFloat)heightForContent:(StyleCell3Model *)aContent{
     return 150;
+}
+
+- (void)setCellContent:(StyleCell3Model *)aCellContent{
+    self.textLabel.text = aCellContent.cellTitle;
+    self.detailTextLabel.text = aCellContent.cellSubTitle;
 }
 
 @end

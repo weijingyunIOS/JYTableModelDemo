@@ -94,7 +94,7 @@
     JYNode *node = [self getCellNodeAtIndexPath:indexPath];
     Method originalMethod = class_getClassMethod(node.cellNode.cellClass, @selector(heightForContent:));
     if (originalMethod != nil) {
-        height = [node.cellNode.cellClass heightForContent:node.content];
+        height = [node.cellNode.cellClass heightForContent:[node conversionModel]];
     }
     height += node.cellNode.edgeInsets.top + node.cellNode.edgeInsets.bottom;
     return height;
@@ -110,7 +110,7 @@
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:NSStringFromClass(node.cellNode.cellClass) forIndexPath:indexPath];
     cell.edgeInsets = node.cellNode.edgeInsets;
     if ([cell respondsToSelector:@selector(setCellContent:)]) {
-        [(id)cell setCellContent:node.content];
+        [(id)cell setCellContent:[node conversionModel]];
     }
     if (aConfig) {
         aConfig(cell,node.content);
