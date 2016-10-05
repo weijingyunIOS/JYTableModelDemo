@@ -35,15 +35,15 @@
 
 - (void)configUI{
     [self.label1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.contentView).offset(20);
-        make.left.equalTo(self.contentView).offset(10);
-        make.right.equalTo(self.contentView).offset(-10);
+        make.top.equalTo(self.contentView);
+        make.left.equalTo(self.contentView);
+        make.right.equalTo(self.contentView);
     }];
     
     [self.label2 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.label1.mas_bottom).offset(20);
         make.left.right.equalTo(self.label1);
-        make.bottom.equalTo(self.contentView).offset(-20);
+        make.bottom.equalTo(self.contentView);
     }];
     
     self.label1.numberOfLines = 0;

@@ -39,4 +39,8 @@
     return model;
 }
 
+- (NSInteger)cellType{
+    return self.cell3Title.length > 0 && self.cell3SubTitle.length > 0;
+}
+
 @end

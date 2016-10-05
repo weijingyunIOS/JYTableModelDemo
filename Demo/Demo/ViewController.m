@@ -71,17 +71,21 @@
 //            cellNode.leftColor = [UIColor redColor];
 //            cellNode.rightColor = [UIColor redColor];
 //        }]];
-        
+        node.cellType = 1;
         [node addCellNodes:@[[StyleCell1 class],[StyleCell2 class],[StyleCell3 class]]];
     }];
     
+    JYNode *node1_1 = [JYNode nodeContentClass:[StyleCellModel class] config:^(JYNode *node) {
+        node.cellType = 0;
+        [node addCellNodes:@[[StyleCell1 class],[StyleCell2 class]]];
+    }];
     
     JYNode *node2 = [JYNode nodeContentClass:[StyleCell1Model class] config:^(JYNode *node) {
         [node addCellNodes:@[[StyleCell1 class]]];
     }];
     
-    [self.tableModel registCellNodes:@[node1,node2] byTableView:self.tableView];
-    [self.tableModel configCellEdgeInsets:UIEdgeInsetsMake(0, 0, 10, 0) marginColor:self.tableView.backgroundColor];
+    [self.tableModel registCellNodes:@[node1,node1_1,node2] byTableView:self.tableView];
+    [self.tableModel configCellEdgeInsets:UIEdgeInsetsMake(0, 10, 10, 10) marginColor:self.tableView.backgroundColor];
     [self.tableModel configSeparatorColor:[UIColor blackColor] hiddenLast:YES];
 }
 
@@ -92,8 +96,8 @@
         model1.cell1SubTitle = @"cell1SubTitle";
         model1.cell2Title = @"model1 - 中";
         model1.cell2SubTitle = @"cell2SubTitle";
-        model1.cell3Title = @"model1 - 尾asdasdasdasdaskdnaskdnksandksandajksdnkasjndksajndkas啊圣诞节卡升级到那时空间三大咖是加拿大桑吉内蒂卡上三等奖阿森纳的空间啊说";
-        model1.cell3SubTitle = @"cell3SubTitle阿斯顿撒开你的卡萨按实际的时刻记得你卡上阿萨德卡蛇年大吉阿森纳将卡上的科技三等奖";
+        model1.cell3Title = @"model1 - 尾部宣传部长新技能就可能参考咨询啊圣诞节卡升级到那时空间三大咖是加拿大桑吉内蒂卡上三等奖阿森纳的空间啊说";
+        model1.cell3SubTitle = @"cell3SubTitle - 阿斯顿撒开你的卡萨按实际的时刻记得你卡上阿萨德卡蛇年大吉阿森纳将卡上的科技三等奖";
     }
     StyleCellModel *model2 = [[StyleCellModel alloc] init];
     {
@@ -101,8 +105,6 @@
         model2.cell1SubTitle = @"cell1SubTitle";
         model2.cell2Title = @"model2 - 中";
         model2.cell2SubTitle = @"cell2SubTitle";
-        model2.cell3Title = @"model2 - 尾";
-        model2.cell3SubTitle = @"cell3SubTitle";
     }
     
     StyleCell1Model *model3 = [[StyleCell1Model alloc] init];
