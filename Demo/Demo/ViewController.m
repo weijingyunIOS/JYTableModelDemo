@@ -81,7 +81,7 @@
     }];
     
     [self.tableModel registCellNodes:@[node1,node2] byTableView:self.tableView];
-    [self.tableModel configCellEdgeInsets:UIEdgeInsetsMake(0, 10, 10, 10) marginColor:self.tableView.backgroundColor];
+    [self.tableModel configCellEdgeInsets:UIEdgeInsetsMake(0, 0, 10, 0) marginColor:self.tableView.backgroundColor];
     [self.tableModel configSeparatorColor:[UIColor blackColor] hiddenLast:YES];
 }
 
@@ -92,8 +92,8 @@
         model1.cell1SubTitle = @"cell1SubTitle";
         model1.cell2Title = @"model1 - 中";
         model1.cell2SubTitle = @"cell2SubTitle";
-        model1.cell3Title = @"model1 - 尾";
-        model1.cell3SubTitle = @"cell3SubTitle";
+        model1.cell3Title = @"model1 - 尾asdasdasdasdaskdnaskdnksandksandajksdnkasjndksajndkas啊圣诞节卡升级到那时空间三大咖是加拿大桑吉内蒂卡上三等奖阿森纳的空间啊说";
+        model1.cell3SubTitle = @"cell3SubTitle阿斯顿撒开你的卡萨按实际的时刻记得你卡上阿萨德卡蛇年大吉阿森纳将卡上的科技三等奖";
     }
     StyleCellModel *model2 = [[StyleCellModel alloc] init];
     {
