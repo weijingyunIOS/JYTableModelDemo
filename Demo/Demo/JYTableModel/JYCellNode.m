@@ -18,15 +18,4 @@
     return node;
 }
 
-- (instancetype)copyNode{
-    JYCellNode *node = [[JYCellNode alloc] init];
-    node.cellClass = [self.cellClass copy];
-    node.edgeInsets = self.edgeInsets;
-    node.topColor = [self.topColor copy];
-    node.bottomColor = [self.bottomColor copy];
-    node.leftColor = [self.leftColor copy];
-    node.rightColor = [self.rightColor copy];
-    return node;
-}
-
 @end

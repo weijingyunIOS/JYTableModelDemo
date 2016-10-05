@@ -74,7 +74,7 @@
 }
 
 - (void)addCellNode:(JYCellNode *)cellNode{
-    [self.groupCellNode addObject:[cellNode copyNode]];
+    [self.groupCellNode addObject:cellNode];
 }
 
 - (void)addCellNodes:(NSArray*)aNodes{

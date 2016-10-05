@@ -114,8 +114,11 @@
 - (UITableViewCell *)cellForRowAtIndexPath:(NSIndexPath *)indexPath config:(void (^)(UITableViewCell *aCell,id aContent))aConfig{
     
     JYNode *node = [self getCellNodeAtIndexPath:indexPath];
-    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:NSStringFromClass(node.cellNode.cellClass) forIndexPath:indexPath];
-    cell.edgeInsets = node.cellNode.edgeInsets;
+    JYCellNode *cellNode = node.cellNode;
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:NSStringFromClass(cellNode.cellClass) forIndexPath:indexPath];
+    cell.edgeInsets = cellNode.edgeInsets;
+    [cell configEdgeInsetsColor:cellNode.marginColor];
+    [cell configTopColor:cellNode.topColor leftColor:cellNode.leftColor bottomColor:cellNode.bottomColor rightColor:cellNode.rightColor];
     if ([cell respondsToSelector:@selector(setCellContent:)]) {
         [(id)cell setCellContent:[node conversionModel]];
     }

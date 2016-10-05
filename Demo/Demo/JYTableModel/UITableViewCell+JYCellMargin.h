@@ -14,4 +14,12 @@
 // 设置 cell 的边距
 @property (nonatomic, assign) UIEdgeInsets edgeInsets;
 
+
+#pragma mark - 以下方法需要先设置 edgeInsets 才有效
+// 颜色一至 该性能更好
+- (void)configEdgeInsetsColor:(UIColor *)color;
+
+// 单独配色可为空
+- (void)configTopColor:(UIColor *)topColor leftColor:(UIColor *)leftColor bottomColor:(UIColor *)bottomColor rightColor:(UIColor *)rightColor;
+
 @end
