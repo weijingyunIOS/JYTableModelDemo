@@ -15,6 +15,7 @@ static char kJYLeftLayer;
 static char kJYBottomLayer;
 static char kJYRightLayer;
 static char kJYLineLayer;
+static char kJYViewConstraints;
 
 @interface UITableViewCell ()
 
@@ -25,6 +26,8 @@ static char kJYLineLayer;
 
 @property (nonatomic, strong) CALayer *lineLayer; // 分割线
 
+// 四边约束 上左下右
+@property (nonatomic, strong) NSArray<NSLayoutConstraint *> *viewConstraints;
 
 @end
 
@@ -45,9 +48,24 @@ static char kJYLineLayer;
 //}
 
 - (void)addMasonry{
-    [self.contentView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self).mas_offset(self.edgeInsets);
-    }];
+    
+    if (self.viewConstraints == nil) {
+        self.contentView.translatesAutoresizingMaskIntoConstraints = NO;
+        NSLayoutConstraint *top = [NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1 constant:self.edgeInsets.top];
+        
+        NSLayoutConstraint *left = [NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeLeft multiplier:1 constant:self.edgeInsets.left];
+        
+        NSLayoutConstraint *bottom = [NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1 constant:-self.edgeInsets.bottom];
+        
+        NSLayoutConstraint *right = [NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1 constant:-self.edgeInsets.right];
+        self.viewConstraints = @[top,left,bottom,right];
+         [self addConstraints:@[top,left,bottom,right]];
+        return;
+    }
+    self.viewConstraints[0].constant = self.edgeInsets.top;
+    self.viewConstraints[1].constant = self.edgeInsets.left;
+    self.viewConstraints[2].constant = - self.edgeInsets.bottom;
+    self.viewConstraints[3].constant = - self.edgeInsets.right;
 }
 
 #pragma mark - 以下方法需要先设置 edgeInsets 才有效
@@ -162,6 +180,14 @@ static char kJYLineLayer;
         [self setLineLayer:layer];
     }
     return objc_getAssociatedObject(self, &kJYLineLayer);
+}
+
+- (void)setViewConstraints:(NSArray<NSLayoutConstraint *> *)viewConstraints{
+    objc_setAssociatedObject(self,&kJYViewConstraints,viewConstraints,OBJC_ASSOCIATION_RETAIN);
+}
+
+- (NSArray<NSLayoutConstraint *> *)viewConstraints{
+    return objc_getAssociatedObject(self, &kJYViewConstraints);
 }
 
 @end
