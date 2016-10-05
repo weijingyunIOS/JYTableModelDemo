@@ -11,6 +11,9 @@
 @interface JYCellNode : NSObject
 
 @property (nonatomic, strong) Class cellClass;
+// 用于设置固定高度 的 cell
+@property (nonatomic, assign) CGFloat cellHeight;
+
 @property (nonatomic, assign) UIEdgeInsets edgeInsets;
 
 // 分割线颜色，不设置则没有分割线

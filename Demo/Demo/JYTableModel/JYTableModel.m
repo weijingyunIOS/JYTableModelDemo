@@ -119,10 +119,13 @@
     
     CGFloat height = 0.;
     JYNode *node = [self getCellNodeAtIndexPath:indexPath];
-    Method originalMethod = class_getClassMethod(node.cellNode.cellClass, @selector(heightForContent:));
-    if (originalMethod != nil) {
+    JYCellNode *cellNode = node.cellNode;
+    if (cellNode.cellHeight > 0) {
+        height = cellNode.cellHeight;
+    }else if (class_getClassMethod(node.cellNode.cellClass, @selector(heightForContent:)) != nil){
         height = [node.cellNode.cellClass heightForContent:[node conversionModel]];
     }
+
     height += node.cellNode.edgeInsets.top + node.cellNode.edgeInsets.bottom;
     return height;
 }

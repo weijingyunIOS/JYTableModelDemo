@@ -79,7 +79,6 @@ static char kJYLineLayer;
         self.bottomLayer.frame = CGRectMake(self.edgeInsets.left, self.frame.size.height - self.edgeInsets.bottom, self.frame.size.width - self.edgeInsets.left - self.edgeInsets.right, self.edgeInsets.bottom);
         self.bottomLayer.backgroundColor = bottomColor.CGColor;
     }
-    
 }
 
 // 设置分割线
