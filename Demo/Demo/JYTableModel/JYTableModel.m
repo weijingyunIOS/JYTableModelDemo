@@ -124,7 +124,6 @@
         height = [node.cellNode.cellClass heightForContent:[node conversionModel]];
     }
     height += node.cellNode.edgeInsets.top + node.cellNode.edgeInsets.bottom;
-    height += node.cellNode.lineColor != nil ? 0.5 : 0.0;
     return height;
 }
 
