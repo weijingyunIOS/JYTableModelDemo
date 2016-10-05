@@ -36,6 +36,8 @@
 // 数组元素只能是 JYCellNode 与 Class
 - (void)addCellNodes:(NSArray*)aNodes;
 
+// 对cellNode间距的简单配置 需要groupCellNode 设置完成
+- (void)configCellEdgeInsets:(UIEdgeInsets)edgeInsets marginColor:(UIColor *)marginColor;
 
 #pragma mark - private 用于框架内部调用
 - (void)recordCurrentIndex:(NSInteger)aIndex content:(id)aContent;

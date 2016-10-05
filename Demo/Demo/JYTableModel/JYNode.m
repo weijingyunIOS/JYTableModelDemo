@@ -87,6 +87,24 @@
     }];
 }
 
+// 对多cellNode间距的简单配置 需要cellNode 设置完成
+- (void)configCellEdgeInsets:(UIEdgeInsets)edgeInsets marginColor:(UIColor *)marginColor{
+    if (self.groupCellNode.count == 1) {
+        self.groupCellNode.firstObject.edgeInsets = edgeInsets;
+        self.groupCellNode.firstObject.marginColor = marginColor;
+        return;
+    }
+    UIEdgeInsets top = UIEdgeInsetsMake(edgeInsets.top, edgeInsets.left, 0, edgeInsets.right);
+    UIEdgeInsets bottom = UIEdgeInsetsMake(0, edgeInsets.left, edgeInsets.bottom, edgeInsets.right);
+    UIEdgeInsets middle = UIEdgeInsetsMake(0, edgeInsets.left, 0, edgeInsets.right);
+    [self.groupCellNode enumerateObjectsUsingBlock:^(JYCellNode * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        obj.edgeInsets = middle;
+        obj.marginColor = marginColor;
+    }];
+    self.groupCellNode.firstObject.edgeInsets = top;
+    self.groupCellNode.lastObject.edgeInsets = bottom;
+}
+
 #pragma mark - private 用于框架内部调用
 + (NSString *)identifierForContent:(id)aContent{
     NSInteger cellType = 0;

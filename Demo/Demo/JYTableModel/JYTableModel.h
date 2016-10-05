@@ -19,6 +19,10 @@
 #pragma mark -  注册cell tableView
 - (void)registCellNodes:(NSArray<JYNode*>*)nodes byTableView:(UITableView*)tableView;
 
+#pragma mark - 辅助设置 需要先执行 registCellNodes
+// 对cellNode间距的简单配置
+- (void)configCellEdgeInsets:(UIEdgeInsets)edgeInsets marginColor:(UIColor *)marginColor;
+
 #pragma mark - 数据操作
 - (void)setContents:(NSArray *)aContents;
 - (void)addContents:(NSArray *)aContents;

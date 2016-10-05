@@ -45,6 +45,14 @@
     }];
 }
 
+#pragma mark - 辅助设置 需要先执行 registCellNodes
+- (void)configCellEdgeInsets:(UIEdgeInsets)edgeInsets marginColor:(UIColor *)marginColor{
+    [self.nodeCache enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, JYNode * _Nonnull obj, BOOL * _Nonnull stop) {
+        [obj configCellEdgeInsets:edgeInsets marginColor:marginColor];
+    }];
+}
+
+
 #pragma mark - 数据操作
 - (void)setContents:(NSArray *)aContents
 {
