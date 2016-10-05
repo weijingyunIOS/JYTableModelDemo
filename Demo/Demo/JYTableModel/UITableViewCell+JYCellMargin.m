@@ -14,13 +14,16 @@ static char kJYTopLayer;
 static char kJYLeftLayer;
 static char kJYBottomLayer;
 static char kJYRightLayer;
+static char kJYLineLayer;
 
 @interface UITableViewCell ()
 
 @property (nonatomic, strong) CALayer *topLayer; // 上边颜色
-@property (nonatomic, strong) CALayer *leftLayer; // 上边颜色
-@property (nonatomic, strong) CALayer *bottomLayer; // 上边颜色
-@property (nonatomic, strong) CALayer *rightLayer; // 上边颜色
+@property (nonatomic, strong) CALayer *leftLayer; // 左边颜色
+@property (nonatomic, strong) CALayer *bottomLayer; // 下边颜色
+@property (nonatomic, strong) CALayer *rightLayer; // 右边颜色
+
+@property (nonatomic, strong) CALayer *lineLayer; // 分割线
 
 
 @end
@@ -57,45 +60,33 @@ static char kJYRightLayer;
 - (void)configTopColor:(UIColor *)topColor leftColor:(UIColor *)leftColor bottomColor:(UIColor *)bottomColor rightColor:(UIColor *)rightColor{
     
     if (leftColor != nil) {
-        
-        if (self.leftLayer == nil) {
-            self.leftLayer = [[CALayer alloc] init];
-            self.leftLayer.frame = CGRectMake(0, 0, self.edgeInsets.left, self.frame.size.height);
-            [self.layer addSublayer:self.leftLayer];
-        }
+        self.leftLayer.frame = CGRectMake(0, 0, self.edgeInsets.left, self.frame.size.height);
         self.leftLayer.backgroundColor = leftColor.CGColor;
     }
     
     if (rightColor != nil) {
-        
-        if (self.rightLayer == nil) {
-            self.rightLayer = [[CALayer alloc] init];
-            self.rightLayer.frame = CGRectMake(self.frame.size.width  - self.edgeInsets.right, 0, self.edgeInsets.right, self.frame.size.height);
-            [self.layer addSublayer:self.rightLayer];
-        }
+        self.rightLayer.frame = CGRectMake(self.frame.size.width  - self.edgeInsets.right, 0, self.edgeInsets.right, self.frame.size.height);
         self.rightLayer.backgroundColor = rightColor.CGColor;
     }
     
     if (topColor != nil) {
-        
-        if (self.topLayer == nil) {
-            self.topLayer = [[CALayer alloc] init];
-            self.topLayer.frame = CGRectMake(self.edgeInsets.left, 0, self.frame.size.width - self.edgeInsets.left - self.edgeInsets.right, self.edgeInsets.top);
-            [self.layer addSublayer:self.topLayer];
-        }
+        self.topLayer.frame = CGRectMake(self.edgeInsets.left, 0, self.frame.size.width - self.edgeInsets.left - self.edgeInsets.right, self.edgeInsets.top);
         self.topLayer.backgroundColor = topColor.CGColor;
     }
     
     if (bottomColor != nil) {
         
-        if (self.bottomLayer == nil) {
-            self.bottomLayer = [[CALayer alloc] init];
-            self.bottomLayer.frame = CGRectMake(self.edgeInsets.left, self.frame.size.height - self.edgeInsets.bottom, self.frame.size.width - self.edgeInsets.left - self.edgeInsets.right, self.edgeInsets.bottom);
-            [self.layer addSublayer:self.bottomLayer];
-        }
+        self.bottomLayer.frame = CGRectMake(self.edgeInsets.left, self.frame.size.height - self.edgeInsets.bottom, self.frame.size.width - self.edgeInsets.left - self.edgeInsets.right, self.edgeInsets.bottom);
         self.bottomLayer.backgroundColor = bottomColor.CGColor;
     }
     
+}
+
+// 设置分割线
+- (void)configSeparatorColor:(UIColor *)lineColor hidden:(BOOL)hidden{
+    self.lineLayer.backgroundColor = lineColor.CGColor;
+    self.lineLayer.hidden = hidden;
+    self.lineLayer.frame = CGRectMake(0, self.frame.size.height - self.edgeInsets.bottom, self.frame.size.width, 0.5);
 }
 
 #pragma mark - 属性方法实现
@@ -114,6 +105,11 @@ static char kJYRightLayer;
 }
 
 - (CALayer *)topLayer{
+    if (objc_getAssociatedObject(self, &kJYTopLayer) == nil) {
+        CALayer *layer = [[CALayer alloc] init];
+        [self.layer addSublayer:layer];
+        [self setTopLayer:layer];
+    }
     return objc_getAssociatedObject(self, &kJYTopLayer);
 }
 
@@ -122,6 +118,11 @@ static char kJYRightLayer;
 }
 
 - (CALayer *)leftLayer{
+    if (objc_getAssociatedObject(self, &kJYLeftLayer) == nil) {
+        CALayer *layer = [[CALayer alloc] init];
+        [self.layer addSublayer:layer];
+        [self setLeftLayer:layer];
+    }
     return objc_getAssociatedObject(self, &kJYLeftLayer);
 }
 
@@ -130,6 +131,11 @@ static char kJYRightLayer;
 }
 
 - (CALayer *)bottomLayer{
+    if (objc_getAssociatedObject(self, &kJYBottomLayer) == nil) {
+        CALayer *layer = [[CALayer alloc] init];
+        [self.layer addSublayer:layer];
+        [self setBottomLayer:layer];
+    }
     return objc_getAssociatedObject(self, &kJYBottomLayer);
 }
 
@@ -138,7 +144,25 @@ static char kJYRightLayer;
 }
 
 - (CALayer *)rightLayer{
+    if (objc_getAssociatedObject(self, &kJYRightLayer) == nil) {
+        CALayer *layer = [[CALayer alloc] init];
+        [self.layer addSublayer:layer];
+        [self setRightLayer:layer];
+    }
     return objc_getAssociatedObject(self, &kJYRightLayer);
+}
+
+- (void)setLineLayer:(CALayer *)lineLayer{
+    objc_setAssociatedObject(self,&kJYLineLayer,lineLayer,OBJC_ASSOCIATION_RETAIN);
+}
+
+- (CALayer *)lineLayer{
+    if (objc_getAssociatedObject(self, &kJYLineLayer) == nil) {
+        CALayer *layer = [[CALayer alloc] init];
+        [self.layer addSublayer:layer];
+        [self setLineLayer:layer];
+    }
+    return objc_getAssociatedObject(self, &kJYLineLayer);
 }
 
 @end

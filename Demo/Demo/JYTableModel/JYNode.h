@@ -36,8 +36,12 @@
 // 数组元素只能是 JYCellNode 与 Class
 - (void)addCellNodes:(NSArray*)aNodes;
 
-// 对cellNode间距的简单配置 需要groupCellNode 设置完成
+#pragma mark - 辅助设置 需要groupCellNode 设置完成
+// 对cellNode间距的简单配置
 - (void)configCellEdgeInsets:(UIEdgeInsets)edgeInsets marginColor:(UIColor *)marginColor;
+
+// 分割线颜色配置
+- (void)configSeparatorColor:(UIColor *)lineColor;
 
 #pragma mark - private 用于框架内部调用
 - (void)recordCurrentIndex:(NSInteger)aIndex content:(id)aContent;

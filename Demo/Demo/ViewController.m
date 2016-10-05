@@ -60,12 +60,16 @@
 //        [node addCellNode:[JYCellNode cellClass:[StyleCell2 class] config:^(JYCellNode *cellNode) {
 //            cellNode.edgeInsets = UIEdgeInsetsMake(10, 10, 0, 10);
 //            cellNode.marginColor = self.tableView.backgroundColor;
-//            cellNode.topColor = [UIColor purpleColor];
+////            cellNode.topColor = [UIColor purpleColor];
 //        }]];
 //        
 //        [node addCellNode:[JYCellNode cellClass:[StyleCell3 class] config:^(JYCellNode *cellNode) {
-//            cellNode.edgeInsets = UIEdgeInsetsMake(0, 10, 10, 10);
-//            cellNode.marginColor = self.tableView.backgroundColor;
+//            cellNode.edgeInsets = UIEdgeInsetsMake(10, 10, 10, 10);
+////            cellNode.marginColor = self.tableView.backgroundColor;
+//            cellNode.topColor = [UIColor purpleColor];
+//            cellNode.bottomColor = [UIColor blueColor];
+//            cellNode.leftColor = [UIColor redColor];
+//            cellNode.rightColor = [UIColor redColor];
 //        }]];
         
         [node addCellNodes:@[[StyleCell1 class],[StyleCell2 class],[StyleCell3 class]]];
@@ -77,8 +81,8 @@
     }];
     
     [self.tableModel registCellNodes:@[node1,node2] byTableView:self.tableView];
-    self.tableView.separatorStyle = UITableViewCellSelectionStyleNone;
     [self.tableModel configCellEdgeInsets:UIEdgeInsetsMake(0, 10, 10, 10) marginColor:self.tableView.backgroundColor];
+    [self.tableModel configSeparatorColor:[UIColor blackColor] hiddenLast:YES];
 }
 
 - (void)addData{

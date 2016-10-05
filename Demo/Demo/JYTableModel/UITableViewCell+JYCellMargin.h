@@ -22,4 +22,7 @@
 // 单独配色可为空
 - (void)configTopColor:(UIColor *)topColor leftColor:(UIColor *)leftColor bottomColor:(UIColor *)bottomColor rightColor:(UIColor *)rightColor;
 
+// 设置分割线
+- (void)configSeparatorColor:(UIColor *)lineColor hidden:(BOOL)hidden;
+
 @end

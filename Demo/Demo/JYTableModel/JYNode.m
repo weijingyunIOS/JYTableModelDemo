@@ -87,7 +87,8 @@
     }];
 }
 
-// 对多cellNode间距的简单配置 需要cellNode 设置完成
+#pragma mark - 辅助设置 需要groupCellNode 设置完成
+// 对多cellNode间距的简单配置
 - (void)configCellEdgeInsets:(UIEdgeInsets)edgeInsets marginColor:(UIColor *)marginColor{
     if (self.groupCellNode.count == 1) {
         self.groupCellNode.firstObject.edgeInsets = edgeInsets;
@@ -103,6 +104,11 @@
     }];
     self.groupCellNode.firstObject.edgeInsets = top;
     self.groupCellNode.lastObject.edgeInsets = bottom;
+}
+
+// 分割线颜色配置
+- (void)configSeparatorColor:(UIColor *)lineColor{
+    self.groupCellNode.lastObject.lineColor = lineColor;
 }
 
 #pragma mark - private 用于框架内部调用

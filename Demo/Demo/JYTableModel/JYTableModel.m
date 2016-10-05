@@ -24,6 +24,9 @@
 // 多cell拼接需要进行复杂计算，该标记是 为 Content － cell 一对一时 节省计算
 @property (nonatomic, assign) BOOL isMoreCell;
 
+// 是否隐藏每组最后的分割线
+@property (nonatomic, assign) BOOL hiddenLast;
+
 @end
 
 @implementation JYTableModel
@@ -43,6 +46,9 @@
         }];
         [self.nodeCache setObject:obj forKey:obj.identifier];
     }];
+    
+    // 取消系统分割线
+    self.tableView.separatorStyle = UITableViewCellSelectionStyleNone;
 }
 
 #pragma mark - 辅助设置 需要先执行 registCellNodes
@@ -52,6 +58,12 @@
     }];
 }
 
+// 添加分割线，不调用则没有分割线, 是否隐藏分割线在每组最后一个cell
+- (void)configSeparatorColor:(UIColor *)lineColor hiddenLast:(BOOL)hidden{
+    [self.nodeCache enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, JYNode * _Nonnull obj, BOOL * _Nonnull stop) {
+        [obj configSeparatorColor:lineColor];
+    }];
+}
 
 #pragma mark - 数据操作
 - (void)setContents:(NSArray *)aContents
@@ -112,6 +124,7 @@
         height = [node.cellNode.cellClass heightForContent:[node conversionModel]];
     }
     height += node.cellNode.edgeInsets.top + node.cellNode.edgeInsets.bottom;
+    height += node.cellNode.lineColor != nil ? 0.5 : 0.0;
     return height;
 }
 
@@ -127,6 +140,9 @@
     cell.edgeInsets = cellNode.edgeInsets;
     [cell configEdgeInsetsColor:cellNode.marginColor];
     [cell configTopColor:cellNode.topColor leftColor:cellNode.leftColor bottomColor:cellNode.bottomColor rightColor:cellNode.rightColor];
+    BOOL hidden = indexPath.row == [self numberOfRowsInSection:indexPath.section] - 1;
+    [cell configSeparatorColor:cellNode.lineColor hidden:hidden || cellNode.lineColor == nil];
+    
     if ([cell respondsToSelector:@selector(setCellContent:)]) {
         [(id)cell setCellContent:[node conversionModel]];
     }

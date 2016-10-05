@@ -13,6 +13,9 @@
 @property (nonatomic, strong) Class cellClass;
 @property (nonatomic, assign) UIEdgeInsets edgeInsets;
 
+// 分割线颜色，不设置则没有分割线
+@property (nonatomic, strong) UIColor *lineColor;
+
 // 如果四遍颜色一致的话，设置这个即可(性能更优)，某边颜色不同单独设置即可
 @property (nonatomic, strong) UIColor *marginColor;
 

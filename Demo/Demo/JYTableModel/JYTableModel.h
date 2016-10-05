@@ -23,6 +23,9 @@
 // 对cellNode间距的简单配置
 - (void)configCellEdgeInsets:(UIEdgeInsets)edgeInsets marginColor:(UIColor *)marginColor;
 
+// 添加分割线，不调用则没有分割线, 是否隐藏分割线在每组最后一个cell
+- (void)configSeparatorColor:(UIColor *)lineColor hiddenLast:(BOOL)hidden;
+
 #pragma mark - 数据操作
 - (void)setContents:(NSArray *)aContents;
 - (void)addContents:(NSArray *)aContents;
