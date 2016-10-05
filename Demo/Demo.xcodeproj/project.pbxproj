@@ -26,6 +26,8 @@
 		5C2C8F661D9CAE7E00751F06 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C8F641D9CAE7E00751F06 /* LaunchScreen.storyboard */; };
 		5C2C8F711D9CAE7F00751F06 /* DemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C2C8F701D9CAE7F00751F06 /* DemoTests.m */; };
 		5C2C8F7C1D9CAE7F00751F06 /* DemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C2C8F7B1D9CAE7F00751F06 /* DemoUITests.m */; };
+		5C8486221DA4DB5D007A41E6 /* UITableView+JYTableLayoutCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8486211DA4DB5D007A41E6 /* UITableView+JYTableLayoutCell.m */; };
+		5C8486251DA4DBFB007A41E6 /* NSObject+JYTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8486241DA4DBFB007A41E6 /* NSObject+JYTable.m */; };
 		8A154A82CE6C2FB94F281D6C /* libPods-Demo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CCB77466B522C9AF3F456FA8 /* libPods-Demo.a */; };
 /* End PBXBuildFile section */
 
@@ -64,7 +66,6 @@
 		5C0D13561DA026E400B22B60 /* JYCellNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYCellNode.m; sourceTree = "<group>"; };
 		5C0D13581DA0331D00B22B60 /* UITableViewCell+JYCellMargin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewCell+JYCellMargin.h"; sourceTree = "<group>"; };
 		5C0D13591DA0331D00B22B60 /* UITableViewCell+JYCellMargin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewCell+JYCellMargin.m"; sourceTree = "<group>"; };
-		5C0D135B1DA0333100B22B60 /* JYSwizzlingDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYSwizzlingDefine.h; sourceTree = "<group>"; };
 		5C0D135F1DA14F4500B22B60 /* StyleCell1Model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StyleCell1Model.h; sourceTree = "<group>"; };
 		5C0D13601DA14F4500B22B60 /* StyleCell1Model.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StyleCell1Model.m; sourceTree = "<group>"; };
 		5C0D13621DA14F5A00B22B60 /* StyleCell2Model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StyleCell2Model.h; sourceTree = "<group>"; };
@@ -87,6 +88,10 @@
 		5C2C8F771D9CAE7F00751F06 /* DemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C2C8F7B1D9CAE7F00751F06 /* DemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoUITests.m; sourceTree = "<group>"; };
 		5C2C8F7D1D9CAE7F00751F06 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5C8486201DA4DB5D007A41E6 /* UITableView+JYTableLayoutCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+JYTableLayoutCell.h"; sourceTree = "<group>"; };
+		5C8486211DA4DB5D007A41E6 /* UITableView+JYTableLayoutCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+JYTableLayoutCell.m"; sourceTree = "<group>"; };
+		5C8486231DA4DBFB007A41E6 /* NSObject+JYTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+JYTable.h"; sourceTree = "<group>"; };
+		5C8486241DA4DBFB007A41E6 /* NSObject+JYTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+JYTable.m"; sourceTree = "<group>"; };
 		946855982A1588A74B8F31E7 /* Pods-Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Demo/Pods-Demo.debug.xcconfig"; sourceTree = "<group>"; };
 		B695BA1BA7FF520027C05AA4 /* Pods-Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Demo/Pods-Demo.release.xcconfig"; sourceTree = "<group>"; };
 		CCB77466B522C9AF3F456FA8 /* libPods-Demo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Demo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -136,9 +141,12 @@
 				5C0D13561DA026E400B22B60 /* JYCellNode.m */,
 				5C0D13411D9FF5B900B22B60 /* JYTableModel.h */,
 				5C0D13421D9FF5B900B22B60 /* JYTableModel.m */,
-				5C0D135B1DA0333100B22B60 /* JYSwizzlingDefine.h */,
 				5C0D13581DA0331D00B22B60 /* UITableViewCell+JYCellMargin.h */,
 				5C0D13591DA0331D00B22B60 /* UITableViewCell+JYCellMargin.m */,
+				5C8486201DA4DB5D007A41E6 /* UITableView+JYTableLayoutCell.h */,
+				5C8486211DA4DB5D007A41E6 /* UITableView+JYTableLayoutCell.m */,
+				5C8486231DA4DBFB007A41E6 /* NSObject+JYTable.h */,
+				5C8486241DA4DBFB007A41E6 /* NSObject+JYTable.m */,
 			);
 			path = JYTableModel;
 			sourceTree = "<group>";
@@ -429,8 +437,10 @@
 				5C0D134D1DA0051500B22B60 /* StyleCell3.m in Sources */,
 				5C2C8F5B1D9CAE7E00751F06 /* AppDelegate.m in Sources */,
 				5C0D13431D9FF5B900B22B60 /* JYTableModel.m in Sources */,
+				5C8486251DA4DBFB007A41E6 /* NSObject+JYTable.m in Sources */,
 				5C0D13531DA0082C00B22B60 /* StyleCellModel.m in Sources */,
 				5C2C8F581D9CAE7E00751F06 /* main.m in Sources */,
+				5C8486221DA4DB5D007A41E6 /* UITableView+JYTableLayoutCell.m in Sources */,
 				5C0D13471DA004FE00B22B60 /* StyleCell1.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -9,6 +9,7 @@
 #import "JYTableModel.h"
 #import <objc/runtime.h>
 #import "UITableViewCell+JYCellMargin.h"
+#import "UITableView+JYTableLayoutCell.h"
 
 @interface JYTableModel()
 
@@ -116,6 +117,10 @@
 }
 
 - (CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return [self heightForRowAtIndexPath:indexPath config:nil];
+}
+
+- (CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath config:(void (^)(UITableViewCell *aCell,id aContent))aConfig{
     
     CGFloat height = 0.;
     JYNode *node = [self getCellNodeAtIndexPath:indexPath];
@@ -124,6 +129,14 @@
         height = cellNode.cellHeight;
     }else if (class_getClassMethod(node.cellNode.cellClass, @selector(heightForContent:)) != nil){
         height = [node.cellNode.cellClass heightForContent:[node conversionModel]];
+    }else{
+        NSString *identifier = NSStringFromClass(node.cellNode.cellClass);
+        height = [self.tableView jy_heightForCellWithIdentifier:identifier cacheBy:node.content configuration:^(id cell) {
+            [self configCell:cell forNode:node AtIndexPath:indexPath];
+            if (aConfig) {
+                aConfig(cell,node.content);
+            }
+        }];
     }
 
     height += node.cellNode.edgeInsets.top + node.cellNode.edgeInsets.bottom;
@@ -137,21 +150,27 @@
 - (UITableViewCell *)cellForRowAtIndexPath:(NSIndexPath *)indexPath config:(void (^)(UITableViewCell *aCell,id aContent))aConfig{
     
     JYNode *node = [self getCellNodeAtIndexPath:indexPath];
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:NSStringFromClass(node.cellNode.cellClass) forIndexPath:indexPath];
+    [self configCell:cell forNode:node AtIndexPath:indexPath];
+    if (aConfig) {
+        aConfig(cell,node.content);
+    }
+    return cell;
+}
+
+- (void)configCell:(UITableViewCell *)cell forNode:(JYNode *)node AtIndexPath:(NSIndexPath *)indexPath{
+    // 边距 分割线 以及颜色设置
     JYCellNode *cellNode = node.cellNode;
-    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:NSStringFromClass(cellNode.cellClass) forIndexPath:indexPath];
     cell.edgeInsets = cellNode.edgeInsets;
     [cell configEdgeInsetsColor:cellNode.marginColor];
     [cell configTopColor:cellNode.topColor leftColor:cellNode.leftColor bottomColor:cellNode.bottomColor rightColor:cellNode.rightColor];
     BOOL hidden = indexPath.row == [self numberOfRowsInSection:indexPath.section] - 1;
     [cell configSeparatorColor:cellNode.lineColor hidden:hidden || cellNode.lineColor == nil];
     
+    //  内容设置
     if ([cell respondsToSelector:@selector(setCellContent:)]) {
         [(id)cell setCellContent:[node conversionModel]];
     }
-    if (aConfig) {
-        aConfig(cell,node.content);
-    }
-    return cell;
 }
 
 - (void)reomveObjectAtIndexPath:(NSIndexPath *)aIndexPath{

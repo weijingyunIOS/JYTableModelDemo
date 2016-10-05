@@ -7,7 +7,7 @@
 //
 
 #import "UITableViewCell+JYCellMargin.h"
-#import <Masonry.h>
+#import <objc/runtime.h>
 
 static char kJYEdgeInsets;
 static char kJYTopLayer;
@@ -33,6 +33,7 @@ static char kJYViewConstraints;
 
 @implementation UITableViewCell (JYCellMargin)
 
+// iOS7.0 可通过交换方法设置间距，不过也存在一定问题，就别适配7.0了
 //+ (void)load{
 //    JY_swizzling_exchangeMethod([self class], @selector(setFrame:), @selector(JY_Swizzling_setFrame:));
 //}

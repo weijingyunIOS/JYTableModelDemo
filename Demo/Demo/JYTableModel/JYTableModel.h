@@ -38,8 +38,11 @@
 - (NSInteger)numberOfRowsInSection:(NSInteger)section;
 
 - (CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath;
+- (CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath config:(void (^)(UITableViewCell *aCell,id aContent))aConfig;
+
+// 如实现- (void)setCellContent:(id)aCellContent; 会走该方法
 - (UITableViewCell *)cellForRowAtIndexPath:(NSIndexPath *)indexPath;
-- (UITableViewCell *)cellForRowAtIndexPath:(NSIndexPath *)indexPath config:(void (^)(UITableViewCell *aCell,id aContent))aConfig;
+- (UITableViewCell *)cellForRowAtIndexPath:(NSIndexPath *)indexPath config:(void (^)(UITableViewCell *aCell,id aContent))aConfig;// 自动计算高度可能要
 
 
 - (void)reomveObjectAtIndexPath:(NSIndexPath *)aIndexPath;

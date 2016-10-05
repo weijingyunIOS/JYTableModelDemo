@@ -6,6 +6,7 @@ platform :ios, '7.0'
 target ‘Demo’ do
 
 pod 'Masonry','1.0.1'
+pod 'UITableView+FDTemplateLayoutCell', '~> 1.4'
 
 end
 
