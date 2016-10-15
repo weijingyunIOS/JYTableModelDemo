@@ -16,6 +16,7 @@ static char kJYBottomLayer;
 static char kJYRightLayer;
 static char kJYLineLayer;
 static char kJYViewConstraints;
+static char kJYIndexPath;
 
 @interface UITableViewCell ()
 
@@ -189,6 +190,14 @@ static char kJYViewConstraints;
 
 - (NSArray<NSLayoutConstraint *> *)viewConstraints{
     return objc_getAssociatedObject(self, &kJYViewConstraints);
+}
+
+- (void)setJy_indexPath:(NSIndexPath *)jy_indexPath{
+  objc_setAssociatedObject(self,&kJYIndexPath,jy_indexPath,OBJC_ASSOCIATION_RETAIN);
+}
+
+- (NSIndexPath *)jy_indexPath{
+  return objc_getAssociatedObject(self, &kJYIndexPath);
 }
 
 @end

@@ -11,14 +11,16 @@
 @interface JYCellNode : NSObject
 
 @property (nonatomic, strong) Class cellClass;
+// 用于多个类似cell的区分
+@property (nonatomic, assign) NSInteger cellType;
+
+#pragma mark - 以下属性只对tableViewCell 有效
 // 用于设置固定高度 的 cell
 @property (nonatomic, assign) CGFloat cellHeight;
-
-@property (nonatomic, assign) UIEdgeInsets edgeInsets;
-
 // 分割线颜色，不设置则没有分割线
 @property (nonatomic, strong) UIColor *lineColor;
 
+@property (nonatomic, assign) UIEdgeInsets edgeInsets;
 // 如果四遍颜色一致的话，设置这个即可(性能更优)，某边颜色不同单独设置即可
 @property (nonatomic, strong) UIColor *marginColor;
 
@@ -29,5 +31,8 @@
 @property (nonatomic, strong) UIColor *rightColor;
 
 + (instancetype)cellClass:(Class)aCellClass config:(void (^)(JYCellNode *cellNode))aConfig;
+
+- (NSString *)cellIdentifier;
++ (NSInteger)cellTypeForIdentifier:(NSString *)identifier;
 
 @end

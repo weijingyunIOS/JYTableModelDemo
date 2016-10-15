@@ -13,6 +13,9 @@
 // 设置 cell 的边距
 @property (nonatomic, assign) UIEdgeInsets edgeInsets;
 
+// 当前cell所在的indexPath
+@property (nonatomic, strong) NSIndexPath *jy_indexPath;
+
 
 #pragma mark - 以下方法需要先设置 edgeInsets 才有效
 // 颜色一至 该性能更好

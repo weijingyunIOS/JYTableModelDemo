@@ -12,11 +12,15 @@
 
 @implementation UITableView (JYTableLayoutCell)
 
-- (CGFloat)jy_heightForCellWithIdentifier:(NSString *)identifier cacheBy:(NSObject *)key configuration:(void (^)(id cell))configuration{
-    if (key.jy_CellHeight > 0) {
-        return key.jy_CellHeight;
+- (CGFloat)jy_heightForCellWithIdentifier:(NSString *)identifier cacheContent:(NSObject *)content key:(NSString *)key configuration:(void (^)(id cell))configuration{
+  
+  CGFloat height = [content.jy_CellHeightDic[key] floatValue];
+    if (height > 0) {
+        return height;
     }
-    return [self fd_heightForCellWithIdentifier:identifier configuration:configuration];
+    height = [self fd_heightForCellWithIdentifier:identifier configuration:configuration];
+  content.jy_CellHeightDic[key] = [NSNumber numberWithFloat:height];
+  return height;
 }
 
 

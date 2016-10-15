@@ -11,6 +11,6 @@
 @interface NSObject (JYTable)
 
 // 用于模型缓存cell行高，通过分类解耦
-@property (nonatomic, assign) CGFloat jy_CellHeight;
+@property (nonatomic, assign) NSMutableDictionary<NSString *, NSNumber *> *jy_CellHeightDic;
 
 @end

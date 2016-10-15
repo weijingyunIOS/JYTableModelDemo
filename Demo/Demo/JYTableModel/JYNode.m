@@ -39,6 +39,10 @@
     return model;
 }
 
+- (NSString *)heightCacheKey{
+  return [NSString stringWithFormat:@"%@%tu",NSStringFromClass(self.contentClass),self.currentIndex];
+}
+
 - (JYCellNode *)cellNode{
     return self.groupCellNode[self.currentIndex];
 }

@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UITableViewCell+JYCellMargin.h"
+#import "UICollectionViewCell+JYCell.h"
 
-@protocol JYNodeProtocol <NSObject>
+@protocol JYTableCellProtocol <NSObject>
 
 @optional
 // 实现tableView高度计算， 如不实现则使用约束自动计算
@@ -17,11 +19,12 @@
 // 实现数据设置
 - (void)setCellContent:(id)aCellContent;
 
+@property (nonatomic, weak) id cellDelegate;
+
 @end
 
 
-@protocol JYContentNodeProtocol <NSObject>
-
+@protocol JYContentProtocol <NSObject>
 
 @optional
 // 如果该 模型 有给不同 cell 使用，需要实现该方法区分
@@ -29,5 +32,18 @@
 
 // 模型转化，对应相应Cell 要转换成对应模型
 - (id)conversionModelForCellClass:(Class)aCellClass;
+
+@end
+
+@protocol JYCollectionCellProtocol <NSObject>
+
+@optional
+// 实现CollectionCell  高度 计算
++ (CGFloat)heightForContent:(id)aContent withWidth:(CGFloat)width;
+
+// 实现数据设置
+- (void)setCellContent:(id)aCellContent;
+
+@property (nonatomic, weak) id cellDelegate;
 
 @end

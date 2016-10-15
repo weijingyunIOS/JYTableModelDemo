@@ -9,18 +9,24 @@
 #import "NSObject+JYTable.h"
 #import <objc/runtime.h>
 
-static char kJYCellHeight;
+static char kJy_CellHeightDic;
 
 @implementation NSObject (JYTable)
 
 
 #pragma mark - 属性方法实现
-- (void)setJy_CellHeight:(CGFloat)jy_CellHeight{
-    objc_setAssociatedObject(self,&kJYCellHeight,[NSNumber numberWithDouble:jy_CellHeight],OBJC_ASSOCIATION_RETAIN);
+- (void)setJy_CellHeightDic:(NSMutableDictionary<NSString *, NSNumber *> *)jy_CellHeightDic{
+    objc_setAssociatedObject(self,&kJy_CellHeightDic,jy_CellHeightDic,OBJC_ASSOCIATION_RETAIN);
 }
 
-- (CGFloat)jy_CellHeight{
-   return [objc_getAssociatedObject(self, &kJYCellHeight) doubleValue];
+- (NSMutableDictionary<NSString *, NSNumber *> *)jy_CellHeightDic{
+  NSMutableDictionary *dicM = objc_getAssociatedObject(self, &kJy_CellHeightDic);
+  if (dicM != nil) {
+    return dicM;
+  }
+  dicM = [[NSMutableDictionary alloc] init];
+  [self setJy_CellHeightDic:dicM];
+  return objc_getAssociatedObject(self, &kJy_CellHeightDic);
 }
 
 @end

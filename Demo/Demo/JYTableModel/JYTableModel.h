@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "UITableViewCell+JYCellMargin.h"
+#import "UITableView+JYTableLayoutCell.h"
 #import "JYNode.h"
-
-@class JYNode;
 
 @interface JYTableModel : NSObject
 
@@ -17,6 +17,8 @@
 @property (nonatomic, strong, readonly) NSMutableArray<NSMutableArray*>* allContents;
 
 #pragma mark -  注册cell tableView
+
+- (void)registCellNodes:(NSArray<JYNode*>*)nodes byTableView:(UITableView*)tableView cellDelegate:(id)cellDelegate;
 - (void)registCellNodes:(NSArray<JYNode*>*)nodes byTableView:(UITableView*)tableView;
 
 #pragma mark - 辅助设置 需要先执行 registCellNodes
@@ -33,20 +35,21 @@
 - (void)setContents:(NSArray *)aContents atSection:(NSInteger)aSection;
 - (void)addContents:(NSArray *)aContents atSection:(NSInteger)aSection;
 
+- (BOOL)isEmpty;
+
 #pragma mark - Table View 辅助计算
 - (NSInteger)numberOfSections;
 - (NSInteger)numberOfRowsInSection:(NSInteger)section;
 
 - (CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath;
-- (CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath config:(void (^)(UITableViewCell *aCell,id aContent))aConfig;
+- (CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath config:(void (^)(UITableViewCell *aCell,JYNode* aNode))aConfig;// 自动计算高度可能要
 
 // 如实现- (void)setCellContent:(id)aCellContent; 会走该方法
 - (UITableViewCell *)cellForRowAtIndexPath:(NSIndexPath *)indexPath;
-- (UITableViewCell *)cellForRowAtIndexPath:(NSIndexPath *)indexPath config:(void (^)(UITableViewCell *aCell,id aContent))aConfig;// 自动计算高度可能要
+- (UITableViewCell *)cellForRowAtIndexPath:(NSIndexPath *)indexPath config:(void (^)(UITableViewCell *aCell,JYNode* aNode))aConfig;
 
 
 - (void)reomveObjectAtIndexPath:(NSIndexPath *)aIndexPath;
-- (id)getObjectAtIndexPath:(NSIndexPath *)aIndexPath;
 - (JYNode *)getCellNodeAtIndexPath:(NSIndexPath *)indexPath;
 
 @end

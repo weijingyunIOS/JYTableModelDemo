@@ -9,12 +9,14 @@
 #import "JYTableModel.h"
 #import <objc/runtime.h>
 #import "UITableViewCell+JYCellMargin.h"
-#import "UITableView+JYTableLayoutCell.h"
 
 @interface JYTableModel()
 
 // 对应的tableViw
 @property (nonatomic, weak) UITableView *tableView;
+
+// 记录cell的代理
+@property (nonatomic, weak) id cellDelegate;
 
 // cell 的配置信息
 @property (nonatomic, strong) NSMutableDictionary<NSString * ,JYNode *> *nodeCache;
@@ -28,6 +30,7 @@
 // 是否隐藏每组最后的分割线
 @property (nonatomic, assign) BOOL hiddenLast;
 
+
 @end
 
 @implementation JYTableModel
@@ -35,6 +38,12 @@
 
 #pragma mark -  注册cell tableView
 - (void)registCellNodes:(NSArray<JYNode*>*)nodes byTableView:(UITableView*)tableView{
+  [self registCellNodes:nodes byTableView:tableView cellDelegate:nil];
+}
+
+- (void)registCellNodes:(NSArray<JYNode*>*)nodes byTableView:(UITableView*)tableView cellDelegate:(id)cellDelegate{
+  
+    _cellDelegate = cellDelegate;
     _tableView = tableView;
     self.isMoreCell = NO;
     [nodes enumerateObjectsUsingBlock:^(JYNode * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -42,8 +51,8 @@
         if (obj.groupCellNode.count >1) {
             self.isMoreCell = YES;
         }
-        [obj.groupCellNode enumerateObjectsUsingBlock:^(JYCellNode* groupCellNode, NSUInteger idx, BOOL * _Nonnull stop) {
-            [tableView registerClass:groupCellNode.cellClass forCellReuseIdentifier:NSStringFromClass(groupCellNode.cellClass)];
+        [obj.groupCellNode enumerateObjectsUsingBlock:^(JYCellNode* cellNode, NSUInteger idx, BOOL * _Nonnull stop) {
+            [tableView registerClass:cellNode.cellClass forCellReuseIdentifier:[cellNode cellIdentifier]];
         }];
         [self.nodeCache setObject:obj forKey:obj.identifier];
     }];
@@ -90,6 +99,10 @@
     [contents addObjectsFromArray:aContents];
 }
 
+- (BOOL)isEmpty{
+  return !(self.allContents.count > 0 && self.allContents.firstObject.count > 0);
+}
+
 //不存在就建一个新的数组
 - (NSMutableArray *)contentsAtInSection:(NSInteger)aSection
 {
@@ -120,7 +133,7 @@
     return [self heightForRowAtIndexPath:indexPath config:nil];
 }
 
-- (CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath config:(void (^)(UITableViewCell *aCell,id aContent))aConfig{
+- (CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath config:(void (^)(UITableViewCell *aCell,JYNode* aNode))aConfig{
     
     CGFloat height = 0.;
     JYNode *node = [self getCellNodeAtIndexPath:indexPath];
@@ -130,11 +143,16 @@
     }else if (class_getClassMethod(node.cellNode.cellClass, @selector(heightForContent:)) != nil){
         height = [node.cellNode.cellClass heightForContent:[node conversionModel]];
     }else{
-        NSString *identifier = NSStringFromClass(node.cellNode.cellClass);
-        height = [self.tableView jy_heightForCellWithIdentifier:identifier cacheBy:node.content configuration:^(id cell) {
-            [self configCell:cell forNode:node AtIndexPath:indexPath];
+        if (self.tableView.frame.size.width == 0) { // 没宽度无法算高度
+          CGRect frame = self.tableView.frame;
+          frame.size.width = [UIScreen mainScreen].bounds.size.width;
+          self.tableView.frame = frame;
+        }
+        NSString *key = self.isMoreCell ? [node heightCacheKey] : @"heightCacheKey";
+        height = [self.tableView jy_heightForCellWithIdentifier:[cellNode cellIdentifier] cacheContent:node.content key:key configuration:^(id cell) {
+            [self configCell:cell forNode:node AtIndexPath:indexPath config:aConfig];
             if (aConfig) {
-                aConfig(cell,node.content);
+                aConfig(cell,node);
             }
         }];
     }
@@ -147,21 +165,20 @@
     return [self cellForRowAtIndexPath:indexPath config:nil];
 }
 
-- (UITableViewCell *)cellForRowAtIndexPath:(NSIndexPath *)indexPath config:(void (^)(UITableViewCell *aCell,id aContent))aConfig{
+- (UITableViewCell *)cellForRowAtIndexPath:(NSIndexPath *)indexPath config:(void (^)(UITableViewCell *aCell,JYNode* aNode))aConfig{
     
     JYNode *node = [self getCellNodeAtIndexPath:indexPath];
-    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:NSStringFromClass(node.cellNode.cellClass) forIndexPath:indexPath];
-    [self configCell:cell forNode:node AtIndexPath:indexPath];
-    if (aConfig) {
-        aConfig(cell,node.content);
-    }
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:[node.cellNode cellIdentifier] forIndexPath:indexPath];
+    [self configCell:cell forNode:node AtIndexPath:indexPath config:aConfig];
     return cell;
 }
 
-- (void)configCell:(UITableViewCell *)cell forNode:(JYNode *)node AtIndexPath:(NSIndexPath *)indexPath{
+- (void)configCell:(UITableViewCell *)cell forNode:(JYNode *)node AtIndexPath:(NSIndexPath *)indexPath config:(void (^)(UITableViewCell *aCell,JYNode* aNode))aConfig{
+  
     // 边距 分割线 以及颜色设置
     JYCellNode *cellNode = node.cellNode;
     cell.edgeInsets = cellNode.edgeInsets;
+    cell.jy_indexPath = indexPath;
     [cell configEdgeInsetsColor:cellNode.marginColor];
     [cell configTopColor:cellNode.topColor leftColor:cellNode.leftColor bottomColor:cellNode.bottomColor rightColor:cellNode.rightColor];
     BOOL hidden = indexPath.row == [self numberOfRowsInSection:indexPath.section] - 1;
@@ -171,17 +188,20 @@
     if ([cell respondsToSelector:@selector(setCellContent:)]) {
         [(id)cell setCellContent:[node conversionModel]];
     }
+  
+    if ([cell respondsToSelector:@selector(setCellDelegate:)]) {
+      [(id)cell setCellDelegate:self.cellDelegate];
+    }
+  
+    if (aConfig) {
+      aConfig(cell,node);
+    }
 }
 
 - (void)reomveObjectAtIndexPath:(NSIndexPath *)aIndexPath{
     NSMutableArray* contents = [self contentsAtInSection:aIndexPath.section];
-    id content = [self getObjectAtIndexPath:aIndexPath];
-    [contents removeObject:content];
-}
-
-- (id)getObjectAtIndexPath:(NSIndexPath *)aIndexPath{
     JYNode *node = [self getCellNodeAtIndexPath:aIndexPath];
-    return node.content;
+    [contents removeObject:node.content];
 }
 
 - (JYNode *)getCellNodeAtIndexPath:(NSIndexPath *)indexPath{

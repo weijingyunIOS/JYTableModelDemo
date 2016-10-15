@@ -18,4 +18,13 @@
     return node;
 }
 
+- (NSString *)cellIdentifier{
+  return [NSString stringWithFormat:@"%@_%tu",NSStringFromClass(self.cellClass),self.cellType];
+}
+
++ (NSInteger)cellTypeForIdentifier:(NSString *)identifier{
+  NSArray * array = [identifier componentsSeparatedByString:@"_"];
+  return [array.lastObject integerValue];
+}
+
 @end

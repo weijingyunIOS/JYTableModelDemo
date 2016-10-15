@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "JYNodeProtocol.h"
 
-@interface StyleCell2 : UITableViewCell<JYNodeProtocol>
+@interface StyleCell2 : UITableViewCell<JYCollectionCellProtocol>
 
 @end

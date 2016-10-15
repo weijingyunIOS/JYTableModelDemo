@@ -18,7 +18,7 @@
 // 同一contentClass(需要实现- (NSInteger)cellType) 对应 不同的 cellType
 @property (nonatomic, assign) NSInteger cellType;
 
-// 模型对应的cell 由多个cell拼接 所以按数组排列
+// 模型对应的cell 由多个cell拼接 所以按数组排列 UICollection 只能设置一个
 @property (nonatomic, strong,readonly) NSMutableArray<JYCellNode *>*groupCellNode;
 
 // 外部展现时对应 的 cellClass 与 数据
@@ -46,6 +46,7 @@
 #pragma mark - private 用于框架内部调用
 - (void)recordCurrentIndex:(NSInteger)aIndex content:(id)aContent;
 - (id)conversionModel; // 执行recordCurrentIndex 后有效
+- (NSString *)heightCacheKey;
 
 // 根据 contentClass 与 cellType 生成的唯一表识用于快速定位
 @property (nonatomic, copy, readonly) NSString *identifier;
