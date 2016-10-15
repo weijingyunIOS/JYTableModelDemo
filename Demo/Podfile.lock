@@ -1,12 +1,17 @@
 PODS:
+  - CHTCollectionViewWaterfallLayout (0.9.5):
+    - CHTCollectionViewWaterfallLayout/ObjC (= 0.9.5)
+  - CHTCollectionViewWaterfallLayout/ObjC (0.9.5)
   - Masonry (1.0.1)
   - UITableView+FDTemplateLayoutCell (1.4)
 
 DEPENDENCIES:
+  - CHTCollectionViewWaterfallLayout
   - Masonry (= 1.0.1)
   - UITableView+FDTemplateLayoutCell (~> 1.4)
 
 SPEC CHECKSUMS:
+  CHTCollectionViewWaterfallLayout: 775ff73f48cfc13859b62d8bceb96e772e4a0318
   Masonry: a1a931a0d08870ed8ae415a2ea5ea68ebcac77df
   UITableView+FDTemplateLayoutCell: 234e1582bcc4e18461af91155123bb96538ed030
 
