@@ -9,17 +9,17 @@
 #import "UICollectionView+JYCollectionViewLayoutCell.h"
 #import "NSObject+JYTable.h"
 
-#define kCellHeight @"kCellHeight"
+
 @implementation UICollectionView (JYCollectionViewLayoutCell)
 
-- (CGFloat)jy_heightForCellClass:(Class)cellClass withIdentifier:(NSString *)identifier width:(CGFloat)width cacheBy:(NSObject *)key configuration:(void (^)(id cell))configuration{
-  CGFloat height = [key.jy_CellHeightDic[kCellHeight] floatValue];
+- (CGFloat)jy_heightForCellClass:(Class)cellClass withIdentifier:(NSString *)identifier width:(CGFloat)width cacheBy:(NSObject *)model key:(NSString *)cachekey configuration:(void (^)(id cell))configuration{
+  CGFloat height = [model.jy_CellHeightDic[cachekey] floatValue];
   if (height > 0) {
     return height;
   }
   
   height = [self jy_heightForCellClass:cellClass withIdentifier:identifier width:(CGFloat)width configuration:configuration];
-  key.jy_CellHeightDic[kCellHeight] = [NSNumber numberWithFloat:height];
+  model.jy_CellHeightDic[cachekey] = [NSNumber numberWithFloat:height];
   return height;
 }
 

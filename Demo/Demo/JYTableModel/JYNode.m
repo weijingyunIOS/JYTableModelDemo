@@ -40,7 +40,11 @@
 }
 
 - (NSString *)heightCacheKey{
-  return [NSString stringWithFormat:@"%@%tu",NSStringFromClass(self.contentClass),self.currentIndex];
+  NSString *key = [NSString stringWithFormat:@"%@%tu",NSStringFromClass(self.contentClass),self.currentIndex];
+  if ([self.content respondsToSelector:@selector(cellType)]) {
+    key = [NSString stringWithFormat:@"%@%tu",key,[self.content cellType]];
+  }
+  return key;
 }
 
 - (JYCellNode *)cellNode{

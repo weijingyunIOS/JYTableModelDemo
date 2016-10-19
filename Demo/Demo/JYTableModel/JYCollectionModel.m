@@ -129,7 +129,8 @@
   if (class_getClassMethod(node.cellNode.cellClass, @selector(heightForContent:withWidth:)) != nil){
     height = [node.cellNode.cellClass heightForContent:[node conversionModel] withWidth:width];
   }else{
-    height = [self.collectionView jy_heightForCellClass:node.cellNode.cellClass withIdentifier:node.cellNode.cellIdentifier width:width cacheBy:node.content configuration:^(id cell) {
+    NSString *key = [node heightCacheKey];
+    height = [self.collectionView jy_heightForCellClass:node.cellNode.cellClass withIdentifier:node.cellNode.cellIdentifier width:width cacheBy:node.content key:key configuration:^(id cell) {
       [self configCell:cell forNode:node AtIndexPath:indexPath config:aConfig];
     }];
   }

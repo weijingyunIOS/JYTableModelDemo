@@ -148,7 +148,7 @@
           frame.size.width = [UIScreen mainScreen].bounds.size.width;
           self.tableView.frame = frame;
         }
-        NSString *key = self.isMoreCell ? [node heightCacheKey] : @"heightCacheKey";
+        NSString *key = [node heightCacheKey];
         height = [self.tableView jy_heightForCellWithIdentifier:[cellNode cellIdentifier] cacheContent:node.content key:key configuration:^(id cell) {
             [self configCell:cell forNode:node AtIndexPath:indexPath config:aConfig];
             if (aConfig) {

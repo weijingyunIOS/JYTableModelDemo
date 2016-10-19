@@ -10,6 +10,6 @@
 
 @interface UICollectionView (JYCollectionViewLayoutCell)
 
-- (CGFloat)jy_heightForCellClass:(Class)cellClass withIdentifier:(NSString *)identifier width:(CGFloat)width cacheBy:(NSObject *)key configuration:(void (^)(id cell))configuration;
+- (CGFloat)jy_heightForCellClass:(Class)cellClass withIdentifier:(NSString *)identifier width:(CGFloat)width cacheBy:(NSObject *)model key:(NSString *)cachekey configuration:(void (^)(id cell))configuration;
 
 @end
