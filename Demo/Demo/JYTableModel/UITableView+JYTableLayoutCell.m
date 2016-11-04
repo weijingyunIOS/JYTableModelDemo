@@ -7,6 +7,7 @@
 //
 
 #import "UITableView+JYTableLayoutCell.h"
+#import "UITableViewCell+JYCellMargin.h"
 #import <objc/runtime.h>
 #import "NSObject+JYTable.h"
 #import "JYNodeProtocol.h"
@@ -47,6 +48,9 @@
   if (configuration) {
     configuration(templateLayoutCell);
   }
+    
+  templateLayoutCell.translatesAutoresizingMaskIntoConstraints = !UIEdgeInsetsEqualToEdgeInsets(templateLayoutCell.edgeInsets, UIEdgeInsetsZero) ;
+  templateLayoutCell.contentView.translatesAutoresizingMaskIntoConstraints = NO;
   
   CGFloat contentViewWidth = CGRectGetWidth(self.frame);
   
@@ -65,6 +69,7 @@
     contentViewWidth -= systemAccessoryWidths[templateLayoutCell.accessoryType];
   }
   
+  contentViewWidth -= (templateLayoutCell.edgeInsets.left + templateLayoutCell.edgeInsets.right);
   CGSize fittingSize = CGSizeZero;
   
   if (contentViewWidth > 0) {
@@ -89,8 +94,6 @@
 - (UITableViewCell *)jy_templateCellForReuseIdentifier:(NSString *)identifier {
   
   UITableViewCell *templateLayoutCell = [self dequeueReusableCellWithIdentifier:identifier];
-  templateLayoutCell.translatesAutoresizingMaskIntoConstraints = NO;
-  templateLayoutCell.contentView.translatesAutoresizingMaskIntoConstraints = NO;
   return templateLayoutCell;
 }
 
