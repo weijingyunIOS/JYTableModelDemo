@@ -13,6 +13,14 @@ static char kJYIndexPath;
 
 @implementation UICollectionViewCell (JYCell)
 
++ (NSInteger)cellTypeForContent:(id)content{
+  return 0;
+}
+
++ (BOOL)jy_cacheHeight{
+  return YES;
+}
+
 - (void)setJy_indexPath:(NSIndexPath *)jy_indexPath{
   objc_setAssociatedObject(self,&kJYIndexPath,jy_indexPath,OBJC_ASSOCIATION_RETAIN);
 }

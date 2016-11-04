@@ -27,4 +27,10 @@
 // 设置分割线
 - (void)configSeparatorColor:(UIColor *)lineColor hidden:(BOOL)hidden;
 
+// 是否为cell缓存高度  默认缓存，可重写该方法 return NO， 则不会缓存高度
++ (BOOL)jy_cacheHeight;
+
+// 根据model获取cellType
++ (NSInteger)cellTypeForContent:(id)content;
+
 @end

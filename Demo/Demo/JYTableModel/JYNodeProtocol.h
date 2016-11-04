@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "UITableViewCell+JYCellMargin.h"
 #import "UICollectionViewCell+JYCell.h"
+#import "NSObject+JYTable.h"
 
 @protocol JYTableCellProtocol <NSObject>
 
@@ -20,6 +21,9 @@
 - (void)setCellContent:(id)aCellContent;
 
 @property (nonatomic, weak) id cellDelegate;
+
+// 是否为cell缓存高度  默认缓存，可重写该方法 return NO， 则不会缓存高度
++ (BOOL)jy_cacheHeight;
 
 @end
 

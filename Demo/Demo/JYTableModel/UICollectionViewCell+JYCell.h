@@ -13,4 +13,8 @@
 // 当前cell所在的indexPath
 @property (nonatomic, strong) NSIndexPath *jy_indexPath;
 
++ (NSInteger)cellTypeForContent:(id)content;
+
++ (BOOL)jy_cacheHeight;
+
 @end

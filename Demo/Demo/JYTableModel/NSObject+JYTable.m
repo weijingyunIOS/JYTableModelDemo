@@ -10,11 +10,20 @@
 #import <objc/runtime.h>
 
 static char kJy_CellHeightDic;
+static char kJy_CellType;
 
 @implementation NSObject (JYTable)
 
 
 #pragma mark - 属性方法实现
+- (void)setJy_CellType:(NSInteger)jy_CellType{
+  objc_setAssociatedObject(self,&kJy_CellType,[NSNumber numberWithInteger:jy_CellType],OBJC_ASSOCIATION_RETAIN);
+}
+
+- (NSInteger)jy_CellType{
+  return [objc_getAssociatedObject(self, &kJy_CellType) integerValue];
+}
+
 - (void)setJy_CellHeightDic:(NSMutableDictionary<NSString *, NSNumber *> *)jy_CellHeightDic{
     objc_setAssociatedObject(self,&kJy_CellHeightDic,jy_CellHeightDic,OBJC_ASSOCIATION_RETAIN);
 }

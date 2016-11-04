@@ -149,12 +149,12 @@
           self.tableView.frame = frame;
         }
         NSString *key = [node heightCacheKey];
-        height = [self.tableView jy_heightForCellWithIdentifier:[cellNode cellIdentifier] cacheContent:node.content key:key configuration:^(id cell) {
-            [self configCell:cell forNode:node AtIndexPath:indexPath config:aConfig];
-            if (aConfig) {
-                aConfig(cell,node);
-            }
-        }];
+       height = [self.tableView jy_heightForCellClass:cellNode.cellClass withIdentifier:[cellNode cellIdentifier] cacheContent:node.content key:key configuration:^(id cell) {
+         [self configCell:cell forNode:node AtIndexPath:indexPath config:aConfig];
+         if (aConfig) {
+             aConfig(cell,node);
+         }
+       }];
     }
 
     height += node.cellNode.edgeInsets.top + node.cellNode.edgeInsets.bottom;

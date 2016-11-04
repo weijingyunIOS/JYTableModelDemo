@@ -44,6 +44,9 @@
   if ([self.content respondsToSelector:@selector(cellType)]) {
     key = [NSString stringWithFormat:@"%@%tu",key,[self.content cellType]];
   }
+  
+  NSInteger type = [self.cellNode.cellClass cellTypeForContent:self.content];
+  key = [NSString stringWithFormat:@"%@%tu",key,type];
   return key;
 }
 

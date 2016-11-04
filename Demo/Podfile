@@ -7,7 +7,6 @@ target ‘Demo’ do
 
 pod 'Masonry','1.0.1'
 pod 'CHTCollectionViewWaterfallLayout'
-pod 'UITableView+FDTemplateLayoutCell', '~> 1.4'
 
 end
 

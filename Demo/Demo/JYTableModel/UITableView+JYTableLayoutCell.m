@@ -7,30 +7,102 @@
 //
 
 #import "UITableView+JYTableLayoutCell.h"
+#import <objc/runtime.h>
 #import "NSObject+JYTable.h"
-#import <UITableView+FDTemplateLayoutCell.h>
+#import "JYNodeProtocol.h"
 
 @implementation UITableView (JYTableLayoutCell)
 
-- (CGFloat)jy_heightForCellWithIdentifier:(NSString *)identifier cacheContent:(NSObject *)content key:(NSString *)key configuration:(void (^)(id cell))configuration{
+- (CGFloat)jy_heightForCellClass:(Class)cellClass withIdentifier:(NSString *)identifier cacheContent:(NSObject *)model key:(NSString *)cachekey configuration:(void (^)(id cell))configuration{
   
-  CGFloat height = [content.jy_CellHeightDic[key] floatValue];
+  BOOL isCacheHeight = [cellClass jy_cacheHeight];
+  CGFloat height = 0;
+  if (isCacheHeight) {
+    height = [model.jy_CellHeightDic[cachekey] floatValue];
     if (height > 0) {
-        return height;
+      return height;
     }
-    height = [self fd_heightForCellWithIdentifier:identifier configuration:configuration];
-  content.jy_CellHeightDic[key] = [NSNumber numberWithFloat:height];
+  }
+  
+  height = [self jy_heightForCellWithIdentifier:identifier configuration:configuration];
+  
+  if (isCacheHeight) {
+    model.jy_CellHeightDic[cachekey] = [NSNumber numberWithFloat:height];
+  }
   return height;
 }
 
 
+- (CGFloat)jy_heightForCellWithIdentifier:(NSString *)identifier configuration:(void (^)(id cell))configuration {
+  if (!identifier) {
+    return 0;
+  }
+  
+  UITableViewCell *templateLayoutCell = [self jy_templateCellForReuseIdentifier:identifier];
+  
+  // Manually calls to ensure consistent behavior with actual cells (that are displayed on screen).
+  [templateLayoutCell prepareForReuse];
+  
+  // Customize and provide content for our template cell.
+  if (configuration) {
+    configuration(templateLayoutCell);
+  }
+  
+  CGFloat contentViewWidth = CGRectGetWidth(self.frame);
+  
+  // If a cell has accessory view or system accessory type, its content view's width is smaller
+  // than cell's by some fixed values.
+  if (templateLayoutCell.accessoryView) {
+    contentViewWidth -= 16 + CGRectGetWidth(templateLayoutCell.accessoryView.frame);
+  } else {
+    static const CGFloat systemAccessoryWidths[] = {
+      [UITableViewCellAccessoryNone] = 0,
+      [UITableViewCellAccessoryDisclosureIndicator] = 34,
+      [UITableViewCellAccessoryDetailDisclosureButton] = 68,
+      [UITableViewCellAccessoryCheckmark] = 40,
+      [UITableViewCellAccessoryDetailButton] = 48
+    };
+    contentViewWidth -= systemAccessoryWidths[templateLayoutCell.accessoryType];
+  }
+  
+  CGSize fittingSize = CGSizeZero;
+  
+  if (contentViewWidth > 0) {
+    NSLayoutConstraint *widthFenceConstraint = [NSLayoutConstraint constraintWithItem:templateLayoutCell.contentView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:contentViewWidth];
+    widthFenceConstraint.priority = UILayoutPriorityDefaultHigh;
+    [templateLayoutCell.contentView addConstraint:widthFenceConstraint];
+    // Auto layout engine does its math
+    fittingSize = [templateLayoutCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+    [templateLayoutCell.contentView removeConstraint:widthFenceConstraint];
+  }
+  
+  // Add 1px extra space for separator line if needed, simulating default UITableViewCell.
+  if (self.separatorStyle != UITableViewCellSeparatorStyleNone) {
+    fittingSize.height += 1.0 / [UIScreen mainScreen].scale;
+  }
+
+  
+  return fittingSize.height;
+}
+
+
+- (UITableViewCell *)jy_templateCellForReuseIdentifier:(NSString *)identifier {
+  
+  UITableViewCell *templateLayoutCell = [self dequeueReusableCellWithIdentifier:identifier];
+  templateLayoutCell.translatesAutoresizingMaskIntoConstraints = NO;
+  templateLayoutCell.contentView.translatesAutoresizingMaskIntoConstraints = NO;
+  return templateLayoutCell;
+}
+
+
+
 // 计算tableView总高度
 - (CGFloat)totalHeight{
-    
+  
     CGFloat height = 0.f;
     UITableView *tableView = self;
     height += self.tableHeaderView.frame.size.height;
-    
+  
     NSInteger section = [tableView.dataSource numberOfSectionsInTableView:tableView];
     for (int i = 0; i < section; i ++) {
         

@@ -108,6 +108,14 @@ static char kJYIndexPath;
     self.lineLayer.frame = CGRectMake(0, self.frame.size.height - self.edgeInsets.bottom, self.frame.size.width, 0.5);
 }
 
++ (BOOL)jy_cacheHeight{
+  return YES;
+}
+
++ (NSInteger)cellTypeForContent:(id)content{
+  return 0;
+}
+
 #pragma mark - 属性方法实现
 - (void)setEdgeInsets:(UIEdgeInsets)edgeInsets{
      objc_setAssociatedObject(self,&kJYEdgeInsets,[NSValue valueWithUIEdgeInsets:edgeInsets],OBJC_ASSOCIATION_RETAIN);

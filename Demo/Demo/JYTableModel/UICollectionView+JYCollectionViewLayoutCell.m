@@ -7,25 +7,43 @@
 //
 
 #import "UICollectionView+JYCollectionViewLayoutCell.h"
+#import <objc/runtime.h>
 #import "NSObject+JYTable.h"
+#import "JYNodeProtocol.h"
 
+static char kJyTemplateLayoutCellDic;
+
+@interface UICollectionView()
+
+@property (nonatomic, strong) NSMutableDictionary *jyTemplateLayoutCellDic;
+
+@end
 
 @implementation UICollectionView (JYCollectionViewLayoutCell)
 
 - (CGFloat)jy_heightForCellClass:(Class)cellClass withIdentifier:(NSString *)identifier width:(CGFloat)width cacheBy:(NSObject *)model key:(NSString *)cachekey configuration:(void (^)(id cell))configuration{
-  CGFloat height = [model.jy_CellHeightDic[cachekey] floatValue];
-  if (height > 0) {
-    return height;
+  
+  BOOL isCacheHeight = [cellClass jy_cacheHeight];
+  CGFloat height = 0;
+  if (isCacheHeight) {
+    height = [model.jy_CellHeightDic[cachekey] floatValue];
+    if (height > 0) {
+      return height;
+    }
   }
   
   height = [self jy_heightForCellClass:cellClass withIdentifier:identifier width:(CGFloat)width configuration:configuration];
-  model.jy_CellHeightDic[cachekey] = [NSNumber numberWithFloat:height];
+  
+  if (isCacheHeight) {
+    model.jy_CellHeightDic[cachekey] = [NSNumber numberWithFloat:height];
+  }
+  
   return height;
 }
 
 - (CGFloat)jy_heightForCellClass:(Class)cellClass withIdentifier:(NSString *)identifier width:(CGFloat)contentViewWidth configuration:(void (^)(id cell))configuration {
-  UICollectionViewCell *templateLayoutCell = [[cellClass alloc] init];
-  [templateLayoutCell setValue:identifier forKey:@"reuseIdentifier"];
+  
+  UICollectionViewCell *templateLayoutCell = [self jy_templateCellClass:cellClass forReuseIdentifier:identifier];
   if (configuration) {
     configuration(templateLayoutCell);
   }
@@ -51,5 +69,36 @@
 
   return fittingSize.height;
 }
+
+
+- (UICollectionViewCell *)jy_templateCellClass:(Class)cellClass forReuseIdentifier:(NSString *)identifier {
+
+  UICollectionViewCell *templateLayoutCell = self.jyTemplateLayoutCellDic[identifier];
+  if (templateLayoutCell == nil) {
+    templateLayoutCell = [[cellClass alloc] init];
+    [templateLayoutCell setValue:identifier forKey:@"reuseIdentifier"];
+    templateLayoutCell.contentView.translatesAutoresizingMaskIntoConstraints = NO;
+    templateLayoutCell.translatesAutoresizingMaskIntoConstraints = NO;
+    self.jyTemplateLayoutCellDic[identifier] = templateLayoutCell;
+  }
+  return templateLayoutCell;
+}
+
+#pragma mark - 属性绑定
+- (void)setJyTemplateLayoutCellDic:(NSMutableDictionary *)jyTemplateLayoutCellDic{
+  objc_setAssociatedObject(self,&kJyTemplateLayoutCellDic,jyTemplateLayoutCellDic,OBJC_ASSOCIATION_RETAIN);
+}
+
+- (NSMutableDictionary *)jyTemplateLayoutCellDic{
+  NSMutableDictionary *dicM = objc_getAssociatedObject(self, &kJyTemplateLayoutCellDic);
+  if (dicM != nil) {
+    return dicM;
+  }
+  dicM = [[NSMutableDictionary alloc] init];
+  [self setJyTemplateLayoutCellDic:dicM];
+  return objc_getAssociatedObject(self, &kJyTemplateLayoutCellDic);
+}
+
+
 
 @end
