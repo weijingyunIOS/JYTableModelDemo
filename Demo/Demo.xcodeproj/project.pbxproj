@@ -26,6 +26,9 @@
 		5C2C8F661D9CAE7E00751F06 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C8F641D9CAE7E00751F06 /* LaunchScreen.storyboard */; };
 		5C2C8F711D9CAE7F00751F06 /* DemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C2C8F701D9CAE7F00751F06 /* DemoTests.m */; };
 		5C2C8F7C1D9CAE7F00751F06 /* DemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C2C8F7B1D9CAE7F00751F06 /* DemoUITests.m */; };
+		5C3AEFFE1DCC616000AB52B0 /* JYCollectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C3AEFF91DCC616000AB52B0 /* JYCollectionModel.m */; };
+		5C3AEFFF1DCC616000AB52B0 /* UICollectionView+JYCollectionViewLayoutCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C3AEFFB1DCC616000AB52B0 /* UICollectionView+JYCollectionViewLayoutCell.m */; };
+		5C3AF0001DCC616000AB52B0 /* UICollectionViewCell+JYCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C3AEFFD1DCC616000AB52B0 /* UICollectionViewCell+JYCell.m */; };
 		5C8486221DA4DB5D007A41E6 /* UITableView+JYTableLayoutCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8486211DA4DB5D007A41E6 /* UITableView+JYTableLayoutCell.m */; };
 		5C8486251DA4DBFB007A41E6 /* NSObject+JYTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8486241DA4DBFB007A41E6 /* NSObject+JYTable.m */; };
 		8A154A82CE6C2FB94F281D6C /* libPods-Demo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CCB77466B522C9AF3F456FA8 /* libPods-Demo.a */; };
@@ -88,6 +91,12 @@
 		5C2C8F771D9CAE7F00751F06 /* DemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C2C8F7B1D9CAE7F00751F06 /* DemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoUITests.m; sourceTree = "<group>"; };
 		5C2C8F7D1D9CAE7F00751F06 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5C3AEFF81DCC616000AB52B0 /* JYCollectionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYCollectionModel.h; sourceTree = "<group>"; };
+		5C3AEFF91DCC616000AB52B0 /* JYCollectionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYCollectionModel.m; sourceTree = "<group>"; };
+		5C3AEFFA1DCC616000AB52B0 /* UICollectionView+JYCollectionViewLayoutCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UICollectionView+JYCollectionViewLayoutCell.h"; sourceTree = "<group>"; };
+		5C3AEFFB1DCC616000AB52B0 /* UICollectionView+JYCollectionViewLayoutCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UICollectionView+JYCollectionViewLayoutCell.m"; sourceTree = "<group>"; };
+		5C3AEFFC1DCC616000AB52B0 /* UICollectionViewCell+JYCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UICollectionViewCell+JYCell.h"; sourceTree = "<group>"; };
+		5C3AEFFD1DCC616000AB52B0 /* UICollectionViewCell+JYCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UICollectionViewCell+JYCell.m"; sourceTree = "<group>"; };
 		5C8486201DA4DB5D007A41E6 /* UITableView+JYTableLayoutCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+JYTableLayoutCell.h"; sourceTree = "<group>"; };
 		5C8486211DA4DB5D007A41E6 /* UITableView+JYTableLayoutCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+JYTableLayoutCell.m"; sourceTree = "<group>"; };
 		5C8486231DA4DBFB007A41E6 /* NSObject+JYTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+JYTable.h"; sourceTree = "<group>"; };
@@ -141,6 +150,12 @@
 				5C0D13561DA026E400B22B60 /* JYCellNode.m */,
 				5C0D13411D9FF5B900B22B60 /* JYTableModel.h */,
 				5C0D13421D9FF5B900B22B60 /* JYTableModel.m */,
+				5C3AEFF81DCC616000AB52B0 /* JYCollectionModel.h */,
+				5C3AEFF91DCC616000AB52B0 /* JYCollectionModel.m */,
+				5C3AEFFA1DCC616000AB52B0 /* UICollectionView+JYCollectionViewLayoutCell.h */,
+				5C3AEFFB1DCC616000AB52B0 /* UICollectionView+JYCollectionViewLayoutCell.m */,
+				5C3AEFFC1DCC616000AB52B0 /* UICollectionViewCell+JYCell.h */,
+				5C3AEFFD1DCC616000AB52B0 /* UICollectionViewCell+JYCell.m */,
 				5C0D13581DA0331D00B22B60 /* UITableViewCell+JYCellMargin.h */,
 				5C0D13591DA0331D00B22B60 /* UITableViewCell+JYCellMargin.m */,
 				5C8486201DA4DB5D007A41E6 /* UITableView+JYTableLayoutCell.h */,
@@ -436,11 +451,14 @@
 				5C0D13641DA14F5A00B22B60 /* StyleCell2Model.m in Sources */,
 				5C0D134D1DA0051500B22B60 /* StyleCell3.m in Sources */,
 				5C2C8F5B1D9CAE7E00751F06 /* AppDelegate.m in Sources */,
+				5C3AEFFE1DCC616000AB52B0 /* JYCollectionModel.m in Sources */,
 				5C0D13431D9FF5B900B22B60 /* JYTableModel.m in Sources */,
 				5C8486251DA4DBFB007A41E6 /* NSObject+JYTable.m in Sources */,
 				5C0D13531DA0082C00B22B60 /* StyleCellModel.m in Sources */,
+				5C3AEFFF1DCC616000AB52B0 /* UICollectionView+JYCollectionViewLayoutCell.m in Sources */,
 				5C2C8F581D9CAE7E00751F06 /* main.m in Sources */,
 				5C8486221DA4DB5D007A41E6 /* UITableView+JYTableLayoutCell.m in Sources */,
+				5C3AF0001DCC616000AB52B0 /* UICollectionViewCell+JYCell.m in Sources */,
 				5C0D13471DA004FE00B22B60 /* StyleCell1.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
