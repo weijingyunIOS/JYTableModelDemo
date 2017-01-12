@@ -17,11 +17,10 @@
 
 // 获取当前cell
 @property (nonatomic, strong, readonly) JYCellNode* cellNode;
-- (id)content;
+
+
 // 转换模型
 - (id)conversionModel;
 
-// 自动计算高度的高度缓存key
-- (NSString *)heightCacheKey;
 
 @end

@@ -44,6 +44,8 @@
     _contentClass = aContentClass;
 }
 
+
+#pragma mark - private 用于框架内部调用
 - (void)recordCurrentIndex:(NSInteger)aIndex content:(id)aContent {
     _currentIndex = aIndex;
     _content = aContent;
@@ -60,7 +62,6 @@
     return key;
 }
 
-#pragma mark - private 用于框架内部调用
 + (NSString *)identifierForContent:(NSObject *)aContent{
     
     Class contentClass = [self classForObject:aContent];
