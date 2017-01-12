@@ -18,8 +18,8 @@
 
 #pragma mark -  注册cell tableView
 
-- (void)registCellNodes:(NSArray<JYBaseNode*>*)nodes byTableView:(UITableView*)tableView cellDelegate:(id)cellDelegate;
-- (void)registCellNodes:(NSArray<JYBaseNode*>*)nodes byTableView:(UITableView*)tableView;
+- (void)registCellNodes:(NSArray<JYBaseNode *> *)nodes byTableView:(UITableView *)tableView cellDelegate:(id)cellDelegate;
+- (void)registCellNodes:(NSArray<JYBaseNode *> *)nodes byTableView:(UITableView *)tableView;
 
 #pragma mark - 辅助设置 需要先执行 registCellNodes
 // 对cellNode间距的简单配置
@@ -42,14 +42,14 @@
 - (NSInteger)numberOfRowsInSection:(NSInteger)section;
 
 - (CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath;
-- (CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath config:(void (^)(UITableViewCell *aCell,JYNode* aNode))aConfig;// 自动计算高度可能要
+- (CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath config:(void (^)(UITableViewCell *aCell,JYBaseNode* aNode))aConfig;// 自动计算高度可能要
 
 // 如实现- (void)setCellContent:(id)aCellContent; 会走该方法
 - (UITableViewCell *)cellForRowAtIndexPath:(NSIndexPath *)indexPath;
-- (UITableViewCell *)cellForRowAtIndexPath:(NSIndexPath *)indexPath config:(void (^)(UITableViewCell *aCell,JYNode* aNode))aConfig;
+- (UITableViewCell *)cellForRowAtIndexPath:(NSIndexPath *)indexPath config:(void (^)(UITableViewCell *aCell,JYBaseNode* aNode))aConfig;
 
 
 - (void)reomveObjectAtIndexPath:(NSIndexPath *)aIndexPath;
-- (JYNode *)getCellNodeAtIndexPath:(NSIndexPath *)indexPath;
+- (JYBaseNode *)getCellNodeAtIndexPath:(NSIndexPath *)indexPath;
 
 @end

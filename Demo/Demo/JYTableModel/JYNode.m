@@ -11,9 +11,6 @@
 
 @interface JYNode()
 
-// 根据 contentClass 与 cellType 生成的唯一表识用于快速定位
-@property (nonatomic, copy) NSString *identifier;
-
 // 外部展现时对应 的 cellClass
 @property (nonatomic, assign) NSInteger currentIndex;
 @property (nonatomic, strong) id content;
@@ -27,12 +24,12 @@
 @implementation JYNode
 
 
-- (void)recordCurrentIndex:(NSInteger)aIndex content:(id)aContent{
+- (void)recordCurrentIndex:(NSInteger)aIndex content:(id)aContent {
     _currentIndex = aIndex;
     _content = aContent;
 }
 
-- (id)conversionModel{
+- (id)conversionModel {
     id model = self.content;
     if ([self.content respondsToSelector:@selector(conversionModelForCellNode:)]) {
         model = [self.content conversionModelForCellNode:self.cellNode];
@@ -40,7 +37,7 @@
     return model;
 }
 
-- (NSString *)heightCacheKey{
+- (NSString *)heightCacheKey {
   NSString *key = [NSString stringWithFormat:@"%@%tu",NSStringFromClass(self.contentClass),self.currentIndex];
   if ([self.content respondsToSelector:@selector(cellType)]) {
     key = [NSString stringWithFormat:@"%@%tu",key,[self.content cellType]];
@@ -75,10 +72,6 @@
     [self addCellNodes:aNodes];
 }
 
-- (void)bindContentClass:(Class)aContentClass{
-    _contentClass = aContentClass;
-}
-
 - (void)addCellClass:(Class)cellClass{
     JYCellNode *cellNode = [[JYCellNode alloc] init];
     cellNode.cellClass = cellClass;
@@ -99,7 +92,7 @@
     }];
 }
 
-#pragma mark - 辅助设置 需要groupCellNode 设置完成
+#pragma mark - JYBaseNodeProtocol
 // 对多cellNode间距的简单配置
 - (void)configCellEdgeInsets:(UIEdgeInsets)edgeInsets marginColor:(UIColor *)marginColor{
     if (self.groupCellNode.count == 1) {
@@ -119,37 +112,8 @@
 }
 
 // 分割线颜色配置
-- (void)configSeparatorColor:(UIColor *)lineColor{
+- (void)configSeparatorColor:(UIColor *)lineColor {
     self.groupCellNode.lastObject.lineColor = lineColor;
-}
-
-#pragma mark - private 用于框架内部调用
-+ (NSString *)identifierForContent:(NSObject *)aContent{
- 
-    Class contentClass = [self classForObject:aContent];
-    return [NSString stringWithFormat:@"%@_%tu",NSStringFromClass(contentClass),aContent.jy_CellType];
-}
-
-- (NSString *)identifier{
-    if (!_identifier) {
-        _identifier = [NSString stringWithFormat:@"%@_%tu",NSStringFromClass(self.contentClass),self.jy_CellType];
-    }
-    return _identifier;
-}
-
-// 必须检测字符串，要对字符串类型做特殊处理
-+ (Class)classForObject:(id)aObject{
-    if ([aObject isKindOfClass:[NSString class]]) {
-//        return [aObject isKindOfClass:[NSMutableString class]] ? [NSMutableString class] : [NSString class];
-        return [NSString class];
-    }else if ([aObject isKindOfClass:[NSArray class]]) {
-//        return [aObject isKindOfClass:[NSMutableArray class]] ? [NSMutableArray class] : [NSArray class];
-        return [NSArray class];
-    }else if ([aObject isKindOfClass:[NSDictionary class]]) {
-//        return [aObject isKindOfClass:[NSMutableDictionary class]] ? [NSMutableDictionary class] : [NSDictionary class];
-        return [NSMutableArray class];
-    }
-    return [aObject class];
 }
 
 #pragma mark - 懒加载

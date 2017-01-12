@@ -16,32 +16,19 @@
 
 @implementation StyleCellModel
 
-// 模型转化，对应相应Cell 要转换成对应模型
-- (id)conversionModelForCellNode:(JYCellNode *)aCellNode{
-    
-    Class aCellClass = aCellNode.cellClass;
-    id model = nil;
-    if (aCellClass == [StyleCell1 class]) {
-         model = [[StyleCell1Model alloc] init];
-        ((StyleCell1Model *)model).cellTitle = self.cell1Title;
-        ((StyleCell1Model *)model).cellSubTitle = self.cell1SubTitle;
-        
-    }else if (aCellClass == [StyleCell2 class]) {
-         model = [[StyleCell2Model alloc] init];
-        ((StyleCell2Model *)model).cellTitle = self.cell2Title;
-        ((StyleCell2Model *)model).cellSubTitle = self.cell2SubTitle;
-        
-    }else if (aCellClass == [StyleCell3 class]) {
-         model = [[StyleCell3Model alloc] init];
-        ((StyleCell3Model *)model).cellTitle = self.cell3Title;
-        ((StyleCell3Model *)model).cellSubTitle = self.cell3SubTitle;
-        
-    }
-    return model;
+// 返回对应HeaderCell数据模型
+- (StyleCell1Model *)conversionModelForGroupHeaderCellNode:(JYCellNode *)aCellNode {
+    return self.cell1Model;
 }
 
-- (NSInteger)cellType{
-    return self.cell3Title.length > 0 && self.cell3SubTitle.length > 0;
+// 返回中间 对应 数据模型 数组
+- (NSArray<StyleCell2Model *> *)conversionModelForGroupCellNode:(JYCellNode *)aCellNode {
+    return self.cell2ModelArray;
+}
+
+// 返回对应FooterCell数据模型
+- (StyleCell3Model *)conversionModelForGroupFooterCellNode:(JYCellNode *)aCellNode {
+    return self.cell3Model;
 }
 
 @end

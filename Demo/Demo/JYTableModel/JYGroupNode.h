@@ -17,13 +17,26 @@
 @interface JYGroupNode : JYBaseNode
 
 // 模型class
-@property (nonatomic, strong, readonly) Class contentClass;
+@property (nonatomic, strong) Class contentClass;
 // 组头cell Model 对应 只有一个
 @property (nonatomic, strong) JYCellNode *groupHeaderCellNode;
 // 中间以该 cell Model 对应 有多数据拼接
 @property (nonatomic, strong) JYCellNode *groupCellNode;
 // 组尾巴cell Model 对应 只有一个
 @property (nonatomic, strong) JYCellNode *groupFooterCellNode;
+
+@property (nonatomic, strong, readonly) JYCellNode* cellNode;
+@property (nonatomic, strong, readonly) id content;
+
+
+- (void)recordCurrentIndex:(NSInteger)aIndex content:(id)aContent;
+
+#pragma mark - JYBaseNodeProtocol
+// 对cellNode间距的简单配置
+- (void)configCellEdgeInsets:(UIEdgeInsets)edgeInsets marginColor:(UIColor *)marginColor;
+
+// 分割线颜色配置
+- (void)configSeparatorColor:(UIColor *)lineColor;
 
 
 @end

@@ -9,6 +9,7 @@
 #import "JYTableModel.h"
 #import <objc/runtime.h>
 #import "UITableViewCell+JYCellMargin.h"
+#import "JYGroupNode.h"
 
 @interface JYTableModel()
 
@@ -19,7 +20,7 @@
 @property (nonatomic, weak) id cellDelegate;
 
 // cell 的配置信息
-@property (nonatomic, strong) NSMutableDictionary<NSString * ,JYNode *> *nodeCache;
+@property (nonatomic, strong) NSMutableDictionary<NSString * ,JYBaseNode *> *nodeCache;
 
 // 所有的数据源
 @property (nonatomic, strong) NSMutableArray<NSMutableArray*>* allContents;
@@ -37,44 +38,66 @@
 
 
 #pragma mark -  注册cell tableView
-- (void)registCellNodes:(NSArray<JYNode*>*)nodes byTableView:(UITableView*)tableView{
+- (void)registCellNodes:(NSArray<JYBaseNode *> *)nodes byTableView:(UITableView *)tableView{
   [self registCellNodes:nodes byTableView:tableView cellDelegate:nil];
 }
 
-- (void)registCellNodes:(NSArray<JYNode*>*)nodes byTableView:(UITableView*)tableView cellDelegate:(id)cellDelegate{
+- (void)registCellNodes:(NSArray<JYBaseNode *> *)nodes byTableView:(UITableView *)tableView cellDelegate:(id)cellDelegate{
   
     _cellDelegate = cellDelegate;
     _tableView = tableView;
     self.isMoreCell = NO;
-    [nodes enumerateObjectsUsingBlock:^(JYNode * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [nodes enumerateObjectsUsingBlock:^(JYBaseNode * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         
-        if (obj.groupCellNode.count >1) {
-            self.isMoreCell = YES;
+        if ([obj isKindOfClass:[JYNode class]]) {
+            [self registNode:(JYNode *)obj byTableView:tableView];
+        }else if ([obj isKindOfClass:[JYGroupNode class]]) {
+            [self registGroupNode:(JYGroupNode *)obj byTableView:tableView];
         }
-        [obj.groupCellNode enumerateObjectsUsingBlock:^(JYCellNode* cellNode, NSUInteger idx, BOOL * _Nonnull stop) {
-            if (cellNode.nib != nil) {
-                [tableView registerNib:cellNode.nib forCellReuseIdentifier:[cellNode cellIdentifier]];
-            }else {
-                [tableView registerClass:cellNode.cellClass forCellReuseIdentifier:[cellNode cellIdentifier]];
-            }
-        }];
-        [self.nodeCache setObject:obj forKey:obj.identifier];
     }];
     
     // 取消系统分割线
     self.tableView.separatorStyle = UITableViewCellSelectionStyleNone;
 }
 
+- (void)registGroupNode:(JYGroupNode *)node byTableView:(UITableView *)tableView {
+    self.isMoreCell = YES;
+    [self registCellNode:node.groupHeaderCellNode byTableView:tableView];
+    [self registCellNode:node.groupCellNode byTableView:tableView];
+    [self registCellNode:node.groupFooterCellNode byTableView:tableView];
+    [self.nodeCache setObject:node forKey:node.identifier];
+}
+
+- (void)registNode:(JYNode *)node byTableView:(UITableView *)tableView {
+    
+    if (node.groupCellNode.count >1) {
+        self.isMoreCell = YES;
+    }
+    [node.groupCellNode enumerateObjectsUsingBlock:^(JYCellNode* cellNode, NSUInteger idx, BOOL * _Nonnull stop) {
+        [self registCellNode:cellNode byTableView:tableView];
+    }];
+    [self.nodeCache setObject:node forKey:node.identifier];
+}
+
+- (void)registCellNode:(JYCellNode *)cellNode byTableView:(UITableView *)tableView {
+
+    if (cellNode.nib != nil) {
+        [tableView registerNib:cellNode.nib forCellReuseIdentifier:[cellNode cellIdentifier]];
+    }else {
+        [tableView registerClass:cellNode.cellClass forCellReuseIdentifier:[cellNode cellIdentifier]];
+    }
+}
+
 #pragma mark - 辅助设置 需要先执行 registCellNodes
 - (void)configCellEdgeInsets:(UIEdgeInsets)edgeInsets marginColor:(UIColor *)marginColor{
-    [self.nodeCache enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, JYNode * _Nonnull obj, BOOL * _Nonnull stop) {
+    [self.nodeCache enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, JYBaseNode * _Nonnull obj, BOOL * _Nonnull stop) {
         [obj configCellEdgeInsets:edgeInsets marginColor:marginColor];
     }];
 }
 
 // 添加分割线，不调用则没有分割线, 是否隐藏分割线在每组最后一个cell
 - (void)configSeparatorColor:(UIColor *)lineColor hiddenLast:(BOOL)hidden{
-    [self.nodeCache enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, JYNode * _Nonnull obj, BOOL * _Nonnull stop) {
+    [self.nodeCache enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, JYBaseNode * _Nonnull obj, BOOL * _Nonnull stop) {
         [obj configSeparatorColor:lineColor];
     }];
 }
@@ -137,10 +160,10 @@
     return [self heightForRowAtIndexPath:indexPath config:nil];
 }
 
-- (CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath config:(void (^)(UITableViewCell *aCell,JYNode* aNode))aConfig{
+- (CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath config:(void (^)(UITableViewCell *aCell,JYBaseNode* aNode))aConfig{
     
     CGFloat height = 0.;
-    JYNode *node = [self getCellNodeAtIndexPath:indexPath];
+    JYBaseNode *node = [self getCellNodeAtIndexPath:indexPath];
     JYCellNode *cellNode = node.cellNode;
     if (cellNode.cellHeight > 0) {
         height = cellNode.cellHeight;
@@ -171,15 +194,15 @@
     return [self cellForRowAtIndexPath:indexPath config:nil];
 }
 
-- (UITableViewCell *)cellForRowAtIndexPath:(NSIndexPath *)indexPath config:(void (^)(UITableViewCell *aCell,JYNode* aNode))aConfig{
+- (UITableViewCell *)cellForRowAtIndexPath:(NSIndexPath *)indexPath config:(void (^)(UITableViewCell *aCell,JYBaseNode* aNode))aConfig{
     
-    JYNode *node = [self getCellNodeAtIndexPath:indexPath];
+    JYBaseNode *node = [self getCellNodeAtIndexPath:indexPath];
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:[node.cellNode cellIdentifier] forIndexPath:indexPath];
     [self configCell:cell forNode:node AtIndexPath:indexPath config:aConfig];
     return cell;
 }
 
-- (void)configCell:(UITableViewCell *)cell forNode:(JYNode *)node AtIndexPath:(NSIndexPath *)indexPath config:(void (^)(UITableViewCell *aCell,JYNode* aNode))aConfig{
+- (void)configCell:(UITableViewCell *)cell forNode:(JYBaseNode *)node AtIndexPath:(NSIndexPath *)indexPath config:(void (^)(UITableViewCell *aCell,JYBaseNode* aNode))aConfig{
   
     // 边距 分割线 以及颜色设置
     JYCellNode *cellNode = node.cellNode;
@@ -206,29 +229,46 @@
 
 - (void)reomveObjectAtIndexPath:(NSIndexPath *)aIndexPath{
     NSMutableArray* contents = [self contentsAtInSection:aIndexPath.section];
-    JYNode *node = [self getCellNodeAtIndexPath:aIndexPath];
+    JYBaseNode *node = [self getCellNodeAtIndexPath:aIndexPath];
     [contents removeObject:node.content];
 }
 
-- (JYNode *)getCellNodeAtIndexPath:(NSIndexPath *)indexPath{
+- (JYBaseNode *)getCellNodeAtIndexPath:(NSIndexPath *)indexPath{
     
     NSArray *contents = [self contentsAtInSection:indexPath.section];
     if (!self.isMoreCell) {
         id content = contents[indexPath.row];
-        JYNode *node = self.nodeCache[[JYNode identifierForContent:content]];
+        JYNode *node = (JYNode *)self.nodeCache[[JYNode identifierForContent:content]];
+        NSAssert([node isKindOfClass:[JYNode class]], @"只有JYNode 才有这种情况");
         [node recordCurrentIndex:0 content:content];
         return node;
     }
     __block NSInteger index = -1;
-    __block JYNode *node = nil;
+    __block JYBaseNode *node = nil;
     [contents enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         
         index += [self cellCountForContent:obj];
         if (index >= indexPath.row) {
             
-            node = self.nodeCache[[JYNode identifierForContent:obj]];
-            NSInteger cellIndex = node.groupCellNode.count - (index - indexPath.row) - 1;
-            [node recordCurrentIndex:cellIndex content:obj];
+            node = self.nodeCache[[JYBaseNode identifierForContent:obj]];
+            if ([node isKindOfClass:[JYNode class]]) {
+                
+                JYNode *ynode = (JYNode *)node;
+                NSInteger cellIndex = ynode.groupCellNode.count - (index - indexPath.row) - 1;
+                [ynode recordCurrentIndex:cellIndex content:obj];
+                
+            }else if ([node isKindOfClass:[JYGroupNode class]]) {
+                JYGroupNode *groupNode = (JYGroupNode *)node;
+                NSArray *group = [obj conversionModelForGroupCellNode:groupNode.groupCellNode];
+                NSInteger currentIndex = group.count + 2 - (index - indexPath.row) - 1;
+                if (currentIndex == 0) {
+                    [groupNode recordCurrentIndex:0 content:[obj conversionModelForGroupHeaderCellNode:groupNode.groupHeaderCellNode]];
+                }else if (currentIndex == (group.count + 2 -1)) {
+                    [groupNode recordCurrentIndex:2 content:[obj conversionModelForGroupHeaderCellNode:groupNode.groupFooterCellNode]];
+                }else {
+                    [groupNode recordCurrentIndex:1 content:[obj conversionModelForGroupHeaderCellNode:groupNode.groupCellNode]];
+                }
+            }
             
             *stop = YES;
         }
@@ -252,16 +292,23 @@
 
 - (NSInteger)cellCountForContent:(id)aContent
 {
-    JYNode *node = self.nodeCache[[JYNode identifierForContent:aContent]];
-    return node.groupCellNode.count;
+    JYBaseNode *node = self.nodeCache[[JYBaseNode identifierForContent:aContent]];
+    NSAssert(node != nil, @"node 为空 检查identifierForContent生成");
+    if ([node isKindOfClass:[JYNode class]]) {
+        return ((JYNode *)node).groupCellNode.count;
+    }
+    NSAssert([node isKindOfClass:[JYGroupNode class]], @"必定是JYGroupNode");
+    JYGroupNode *groupNode = (JYGroupNode *)node;
+    NSArray *group = [aContent conversionModelForGroupCellNode:groupNode.groupCellNode];
+    return group.count + 2;
 }
 
 // 必须检测字符串，要对字符串类型做特殊处理
 - (Class)classForObject:(id)aObject{
-    return [JYNode classForObject:aObject];
+    return [JYBaseNode classForObject:aObject];
 }
 #pragma mark - 懒加载
-- (NSMutableDictionary<NSString *,JYNode *> *)nodeCache{
+- (NSMutableDictionary<NSString *,JYBaseNode *> *)nodeCache{
     if (!_nodeCache) {
         _nodeCache = [[NSMutableDictionary alloc] init];
     }
