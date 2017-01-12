@@ -7,6 +7,7 @@
 //
 
 #import "JYNode.h"
+#import "NSObject+JYTable.h"
 
 @interface JYNode()
 
@@ -61,7 +62,7 @@
 
 + (instancetype)nodeContentClass:(Class)aContentClass cellType:(NSInteger)aCellType config:(void (^)(JYNode *node))aConfig{
     JYNode *node = [[JYNode alloc] init];
-    node.cellType = aCellType;
+    node.jy_CellType = aCellType;
     [node bindContentClass:aContentClass];
     if (aConfig) {
         aConfig(node);
@@ -123,18 +124,15 @@
 }
 
 #pragma mark - private 用于框架内部调用
-+ (NSString *)identifierForContent:(id)aContent{
-    NSInteger cellType = 0;
-    if ([aContent respondsToSelector:@selector(cellType)]) {
-        cellType = [aContent cellType];
-    }
++ (NSString *)identifierForContent:(NSObject *)aContent{
+ 
     Class contentClass = [self classForObject:aContent];
-    return [NSString stringWithFormat:@"%@_%tu",NSStringFromClass(contentClass),cellType];
+    return [NSString stringWithFormat:@"%@_%tu",NSStringFromClass(contentClass),aContent.jy_CellType];
 }
 
 - (NSString *)identifier{
     if (!_identifier) {
-        _identifier = [NSString stringWithFormat:@"%@_%tu",NSStringFromClass(self.contentClass),self.cellType];
+        _identifier = [NSString stringWithFormat:@"%@_%tu",NSStringFromClass(self.contentClass),self.jy_CellType];
     }
     return _identifier;
 }
@@ -142,7 +140,14 @@
 // 必须检测字符串，要对字符串类型做特殊处理
 + (Class)classForObject:(id)aObject{
     if ([aObject isKindOfClass:[NSString class]]) {
+//        return [aObject isKindOfClass:[NSMutableString class]] ? [NSMutableString class] : [NSString class];
         return [NSString class];
+    }else if ([aObject isKindOfClass:[NSArray class]]) {
+//        return [aObject isKindOfClass:[NSMutableArray class]] ? [NSMutableArray class] : [NSArray class];
+        return [NSArray class];
+    }else if ([aObject isKindOfClass:[NSDictionary class]]) {
+//        return [aObject isKindOfClass:[NSMutableDictionary class]] ? [NSMutableDictionary class] : [NSDictionary class];
+        return [NSMutableArray class];
     }
     return [aObject class];
 }

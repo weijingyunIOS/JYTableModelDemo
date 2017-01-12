@@ -52,7 +52,11 @@
             self.isMoreCell = YES;
         }
         [obj.groupCellNode enumerateObjectsUsingBlock:^(JYCellNode* cellNode, NSUInteger idx, BOOL * _Nonnull stop) {
-            [tableView registerClass:cellNode.cellClass forCellReuseIdentifier:[cellNode cellIdentifier]];
+            if (cellNode.nib != nil) {
+                [tableView registerNib:cellNode.nib forCellReuseIdentifier:[cellNode cellIdentifier]];
+            }else {
+                [tableView registerClass:cellNode.cellClass forCellReuseIdentifier:[cellNode cellIdentifier]];
+            }
         }];
         [self.nodeCache setObject:obj forKey:obj.identifier];
     }];
@@ -142,6 +146,8 @@
         height = cellNode.cellHeight;
     }else if (class_getClassMethod(node.cellNode.cellClass, @selector(heightForContent:)) != nil){
         height = [node.cellNode.cellClass heightForContent:[node conversionModel]];
+    }else if (class_getClassMethod(node.cellNode.cellClass, @selector(heightForContent:cellNode:)) != nil){
+        height = [node.cellNode.cellClass heightForContent:[node conversionModel] cellNode:node.cellNode];
     }else{
         if (self.tableView.frame.size.width == 0) { // 没宽度无法算高度
           CGRect frame = self.tableView.frame;

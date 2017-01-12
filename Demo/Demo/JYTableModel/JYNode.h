@@ -15,8 +15,8 @@
 // 模型class
 @property (nonatomic, strong, readonly) Class contentClass;
 
-// 同一contentClass(需要实现- (NSInteger)cellType) 对应 不同的 cellType
-@property (nonatomic, assign) NSInteger cellType;
+// 同一contentClass(需要实现- (NSInteger)jy_CellType) 对应 不同的 jy_CellType
+@property (nonatomic, assign) NSInteger jy_CellType;
 
 // 模型对应的cell 由多个cell拼接 所以按数组排列 UICollection 只能设置一个
 @property (nonatomic, strong,readonly) NSMutableArray<JYCellNode *>*groupCellNode;

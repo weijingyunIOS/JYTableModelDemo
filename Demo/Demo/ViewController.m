@@ -71,12 +71,12 @@
 //            cellNode.leftColor = [UIColor redColor];
 //            cellNode.rightColor = [UIColor redColor];
 //        }]];
-        node.cellType = 1;
+        node.jy_CellType = 1;
         [node addCellNodes:@[[StyleCell1 class],[StyleCell2 class],[StyleCell3 class]]];
     }];
     
     JYNode *node1_1 = [JYNode nodeContentClass:[StyleCellModel class] config:^(JYNode *node) {
-        node.cellType = 0;
+        node.jy_CellType = 0;
         [node addCellNodes:@[[StyleCell1 class],[StyleCell2 class]]];
     }];
     

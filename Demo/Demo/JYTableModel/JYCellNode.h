@@ -11,8 +11,11 @@
 @interface JYCellNode : NSObject
 
 @property (nonatomic, strong) Class cellClass;
-// 用于多个类似cell的区分
-@property (nonatomic, assign) NSInteger cellType;
+// 如果是Xib必须传
+@property (nonatomic, strong) UINib *nib;
+
+// 同一个cellClass 有多种形态，用jy_CellType来区分形态，从而注册cellIdentifier
+@property (nonatomic, assign) NSInteger jy_CellType;
 
 #pragma mark - 以下属性只对tableViewCell 有效
 // 用于设置固定高度 的 cell
@@ -34,5 +37,8 @@
 
 - (NSString *)cellIdentifier;
 + (NSInteger)cellTypeForIdentifier:(NSString *)identifier;
+
+// 与类名相同的xib
+- (UINib *)getDefaultNib;
 
 @end

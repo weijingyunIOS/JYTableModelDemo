@@ -1,4 +1,4 @@
-//
+  //
 //  JYCollectionModel.m
 //  MeiShuBaoPro
 //
@@ -37,7 +37,12 @@
   _cellDelegate = cellDelegate;
   [nodes enumerateObjectsUsingBlock:^(JYNode * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
     Class cellClass = obj.groupCellNode.firstObject.cellClass;
-    [self.collectionView registerClass:cellClass forCellWithReuseIdentifier:[obj.groupCellNode.firstObject cellIdentifier]];
+      UINib *nib = obj.groupCellNode.firstObject.nib;
+      if (nib) {
+          [self.collectionView registerNib:nib forCellWithReuseIdentifier:[obj.groupCellNode.firstObject cellIdentifier]];
+      }else {
+          [self.collectionView registerClass:cellClass forCellWithReuseIdentifier:[obj.groupCellNode.firstObject cellIdentifier]];
+      }
     [self.nodeCache setObject:obj forKey:obj.identifier];
   }];
   self.isUseCHT = [self.collectionView.collectionViewLayout isKindOfClass:[CHTCollectionViewWaterfallLayout class]];
@@ -128,6 +133,8 @@
   JYNode *node = [self getCellNodeAtIndexPath:indexPath];
   if (class_getClassMethod(node.cellNode.cellClass, @selector(heightForContent:withWidth:)) != nil){
     height = [node.cellNode.cellClass heightForContent:[node conversionModel] withWidth:width];
+  }else if (class_getClassMethod(node.cellNode.cellClass, @selector(heightForContent:withWidth:cellNode:)) != nil){
+      height = [node.cellNode.cellClass heightForContent:[node conversionModel] withWidth:width cellNode:node.cellNode];
   }else{
     NSString *key = [node heightCacheKey];
     height = [self.collectionView jy_heightForCellClass:node.cellNode.cellClass withIdentifier:node.cellNode.cellIdentifier width:width cacheBy:node.content key:key configuration:^(id cell) {
@@ -179,6 +186,7 @@
   }
   id content = contents[indexPath.row];
   JYNode *node = self.nodeCache[[JYNode identifierForContent:content]];
+    NSAssert(node != nil, @"node不能为空请检查");
   [node recordCurrentIndex:0 content:content];
   return node;
 }

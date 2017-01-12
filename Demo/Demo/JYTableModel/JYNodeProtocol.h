@@ -10,12 +10,15 @@
 #import "UITableViewCell+JYCellMargin.h"
 #import "UICollectionViewCell+JYCell.h"
 #import "NSObject+JYTable.h"
+#import "JYCellNode.h"
 
 @protocol JYTableCellProtocol <NSObject>
 
 @optional
 // 实现tableView高度计算， 如不实现则使用约束自动计算
 + (CGFloat)heightForContent:(id)aContent;
+// 需要一些 cellNode 数据
++ (CGFloat)heightForContent:(id)aContent cellNode:(JYCellNode *)aCellNode;
 
 // 实现数据设置
 - (void)setCellContent:(id)aCellContent;
@@ -44,6 +47,8 @@
 @optional
 // 实现CollectionCell  高度 计算
 + (CGFloat)heightForContent:(id)aContent withWidth:(CGFloat)width;
+// 需要一些 cellNode 数据
++ (CGFloat)heightForContent:(id)aContent withWidth:(CGFloat)width cellNode:(JYCellNode *)aCellNode;
 
 // 实现数据设置
 - (void)setCellContent:(id)aCellContent;

@@ -105,7 +105,7 @@ static char kJYIndexPath;
 - (void)configSeparatorColor:(UIColor *)lineColor hidden:(BOOL)hidden{
     self.lineLayer.backgroundColor = lineColor.CGColor;
     self.lineLayer.hidden = hidden;
-    self.lineLayer.frame = CGRectMake(0, self.frame.size.height - self.edgeInsets.bottom, self.frame.size.width, 0.5);
+    self.lineLayer.frame = CGRectMake(0, self.frame.size.height - self.edgeInsets.bottom - 1./[UIScreen mainScreen].scale, self.frame.size.width, 1./[UIScreen mainScreen].scale);
 }
 
 + (BOOL)jy_cacheHeight{
