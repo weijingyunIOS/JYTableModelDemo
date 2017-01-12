@@ -31,6 +31,8 @@
 		5C3AF0001DCC616000AB52B0 /* UICollectionViewCell+JYCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C3AEFFD1DCC616000AB52B0 /* UICollectionViewCell+JYCell.m */; };
 		5C8486221DA4DB5D007A41E6 /* UITableView+JYTableLayoutCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8486211DA4DB5D007A41E6 /* UITableView+JYTableLayoutCell.m */; };
 		5C8486251DA4DBFB007A41E6 /* NSObject+JYTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8486241DA4DBFB007A41E6 /* NSObject+JYTable.m */; };
+		5CDC35CC1E278AC200F26304 /* JYGroupNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CDC35CB1E278AC200F26304 /* JYGroupNode.m */; };
+		5CDC35CF1E278F9200F26304 /* JYBaseNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CDC35CE1E278F9200F26304 /* JYBaseNode.m */; };
 		8A154A82CE6C2FB94F281D6C /* libPods-Demo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CCB77466B522C9AF3F456FA8 /* libPods-Demo.a */; };
 /* End PBXBuildFile section */
 
@@ -101,6 +103,10 @@
 		5C8486211DA4DB5D007A41E6 /* UITableView+JYTableLayoutCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+JYTableLayoutCell.m"; sourceTree = "<group>"; };
 		5C8486231DA4DBFB007A41E6 /* NSObject+JYTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+JYTable.h"; sourceTree = "<group>"; };
 		5C8486241DA4DBFB007A41E6 /* NSObject+JYTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+JYTable.m"; sourceTree = "<group>"; };
+		5CDC35CA1E278AC200F26304 /* JYGroupNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYGroupNode.h; sourceTree = "<group>"; };
+		5CDC35CB1E278AC200F26304 /* JYGroupNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYGroupNode.m; sourceTree = "<group>"; };
+		5CDC35CD1E278F9200F26304 /* JYBaseNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYBaseNode.h; sourceTree = "<group>"; };
+		5CDC35CE1E278F9200F26304 /* JYBaseNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYBaseNode.m; sourceTree = "<group>"; };
 		946855982A1588A74B8F31E7 /* Pods-Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Demo/Pods-Demo.debug.xcconfig"; sourceTree = "<group>"; };
 		B695BA1BA7FF520027C05AA4 /* Pods-Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Demo/Pods-Demo.release.xcconfig"; sourceTree = "<group>"; };
 		CCB77466B522C9AF3F456FA8 /* libPods-Demo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Demo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -144,8 +150,12 @@
 			isa = PBXGroup;
 			children = (
 				5C0D13441DA0014F00B22B60 /* JYNodeProtocol.h */,
+				5CDC35CD1E278F9200F26304 /* JYBaseNode.h */,
+				5CDC35CE1E278F9200F26304 /* JYBaseNode.m */,
 				5C0D133E1D9FF57900B22B60 /* JYNode.h */,
 				5C0D133F1D9FF57900B22B60 /* JYNode.m */,
+				5CDC35CA1E278AC200F26304 /* JYGroupNode.h */,
+				5CDC35CB1E278AC200F26304 /* JYGroupNode.m */,
 				5C0D13551DA026E400B22B60 /* JYCellNode.h */,
 				5C0D13561DA026E400B22B60 /* JYCellNode.m */,
 				5C0D13411D9FF5B900B22B60 /* JYTableModel.h */,
@@ -451,10 +461,12 @@
 				5C0D13641DA14F5A00B22B60 /* StyleCell2Model.m in Sources */,
 				5C0D134D1DA0051500B22B60 /* StyleCell3.m in Sources */,
 				5C2C8F5B1D9CAE7E00751F06 /* AppDelegate.m in Sources */,
+				5CDC35CC1E278AC200F26304 /* JYGroupNode.m in Sources */,
 				5C3AEFFE1DCC616000AB52B0 /* JYCollectionModel.m in Sources */,
 				5C0D13431D9FF5B900B22B60 /* JYTableModel.m in Sources */,
 				5C8486251DA4DBFB007A41E6 /* NSObject+JYTable.m in Sources */,
 				5C0D13531DA0082C00B22B60 /* StyleCellModel.m in Sources */,
+				5CDC35CF1E278F9200F26304 /* JYBaseNode.m in Sources */,
 				5C3AEFFF1DCC616000AB52B0 /* UICollectionView+JYCollectionViewLayoutCell.m in Sources */,
 				5C2C8F581D9CAE7E00751F06 /* main.m in Sources */,
 				5C8486221DA4DB5D007A41E6 /* UITableView+JYTableLayoutCell.m in Sources */,

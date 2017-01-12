@@ -6,11 +6,11 @@
 //  Copyright © 2016年 weijingyun. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "JYBaseNode.h"
 #import "JYCellNode.h"
 #import "JYNodeProtocol.h"
 
-@interface JYNode : NSObject
+@interface JYNode : JYBaseNode
 
 // 模型class
 @property (nonatomic, strong, readonly) Class contentClass;

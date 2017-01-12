@@ -42,6 +42,26 @@
 
 @end
 
+
+// 以 JYGroupNode 必须遵守该协议
+@protocol JYGroupContentProtocol <NSObject>
+
+// 返回对应HeaderCell数据模型
+- (id)conversionModelForGroupHeaderCellNode:(JYCellNode *)aCellNode;
+// 返回中间 对应 数据模型 数组
+- (NSArray<NSObject *> *)conversionModelForGroupCellNode:(JYCellNode *)aCellNode;
+// 返回对应FooterCell数据模型
+- (id)conversionModelForGroupFooterCellNode:(JYCellNode *)aCellNode;
+
+@end
+
+//// 组头cell Model 对应 只有一个
+//@property (nonatomic, strong) JYCellNode *groupHeaderCellNode;
+//// 中间以该 cell Model 对应 有多数据拼接
+//@property (nonatomic, strong) JYCellNode *groupCellNode;
+//// 组尾巴cell Model 对应 只有一个
+//@property (nonatomic, strong) JYCellNode *groupFooterCellNode;
+
 @protocol JYCollectionCellProtocol <NSObject>
 
 @optional

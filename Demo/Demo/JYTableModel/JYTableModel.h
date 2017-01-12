@@ -18,8 +18,8 @@
 
 #pragma mark -  注册cell tableView
 
-- (void)registCellNodes:(NSArray<JYNode*>*)nodes byTableView:(UITableView*)tableView cellDelegate:(id)cellDelegate;
-- (void)registCellNodes:(NSArray<JYNode*>*)nodes byTableView:(UITableView*)tableView;
+- (void)registCellNodes:(NSArray<JYBaseNode*>*)nodes byTableView:(UITableView*)tableView cellDelegate:(id)cellDelegate;
+- (void)registCellNodes:(NSArray<JYBaseNode*>*)nodes byTableView:(UITableView*)tableView;
 
 #pragma mark - 辅助设置 需要先执行 registCellNodes
 // 对cellNode间距的简单配置
