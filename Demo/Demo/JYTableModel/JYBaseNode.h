@@ -17,6 +17,15 @@
 // 同一contentClass(需要实现- (NSInteger)jy_CellType) 对应 不同的 jy_CellType
 @property (nonatomic, assign) NSInteger jy_CellType;
 
+// 外部展现时对应 的 cellClass
+@property (nonatomic, assign, readonly) NSInteger currentIndex;
+@property (nonatomic, strong, readonly) id content;
+
+
+- (void)recordCurrentIndex:(NSInteger)aIndex content:(id)aContent;
+
++ (instancetype)nodeContentClass:(Class)aContentClass config:(void (^)(__kindof JYBaseNode *node))aConfig;
++ (instancetype)nodeContentClass:(Class)aContentClass cellType:(NSInteger)aCellType config:(void (^)(__kindof JYBaseNode *node))aConfig;
 - (void)bindContentClass:(Class)aContentClass;
 
 #pragma mark - private 用于框架内部调用

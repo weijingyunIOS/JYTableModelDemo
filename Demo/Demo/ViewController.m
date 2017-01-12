@@ -51,17 +51,19 @@
 }
 
 - (void)confiTableModel{
-    JYGroupNode *node = [[JYGroupNode alloc] init];
-    node.contentClass = [StyleCellModel class];
-    node.groupHeaderCellNode = [JYCellNode cellClass:[StyleCell1 class] config:^(JYCellNode *cellNode) {
+    JYGroupNode *node = [JYGroupNode nodeContentClass:[StyleCellModel class] config:^(JYGroupNode *node) {
         
-    }];
-    
-    node.groupCellNode = [JYCellNode cellClass:[StyleCell2 class] config:^(JYCellNode *cellNode) {
+        node.groupHeaderCellNode = [JYCellNode cellClass:[StyleCell1 class] config:^(JYCellNode *cellNode) {
+            
+        }];
         
-    }];
-    
-    node.groupFooterCellNode = [JYCellNode cellClass:[StyleCell3 class] config:^(JYCellNode *cellNode) {
+        node.groupCellNode = [JYCellNode cellClass:[StyleCell2 class] config:^(JYCellNode *cellNode) {
+            
+        }];
+        
+        node.groupFooterCellNode = [JYCellNode cellClass:[StyleCell3 class] config:^(JYCellNode *cellNode) {
+            
+        }];
         
     }];
     
@@ -77,7 +79,7 @@
         cell1.cellSubTitle = @"model1_组头_cellSubTitle";
         
         NSMutableArray *arrayM = [[NSMutableArray alloc] init];
-        for (int i = 0 ; i < 5; i ++) {
+        for (int i = 0 ; i < 2; i ++) {
             StyleCell2Model *cell2 = [[StyleCell2Model alloc] init];
             cell2.cellTitle = [NSString stringWithFormat:@"model1_中间拼接_cellTitle_%tu",i];
             cell2.cellSubTitle = [NSString stringWithFormat:@"model1_中间拼接_cellSubTitle_%tu",i];
@@ -101,7 +103,7 @@
         cell1.cellSubTitle = @"model2_组头cellSubTitle";
         
         NSMutableArray *arrayM = [[NSMutableArray alloc] init];
-        for (int i = 0 ; i < 5; i ++) {
+        for (int i = 0 ; i < 3; i ++) {
             StyleCell2Model *cell2 = [[StyleCell2Model alloc] init];
             cell2.cellTitle = [NSString stringWithFormat:@"model2_中间拼接_cellTitle_%tu",i];
             cell2.cellSubTitle = [NSString stringWithFormat:@"model2_中间拼接_cellSubTitle_%tu",i];

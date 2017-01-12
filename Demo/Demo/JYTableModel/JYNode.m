@@ -11,23 +11,13 @@
 
 @interface JYNode()
 
-// 外部展现时对应 的 cellClass
-@property (nonatomic, assign) NSInteger currentIndex;
-@property (nonatomic, strong) id content;
-
 // CellNode
 @property (nonatomic, strong) NSMutableArray<JYCellNode *>*groupCellNode;
-@property (nonatomic, strong) Class contentClass;
 
 @end
 
 @implementation JYNode
 
-
-- (void)recordCurrentIndex:(NSInteger)aIndex content:(id)aContent {
-    _currentIndex = aIndex;
-    _content = aContent;
-}
 
 - (id)conversionModel {
     id model = self.content;
@@ -37,36 +27,13 @@
     return model;
 }
 
-- (NSString *)heightCacheKey {
-  NSString *key = [NSString stringWithFormat:@"%@%tu",NSStringFromClass(self.contentClass),self.currentIndex];
-  if ([self.content respondsToSelector:@selector(cellType)]) {
-    key = [NSString stringWithFormat:@"%@%tu",key,[self.content cellType]];
-  }
-  
-  NSInteger type = [self.cellNode.cellClass cellTypeForContent:self.content];
-  key = [NSString stringWithFormat:@"%@%tu",key,type];
-  return key;
-}
+
 
 - (JYCellNode *)cellNode{
     return self.groupCellNode[self.currentIndex];
 }
 
 #pragma mark - cellNode 配置
-+ (instancetype)nodeContentClass:(Class)aContentClass config:(void (^)(JYNode *node))aConfig{
-    return [self nodeContentClass:aContentClass cellType:0 config:aConfig];
-}
-
-+ (instancetype)nodeContentClass:(Class)aContentClass cellType:(NSInteger)aCellType config:(void (^)(JYNode *node))aConfig{
-    JYNode *node = [[JYNode alloc] init];
-    node.jy_CellType = aCellType;
-    [node bindContentClass:aContentClass];
-    if (aConfig) {
-        aConfig(node);
-    }
-    return node;
-}
-
 - (void)bindContentClass:(Class)aContentClass cellNodes:(NSArray*)aNodes{
     [self bindContentClass:aContentClass];
     [self addCellNodes:aNodes];

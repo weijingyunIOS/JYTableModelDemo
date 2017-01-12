@@ -11,23 +11,10 @@
 
 @interface JYGroupNode ()
 
-// 模型class
-//@property (nonatomic, strong) Class contentClass;
-// 外部展现时对应 的 cellClass
-
-// 0 头 1 中  2 尾
-@property (nonatomic, assign) NSInteger currentIndex;
-@property (nonatomic, strong) id content;
-
 
 @end
 
 @implementation JYGroupNode
-
-- (void)recordCurrentIndex:(NSInteger)aIndex content:(id)aContent {
-    _currentIndex = aIndex;
-    _content = aContent;
-}
 
 // 对cellNode间距的简单配置
 - (void)configCellEdgeInsets:(UIEdgeInsets)edgeInsets marginColor:(UIColor *)marginColor {
@@ -68,19 +55,6 @@
 - (id)conversionModel {
     return self.content;
 }
-
-- (NSString *)heightCacheKey {
-    
-    NSString *key = [NSString stringWithFormat:@"%@%tu",NSStringFromClass(self.contentClass),self.currentIndex];
-    if ([self.content respondsToSelector:@selector(cellType)]) {
-        key = [NSString stringWithFormat:@"%@%tu",key,[self.content cellType]];
-    }
-    
-    NSInteger type = [self.cellNode.cellClass cellTypeForContent:self.content];
-    key = [NSString stringWithFormat:@"%@%tu",key,type];
-    return key;
-}
-
 
 
 @end
