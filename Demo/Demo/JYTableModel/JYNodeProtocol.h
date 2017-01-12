@@ -38,7 +38,7 @@
 - (NSInteger)cellType;
 
 // 模型转化，对应相应Cell 要转换成对应模型
-- (id)conversionModelForCellClass:(Class)aCellClass;
+- (id)conversionModelForCellNode:(JYCellNode *)aCellNode;
 
 @end
 

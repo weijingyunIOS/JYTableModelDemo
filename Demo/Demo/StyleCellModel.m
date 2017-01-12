@@ -17,8 +17,9 @@
 @implementation StyleCellModel
 
 // 模型转化，对应相应Cell 要转换成对应模型
-- (id)conversionModelForCellClass:(Class)aCellClass{
+- (id)conversionModelForCellNode:(JYCellNode *)aCellNode{
     
+    Class aCellClass = aCellNode.cellClass;
     id model = nil;
     if (aCellClass == [StyleCell1 class]) {
          model = [[StyleCell1Model alloc] init];

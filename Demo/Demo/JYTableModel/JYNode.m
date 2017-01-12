@@ -34,8 +34,8 @@
 
 - (id)conversionModel{
     id model = self.content;
-    if ([self.content respondsToSelector:@selector(conversionModelForCellClass:)]) {
-        model = [self.content conversionModelForCellClass:self.cellNode.cellClass];
+    if ([self.content respondsToSelector:@selector(conversionModelForCellNode:)]) {
+        model = [self.content conversionModelForCellNode:self.cellNode];
     }
     return model;
 }
