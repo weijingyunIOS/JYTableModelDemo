@@ -11,16 +11,7 @@
 
 @protocol JYBaseNodeProtocol <NSObject>
 
-// 对多cellNode间距的简单配置
-- (void)configCellEdgeInsets:(UIEdgeInsets)edgeInsets marginColor:(UIColor *)marginColor;
-- (void)configSeparatorColor:(UIColor *)lineColor;
 
-// 获取当前cell
-@property (nonatomic, strong, readonly) JYCellNode* cellNode;
-
-
-// 转换模型
-- (id)conversionModel;
 
 
 @end

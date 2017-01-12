@@ -45,6 +45,29 @@
 }
 
 
+
+#pragma mark - 对node的整体配置 需要子类重写
+// 对cellNode间距的简单配置
+- (void)configCellEdgeInsets:(UIEdgeInsets)edgeInsets marginColor:(UIColor *)marginColor {
+    NSAssert(YES, @"子类重写方可调用");
+}
+
+// 分割线颜色配置
+- (void)configSeparatorColor:(UIColor *)lineColor {
+    NSAssert(YES, @"子类重写方可调用");
+}
+
+- (JYCellNode *)getCurrentCellNode {
+    NSAssert(YES, @"子类必须重写方可调用");
+    return nil;
+}
+
+// 转换模型
+- (id)conversionModel {
+    NSAssert(YES, @"子类必须重写方可调用");
+    return nil;
+}
+
 #pragma mark - private 用于框架内部调用
 - (void)recordCurrentIndex:(NSInteger)aIndex content:(id)aContent {
     _currentIndex = aIndex;
@@ -57,7 +80,7 @@
         key = [NSString stringWithFormat:@"%@%tu",key,[self.content cellType]];
     }
     
-    NSInteger type = [self.cellNode.cellClass cellTypeForContent:self.content];
+    NSInteger type = [self.getCurrentCellNode.cellClass cellTypeForContent:self.content];
     key = [NSString stringWithFormat:@"%@%tu",key,type];
     return key;
 }

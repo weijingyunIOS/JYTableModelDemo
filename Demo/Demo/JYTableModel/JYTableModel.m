@@ -164,13 +164,13 @@
     
     CGFloat height = 0.;
     JYBaseNode *node = [self getCellNodeAtIndexPath:indexPath];
-    JYCellNode *cellNode = node.cellNode;
+    JYCellNode *cellNode = node.getCurrentCellNode;
     if (cellNode.cellHeight > 0) {
         height = cellNode.cellHeight;
-    }else if (class_getClassMethod(node.cellNode.cellClass, @selector(heightForContent:)) != nil){
-        height = [node.cellNode.cellClass heightForContent:[node conversionModel]];
-    }else if (class_getClassMethod(node.cellNode.cellClass, @selector(heightForContent:cellNode:)) != nil){
-        height = [node.cellNode.cellClass heightForContent:[node conversionModel] cellNode:node.cellNode];
+    }else if (class_getClassMethod(node.getCurrentCellNode.cellClass, @selector(heightForContent:)) != nil){
+        height = [node.getCurrentCellNode.cellClass heightForContent:[node conversionModel]];
+    }else if (class_getClassMethod(node.getCurrentCellNode.cellClass, @selector(heightForContent:cellNode:)) != nil){
+        height = [node.getCurrentCellNode.cellClass heightForContent:[node conversionModel] cellNode:node.getCurrentCellNode];
     }else{
         if (self.tableView.frame.size.width == 0) { // 没宽度无法算高度
           CGRect frame = self.tableView.frame;
@@ -186,7 +186,7 @@
        }];
     }
 
-    height += node.cellNode.edgeInsets.top + node.cellNode.edgeInsets.bottom;
+    height += node.getCurrentCellNode.edgeInsets.top + node.getCurrentCellNode.edgeInsets.bottom;
     return height;
 }
 
@@ -197,7 +197,7 @@
 - (UITableViewCell *)cellForRowAtIndexPath:(NSIndexPath *)indexPath config:(void (^)(UITableViewCell *aCell,JYBaseNode* aNode))aConfig{
     
     JYBaseNode *node = [self getCellNodeAtIndexPath:indexPath];
-    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:[node.cellNode cellIdentifier] forIndexPath:indexPath];
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:[node.getCurrentCellNode cellIdentifier] forIndexPath:indexPath];
     [self configCell:cell forNode:node AtIndexPath:indexPath config:aConfig];
     return cell;
 }
@@ -205,7 +205,7 @@
 - (void)configCell:(UITableViewCell *)cell forNode:(JYBaseNode *)node AtIndexPath:(NSIndexPath *)indexPath config:(void (^)(UITableViewCell *aCell,JYBaseNode* aNode))aConfig{
   
     // 边距 分割线 以及颜色设置
-    JYCellNode *cellNode = node.cellNode;
+    JYCellNode *cellNode = node.getCurrentCellNode;
     cell.edgeInsets = cellNode.edgeInsets;
     cell.jy_indexPath = indexPath;
     [cell configEdgeInsetsColor:cellNode.marginColor];

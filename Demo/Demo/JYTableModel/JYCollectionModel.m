@@ -131,13 +131,13 @@
   }
   CGFloat height = 0;
   JYNode *node = [self getCellNodeAtIndexPath:indexPath];
-  if (class_getClassMethod(node.cellNode.cellClass, @selector(heightForContent:withWidth:)) != nil){
-    height = [node.cellNode.cellClass heightForContent:[node conversionModel] withWidth:width];
-  }else if (class_getClassMethod(node.cellNode.cellClass, @selector(heightForContent:withWidth:cellNode:)) != nil){
-      height = [node.cellNode.cellClass heightForContent:[node conversionModel] withWidth:width cellNode:node.cellNode];
+  if (class_getClassMethod(node.getCurrentCellNode.cellClass, @selector(heightForContent:withWidth:)) != nil){
+    height = [node.getCurrentCellNode.cellClass heightForContent:[node conversionModel] withWidth:width];
+  }else if (class_getClassMethod(node.getCurrentCellNode.cellClass, @selector(heightForContent:withWidth:cellNode:)) != nil){
+      height = [node.getCurrentCellNode.cellClass heightForContent:[node conversionModel] withWidth:width cellNode:node.getCurrentCellNode];
   }else{
     NSString *key = [node heightCacheKey];
-    height = [self.collectionView jy_heightForCellClass:node.cellNode.cellClass withIdentifier:node.cellNode.cellIdentifier width:width cacheBy:node.content key:key configuration:^(id cell) {
+    height = [self.collectionView jy_heightForCellClass:node.getCurrentCellNode.cellClass withIdentifier:node.getCurrentCellNode.cellIdentifier width:width cacheBy:node.content key:key configuration:^(id cell) {
       [self configCell:cell forNode:node AtIndexPath:indexPath config:aConfig];
     }];
   }
@@ -149,7 +149,7 @@
 }
 - (UICollectionViewCell *)cellForRowAtIndexPath:(NSIndexPath *)indexPath config:(void (^)(UICollectionViewCell *aCell,JYNode *aNode))aConfig{
   JYNode *node = [self getCellNodeAtIndexPath:indexPath];
-  UICollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:[node.cellNode cellIdentifier] forIndexPath:indexPath];
+  UICollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:[node.getCurrentCellNode cellIdentifier] forIndexPath:indexPath];
   [self configCell:cell forNode:node AtIndexPath:indexPath config:aConfig];
   return cell;
 }

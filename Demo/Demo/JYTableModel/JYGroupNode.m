@@ -33,7 +33,7 @@
 }
 
 // 当前的
-- (JYCellNode *)cellNode {
+- (JYCellNode *)getCurrentCellNode {
     JYCellNode *cellNode = nil;
     switch (self.currentIndex) {
         case 0:

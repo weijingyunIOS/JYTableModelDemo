@@ -26,8 +26,20 @@
 + (instancetype)nodeContentClass:(Class)aContentClass cellType:(NSInteger)aCellType config:(void (^)(__kindof JYBaseNode *node))aConfig;
 - (void)bindContentClass:(Class)aContentClass;
 
-#pragma mark - private 用于框架内部调用
+#pragma mark - 对node的整体配置 需要子类重写
+// 对cellNode间距的简单配置
+- (void)configCellEdgeInsets:(UIEdgeInsets)edgeInsets marginColor:(UIColor *)marginColor;
 
+// 分割线颜色配置
+- (void)configSeparatorColor:(UIColor *)lineColor;
+
+// 获取当前cell
+- (JYCellNode *)getCurrentCellNode;
+
+// 转换模型
+- (id)conversionModel;
+
+#pragma mark - private 用于框架内部调用
 - (void)recordCurrentIndex:(NSInteger)aIndex content:(id)aContent;
 
 // 高度缓存key 生成

@@ -22,15 +22,9 @@
 - (id)conversionModel {
     id model = self.content;
     if ([self.content respondsToSelector:@selector(conversionModelForCellNode:)]) {
-        model = [self.content conversionModelForCellNode:self.cellNode];
+        model = [self.content conversionModelForCellNode:self.getCurrentCellNode];
     }
     return model;
-}
-
-
-
-- (JYCellNode *)cellNode{
-    return self.groupCellNode[self.currentIndex];
 }
 
 #pragma mark - cellNode 配置
@@ -59,7 +53,7 @@
     }];
 }
 
-#pragma mark - JYBaseNodeProtocol
+#pragma mark - 重写的方法
 // 对多cellNode间距的简单配置
 - (void)configCellEdgeInsets:(UIEdgeInsets)edgeInsets marginColor:(UIColor *)marginColor{
     if (self.groupCellNode.count == 1) {
@@ -81,6 +75,11 @@
 // 分割线颜色配置
 - (void)configSeparatorColor:(UIColor *)lineColor {
     self.groupCellNode.lastObject.lineColor = lineColor;
+}
+
+// 获取当前要展现的 CellNode
+- (JYCellNode *)getCurrentCellNode {
+    return self.groupCellNode[self.currentIndex];
 }
 
 #pragma mark - 懒加载

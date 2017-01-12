@@ -25,12 +25,6 @@
 // 数组元素只能是 JYCellNode 与 Class
 - (void)addCellNodes:(NSArray*)aNodes;
 
-#pragma mark - JYBaseNodeProtocol
-// 对cellNode间距的简单配置
-- (void)configCellEdgeInsets:(UIEdgeInsets)edgeInsets marginColor:(UIColor *)marginColor;
-
-// 分割线颜色配置
-- (void)configSeparatorColor:(UIColor *)lineColor;
 
 #pragma mark - private 用于框架内部调用
 - (id)conversionModel; // 执行recordCurrentIndex 后有效
