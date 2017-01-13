@@ -22,6 +22,10 @@
 
 // 实现数据设置
 - (void)setCellContent:(id)aCellContent;
+/* 实现数据设置 如果模型 遵守协议 写了 conversionModel 等方法，aCellContent 只是转换出来的展示数据
+ * aMetaContent 是原数据， 编辑 删除都得修改 原数据才有效的
+ */
+- (void)setCellContent:(id)aCellContent metaContent:(id)aMetaContent cellNode:(JYCellNode *)aCellNode;
 
 @property (nonatomic, weak) id cellDelegate;
 
@@ -52,6 +56,10 @@
 - (NSArray<NSObject *> *)conversionModelForGroupCellNode:(JYCellNode *)aCellNode;
 // 返回对应FooterCell数据模型
 - (id)conversionModelForGroupFooterCellNode:(JYCellNode *)aCellNode;
+
+@optional
+// 如果该 模型 有给不同 cell 使用，需要实现该方法区分 同cell 不同type高度也会做不同缓存
+- (NSInteger)cellType;
 
 @end
 

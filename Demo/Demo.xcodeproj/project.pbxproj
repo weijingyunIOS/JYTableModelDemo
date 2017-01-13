@@ -103,7 +103,6 @@
 		5C8486211DA4DB5D007A41E6 /* UITableView+JYTableLayoutCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+JYTableLayoutCell.m"; sourceTree = "<group>"; };
 		5C8486231DA4DBFB007A41E6 /* NSObject+JYTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+JYTable.h"; sourceTree = "<group>"; };
 		5C8486241DA4DBFB007A41E6 /* NSObject+JYTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+JYTable.m"; sourceTree = "<group>"; };
-		5C9C8CCA1E27ACC900A73AE5 /* JYBaseNodeProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYBaseNodeProtocol.h; sourceTree = "<group>"; };
 		5CDC35CA1E278AC200F26304 /* JYGroupNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYGroupNode.h; sourceTree = "<group>"; };
 		5CDC35CB1E278AC200F26304 /* JYGroupNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYGroupNode.m; sourceTree = "<group>"; };
 		5CDC35CD1E278F9200F26304 /* JYBaseNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYBaseNode.h; sourceTree = "<group>"; };
@@ -151,7 +150,6 @@
 			isa = PBXGroup;
 			children = (
 				5C0D13441DA0014F00B22B60 /* JYNodeProtocol.h */,
-				5C9C8CCA1E27ACC900A73AE5 /* JYBaseNodeProtocol.h */,
 				5CDC35CD1E278F9200F26304 /* JYBaseNode.h */,
 				5CDC35CE1E278F9200F26304 /* JYBaseNode.m */,
 				5C0D133E1D9FF57900B22B60 /* JYNode.h */,

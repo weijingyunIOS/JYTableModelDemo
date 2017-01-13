@@ -20,7 +20,7 @@
 // 外部展现时对应 的 cellClass
 @property (nonatomic, assign) NSInteger currentIndex;
 @property (nonatomic, strong) id content;
-
+@property (nonatomic, strong) id metaContent;
 
 @end
 
@@ -69,9 +69,10 @@
 }
 
 #pragma mark - private 用于框架内部调用
-- (void)recordCurrentIndex:(NSInteger)aIndex content:(id)aContent {
+- (void)recordCurrentIndex:(NSInteger)aIndex content:(id)aContent metaContent:(id)aMetaContent {
     _currentIndex = aIndex;
     _content = aContent;
+    _metaContent = aMetaContent;
 }
 
 - (NSString *)heightCacheKey {

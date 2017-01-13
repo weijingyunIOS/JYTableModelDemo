@@ -168,9 +168,9 @@
     if (cellNode.cellHeight > 0) {
         height = cellNode.cellHeight;
     }else if (class_getClassMethod(node.getCurrentCellNode.cellClass, @selector(heightForContent:)) != nil){
-        height = [node.getCurrentCellNode.cellClass heightForContent:[node conversionModel]];
+        height = [node.getCurrentCellNode.cellClass heightForContent:node.content];
     }else if (class_getClassMethod(node.getCurrentCellNode.cellClass, @selector(heightForContent:cellNode:)) != nil){
-        height = [node.getCurrentCellNode.cellClass heightForContent:[node conversionModel] cellNode:node.getCurrentCellNode];
+        height = [node.getCurrentCellNode.cellClass heightForContent:node.content cellNode:node.getCurrentCellNode];
     }else{
         if (self.tableView.frame.size.width == 0) { // 没宽度无法算高度
           CGRect frame = self.tableView.frame;
@@ -215,7 +215,9 @@
     
     //  内容设置
     if ([cell respondsToSelector:@selector(setCellContent:)]) {
-        [(id)cell setCellContent:[node conversionModel]];
+        [(id)cell setCellContent:node.content];
+    }else if ([cell respondsToSelector:@selector(setCellContent:metaContent:cellNode:)]) {
+        [(id)cell setCellContent:node.content metaContent:node.metaContent cellNode:node.getCurrentCellNode];
     }
   
     if ([cell respondsToSelector:@selector(setCellDelegate:)]) {
@@ -240,7 +242,7 @@
         id content = contents[indexPath.row];
         JYNode *node = (JYNode *)self.nodeCache[[JYNode identifierForContent:content]];
         NSAssert([node isKindOfClass:[JYNode class]], @"只有JYNode 才有这种情况");
-        [node recordCurrentIndex:0 content:content];
+        [node recordCurrentIndex:0 content:content metaContent:content];
         return node;
     }
     __block NSInteger index = -1;
@@ -255,18 +257,22 @@
                 
                 JYNode *ynode = (JYNode *)node;
                 NSInteger cellIndex = ynode.groupCellNode.count - (index - indexPath.row) - 1;
-                [ynode recordCurrentIndex:cellIndex content:obj];
+                id content = obj;
+                if ([obj respondsToSelector:@selector(conversionModelForCellNode:)]) {
+                    content = [obj conversionModelForCellNode:ynode.groupCellNode[cellIndex]];
+                }
+                [ynode recordCurrentIndex:cellIndex content:content metaContent:obj];
                 
             }else if ([node isKindOfClass:[JYGroupNode class]]) {
                 JYGroupNode *groupNode = (JYGroupNode *)node;
                 NSArray *group = [obj conversionModelForGroupCellNode:groupNode.groupCellNode];
                 NSInteger currentIndex = group.count + 2 - (index - indexPath.row) - 1;
                 if (currentIndex == 0) {
-                    [groupNode recordCurrentIndex:0 content:[obj conversionModelForGroupHeaderCellNode:groupNode.groupHeaderCellNode]];
+                    [groupNode recordCurrentIndex:0 content:[obj conversionModelForGroupHeaderCellNode:groupNode.groupHeaderCellNode]metaContent:obj];
                 }else if (currentIndex == (group.count + 2 -1)) {
-                    [groupNode recordCurrentIndex:2 content:[obj conversionModelForGroupHeaderCellNode:groupNode.groupFooterCellNode]];
+                    [groupNode recordCurrentIndex:2 content:[obj conversionModelForGroupHeaderCellNode:groupNode.groupFooterCellNode]metaContent:obj];
                 }else {
-                    [groupNode recordCurrentIndex:1 content:[obj conversionModelForGroupHeaderCellNode:groupNode.groupCellNode]];
+                    [groupNode recordCurrentIndex:1 content:[obj conversionModelForGroupHeaderCellNode:groupNode.groupCellNode]metaContent:obj];
                 }
             }
             

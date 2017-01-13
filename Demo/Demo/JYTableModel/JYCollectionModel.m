@@ -132,9 +132,9 @@
   CGFloat height = 0;
   JYNode *node = [self getCellNodeAtIndexPath:indexPath];
   if (class_getClassMethod(node.getCurrentCellNode.cellClass, @selector(heightForContent:withWidth:)) != nil){
-    height = [node.getCurrentCellNode.cellClass heightForContent:[node conversionModel] withWidth:width];
+    height = [node.getCurrentCellNode.cellClass heightForContent:node.content withWidth:width];
   }else if (class_getClassMethod(node.getCurrentCellNode.cellClass, @selector(heightForContent:withWidth:cellNode:)) != nil){
-      height = [node.getCurrentCellNode.cellClass heightForContent:[node conversionModel] withWidth:width cellNode:node.getCurrentCellNode];
+      height = [node.getCurrentCellNode.cellClass heightForContent:node.content withWidth:width cellNode:node.getCurrentCellNode];
   }else{
     NSString *key = [node heightCacheKey];
     height = [self.collectionView jy_heightForCellClass:node.getCurrentCellNode.cellClass withIdentifier:node.getCurrentCellNode.cellIdentifier width:width cacheBy:node.content key:key configuration:^(id cell) {
@@ -159,7 +159,9 @@
   cell.jy_indexPath = indexPath;
   //  内容设置
   if ([cell respondsToSelector:@selector(setCellContent:)]) {
-    [(id)cell setCellContent:[node conversionModel]];
+    [(id)cell setCellContent:node.content];
+  }else if ([cell respondsToSelector:@selector(setCellContent:metaContent:cellNode:)]) {
+      [(id)cell setCellContent:node.content metaContent:node.metaContent cellNode:node.getCurrentCellNode];
   }
   
   if ([cell respondsToSelector:@selector(setCellDelegate:)]) {
@@ -187,7 +189,7 @@
   id content = contents[indexPath.row];
   JYNode *node = self.nodeCache[[JYNode identifierForContent:content]];
     NSAssert(node != nil, @"node不能为空请检查");
-  [node recordCurrentIndex:0 content:content];
+  [node recordCurrentIndex:0 content:content metaContent:content];
   return node;
 }
 

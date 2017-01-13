@@ -19,14 +19,6 @@
 @implementation JYNode
 
 
-- (id)conversionModel {
-    id model = self.content;
-    if ([self.content respondsToSelector:@selector(conversionModelForCellNode:)]) {
-        model = [self.content conversionModelForCellNode:self.getCurrentCellNode];
-    }
-    return model;
-}
-
 #pragma mark - cellNode 配置
 - (void)bindContentClass:(Class)aContentClass cellNodes:(NSArray*)aNodes{
     [self bindContentClass:aContentClass];

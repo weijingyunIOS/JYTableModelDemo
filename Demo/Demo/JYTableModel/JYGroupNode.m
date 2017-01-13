@@ -52,9 +52,4 @@
     return cellNode;
 }
 
-- (id)conversionModel {
-    return self.content;
-}
-
-
 @end

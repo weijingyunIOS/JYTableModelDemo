@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "JYBaseNodeProtocol.h"
+#import "JYCellNode.h"
 
-@interface JYBaseNode : NSObject <JYBaseNodeProtocol>
+@interface JYBaseNode : NSObject
 
 // 模型class
 @property (nonatomic, strong, readonly) Class contentClass;
@@ -18,8 +18,9 @@
 @property (nonatomic, assign) NSInteger jy_CellType;
 
 // 外部展现时对应 的 cellClass
-@property (nonatomic, assign, readonly) NSInteger currentIndex;
-@property (nonatomic, strong, readonly) id content;
+@property (nonatomic, assign, readonly) NSInteger currentIndex; // 当前index 用于 - (JYCellNode *)getCurrentCellNode;
+@property (nonatomic, strong, readonly) id content;     // 当前cell要展现的数据
+@property (nonatomic, strong, readonly) id metaContent; // 元数据 如未做处理，content 与 metaContent一样
 
 #pragma mark - 简便的创建方法提供
 + (instancetype)nodeContentClass:(Class)aContentClass config:(void (^)(__kindof JYBaseNode *node))aConfig;
@@ -36,11 +37,9 @@
 // 获取当前cell
 - (JYCellNode *)getCurrentCellNode;
 
-// 转换模型
-- (id)conversionModel;
 
 #pragma mark - private 用于框架内部调用
-- (void)recordCurrentIndex:(NSInteger)aIndex content:(id)aContent;
+- (void)recordCurrentIndex:(NSInteger)aIndex content:(id)aContent metaContent:(id)aMetaContent;
 
 // 高度缓存key 生成
 - (NSString *)heightCacheKey;

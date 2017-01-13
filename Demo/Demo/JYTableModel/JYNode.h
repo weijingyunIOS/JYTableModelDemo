@@ -26,9 +26,4 @@
 - (void)addCellNodes:(NSArray*)aNodes;
 
 
-#pragma mark - private 用于框架内部调用
-- (id)conversionModel; // 执行recordCurrentIndex 后有效
-- (NSString *)heightCacheKey;
-
-
 @end
