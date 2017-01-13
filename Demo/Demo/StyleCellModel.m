@@ -21,9 +21,14 @@
     return self.cell1Model;
 }
 
-// 返回中间 对应 数据模型 数组
-- (NSArray<StyleCell2Model *> *)conversionModelForGroupCellNode:(JYCellNode *)aCellNode {
-    return self.cell2ModelArray;
+// 中间 GroupCell 数量
+- (NSInteger)getConversionModelCountForGroupCellNode:(JYCellNode *)aCellNode {
+    return self.cell2ModelArray.count;
+}
+
+// 返回中间 对应 数据模型  跟 getConversionModelCountForGroupCellNode 对应
+- (StyleCell2Model *)conversionModelForGroupCellNode:(JYCellNode *)aCellNode index:(NSInteger)aIndex {
+    return self.cell2ModelArray[aIndex];
 }
 
 // 返回对应FooterCell数据模型

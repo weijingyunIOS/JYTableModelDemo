@@ -265,14 +265,15 @@
                 
             }else if ([node isKindOfClass:[JYGroupNode class]]) {
                 JYGroupNode *groupNode = (JYGroupNode *)node;
-                NSArray *group = [obj conversionModelForGroupCellNode:groupNode.groupCellNode];
-                NSInteger currentIndex = group.count + 2 - (index - indexPath.row) - 1;
+                NSInteger groupCellCount = [obj getConversionModelCountForGroupCellNode:groupNode.groupCellNode];
+                NSInteger currentIndex = groupCellCount + 2 - (index - indexPath.row) - 1;
+                
                 if (currentIndex == 0) {
                     [groupNode recordCurrentIndex:0 content:[obj conversionModelForGroupHeaderCellNode:groupNode.groupHeaderCellNode]metaContent:obj];
-                }else if (currentIndex == (group.count + 2 -1)) {
+                }else if (currentIndex == (groupCellCount + 2 -1)) {
                     [groupNode recordCurrentIndex:2 content:[obj conversionModelForGroupHeaderCellNode:groupNode.groupFooterCellNode]metaContent:obj];
                 }else {
-                    [groupNode recordCurrentIndex:1 content:[obj conversionModelForGroupHeaderCellNode:groupNode.groupCellNode]metaContent:obj];
+                    [groupNode recordCurrentIndex:1 content:[obj conversionModelForGroupCellNode:groupNode.groupCellNode index:currentIndex - 1] metaContent:obj];
                 }
             }
             
@@ -305,8 +306,8 @@
     }
     NSAssert([node isKindOfClass:[JYGroupNode class]], @"必定是JYGroupNode");
     JYGroupNode *groupNode = (JYGroupNode *)node;
-    NSArray *group = [aContent conversionModelForGroupCellNode:groupNode.groupCellNode];
-    return group.count + 2;
+    NSInteger groupCount = [aContent getConversionModelCountForGroupCellNode:groupNode.groupCellNode];
+    return groupCount + 2;
 }
 
 // 必须检测字符串，要对字符串类型做特殊处理

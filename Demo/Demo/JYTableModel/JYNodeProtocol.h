@@ -52,8 +52,12 @@
 
 // 返回对应HeaderCell数据模型
 - (id)conversionModelForGroupHeaderCellNode:(JYCellNode *)aCellNode;
-// 返回中间 对应 数据模型 数组
-- (NSArray<NSObject *> *)conversionModelForGroupCellNode:(JYCellNode *)aCellNode;
+
+// 中间 GroupCell 数量
+- (NSInteger)getConversionModelCountForGroupCellNode:(JYCellNode *)aCellNode;
+// 返回中间 对应 数据模型  跟 getConversionModelCountForGroupCellNode 对应
+- (id)conversionModelForGroupCellNode:(JYCellNode *)aCellNode index:(NSInteger)aIndex;
+
 // 返回对应FooterCell数据模型
 - (id)conversionModelForGroupFooterCellNode:(JYCellNode *)aCellNode;
 
